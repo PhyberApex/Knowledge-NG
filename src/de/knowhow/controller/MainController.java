@@ -131,8 +131,9 @@ public class MainController {
 	}
 
 	private void prefChange() {
-		JOptionPane.showMessageDialog(mv, Constants.getText("message.warning.prefChange"),
-				"Information", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(mv, Constants
+				.getText("message.warning.restart"), "Information",
+				JOptionPane.INFORMATION_MESSAGE);
 		config.saveChanges();
 	}
 
@@ -267,5 +268,33 @@ public class MainController {
 
 	public void insertHTMLLink(String string, int iD) {
 		acl.insertHTMLLink(string, iD);
+	}
+
+	public void changeDatabase(String string) {
+		if (string.equals("1")) {
+			config.setProperty("databasetyp", string);
+			config.setProperty("defaultdb", JOptionPane
+					.showInputDialog(Constants.getText("keyword.database")
+							+ ":"));
+			config.setProperty("host", "");
+			config.setProperty("user", "");
+			config.setProperty("pass", "");
+			prefChange();
+		} else if (string.equals("2")) {
+			config.setProperty("databasetyp", string);
+			config.setProperty("host", JOptionPane.showInputDialog(Constants
+					.getText("database.host")
+					+ ":"));
+			config.setProperty("defaultdb", JOptionPane
+					.showInputDialog(Constants.getText("keyword.database")
+							+ ":"));
+			config.setProperty("user", JOptionPane.showInputDialog(Constants
+					.getText("database.user")
+					+ ":"));
+			config.setProperty("pass", JOptionPane.showInputDialog(Constants
+					.getText("database.password")
+					+ ":"));
+			prefChange();
+		}
 	}
 }

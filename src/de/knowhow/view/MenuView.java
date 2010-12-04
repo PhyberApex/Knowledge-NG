@@ -37,6 +37,9 @@ public class MenuView extends JMenuBar {
 	private Menu prefs;
 	private Menu lang;
 	private Menu res;
+	private Menu database;
+	private RadioButtonMenuItem sqlite;
+	private RadioButtonMenuItem mysql;
 
 	private MainController mc;
 
@@ -247,6 +250,33 @@ public class MenuView extends JMenuBar {
 			res600.setSelected(true);
 		}
 		prefs.add(res);
+		this.database = new Menu(Constants.getText("keyword.database"));
+		ButtonGroup databaseGroup = new ButtonGroup();
+		this.sqlite = new RadioButtonMenuItem(Constants.getText("menu.prefs.database.sqlite"));
+		this.sqlite.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				mc.changeDatabase("1");
+			}
+		});
+		databaseGroup.add(this.sqlite);
+		this.database.add(this.sqlite);
+		this.mysql = new RadioButtonMenuItem(Constants.getText("menu.prefs.database.mysql"));
+		this.mysql.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				mc.changeDatabase("2");
+			}
+		});
+		databaseGroup.add(this.mysql);
+		this.database.add(this.mysql);
+		if (Constants.getHost() != null){
+			this.mysql.setSelected(true);
+			this.mysql.setEnabled(false);
+		}
+		else{
+			this.sqlite.setSelected(true);
+			this.sqlite.setEnabled(false);
+		}
+		this.prefs.add(this.database);
 		this.add(file);
 		this.add(edit);
 		this.add(prefs);
