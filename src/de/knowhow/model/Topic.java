@@ -26,7 +26,7 @@ public class Topic {
 		this.db = db;
 		try {
 			this.db
-					.prepareStatement("INSERT INTO Topic (name, topic_ID_FK) values(?, ?);");
+					.prepareStatement("INSERT INTO topic (name, topic_ID_FK) values(?, ?);");
 			this.db.getStatement().setString(1, "New Topic");
 			this.db.getStatement().setInt(2, 0);
 			this.db.executeBatch();
@@ -56,7 +56,7 @@ public class Topic {
 		try {
 			this.name = name;
 			this.db
-					.prepareStatement("UPDATE Topic SET name = ? WHERE topic_ID = ?");
+					.prepareStatement("UPDATE topic SET name = ? WHERE topic_ID = ?");
 			this.db.getStatement().setString(1, this.getName());
 			this.db.getStatement().setInt(2, this.getTopic_ID());
 			this.db.executeBatch();
@@ -75,7 +75,7 @@ public class Topic {
 		this.topic_ID_FK = topic_ID_FK;
 		try {
 			this.db
-					.prepareStatement("UPDATE Topic SET topic_ID_FK = ? WHERE topic_ID = ?");
+					.prepareStatement("UPDATE topic SET topic_ID_FK = ? WHERE topic_ID = ?");
 			this.db.getStatement().setInt(1, this.getTopic_ID_FK());
 			this.db.getStatement().setInt(1, this.getTopic_ID());
 			this.db.executeBatch();

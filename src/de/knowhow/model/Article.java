@@ -72,7 +72,7 @@ public class Article {
 		this.name = name;
 		try {
 			this.db
-					.prepareStatement("UPDATE Article SET name = ?, lastEdit = ? WHERE article_ID = ?");
+					.prepareStatement("UPDATE article SET name = ?, lastEdit = ? WHERE article_ID = ?");
 			this.db.getStatement().setString(1, this.getName());
 			this.db.getStatement().setString(2, Constants.getDate());
 			this.db.getStatement().setInt(3, this.getArticle_ID());
@@ -109,7 +109,7 @@ public class Article {
 		try {
 
 			this.db
-					.prepareStatement("UPDATE Article SET content = ?, lastEdit = ? WHERE article_ID = ?");
+					.prepareStatement("UPDATE article SET content = ?, lastEdit = ? WHERE article_ID = ?");
 			this.db.getStatement().setString(1, this.getContent());
 			this.db.getStatement().setString(2, Constants.getDate());
 			this.db.getStatement().setInt(3, this.getArticle_ID());
@@ -127,7 +127,7 @@ public class Article {
 		this.topic_ID_FK = topic_ID_FK;
 		try {
 			this.db
-					.prepareStatement("UPDATE Article SET topic_ID_FK = ?, lastEdit = ? WHERE article_ID = ?");
+					.prepareStatement("UPDATE article SET topic_ID_FK = ?, lastEdit = ? WHERE article_ID = ?");
 			this.db.getStatement().setInt(1, this.getTopic_ID_FK());
 			this.db.getStatement().setString(2, Constants.getDate());
 			this.db.getStatement().setInt(3, this.getArticle_ID());

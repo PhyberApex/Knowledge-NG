@@ -47,7 +47,7 @@ public class MainController {
 			db = new DAO_MYSQL();
 			Constants.setHost(config.getProperty("host"));
 			Constants.setUser(config.getProperty("user"));
-			Constants.setPassword(config.getProperty("password"));
+			Constants.setPassword(config.getProperty("pass"));
 		}
 		try {
 			db.openDB();

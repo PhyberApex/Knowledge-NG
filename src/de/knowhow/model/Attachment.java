@@ -35,7 +35,7 @@ public class Attachment {
 		this.image = image;
 		try {
 			this.db
-					.prepareStatement("INSERT INTO attachment (name, image, article_ID_FK, binary) values(?, ?, ?, ?);");
+					.prepareStatement("INSERT INTO attachment (name, image, article_ID_FK, bin) values(?, ?, ?, ?);");
 			this.db.getStatement().setString(1, this.name);
 			this.db.getStatement().setBoolean(2, this.image);
 			this.db.getStatement().setInt(3, this.article_ID_FK);
@@ -109,7 +109,7 @@ public class Attachment {
 	public void loadBin() throws DatabaseException {
 		try {
 			this.db
-					.prepareStatement("SELECT binary FROM attachment WHERE attachment_ID = "
+					.prepareStatement("SELECT bin FROM attachment WHERE attachment_ID = "
 							+ this.attachment_ID + ";");
 			ResultSet rs = this.db.execute();
 			rs.next();
