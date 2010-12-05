@@ -105,15 +105,19 @@ public class MenuView extends JMenuBar {
 				mc.newDatabase();
 			}
 		});
-		newDatabase.setEnabled(false);
+		if (Constants.getHost() != null) {
+			newDatabase.setEnabled(false);
+		}
 		file.add(newDatabase);
 		openDatabase = new MenuItem(Constants.getText("menu.file.openDatabase"));
 		openDatabase.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				mc.openDatabase();
+				mc.newDatabase();
 			}
 		});
-		openDatabase.setEnabled(false);
+		if (Constants.getHost() != null) {
+			openDatabase.setEnabled(false);
+		}
 		file.add(openDatabase);
 		file.addSeparator();
 		close = new MenuItem(Constants.getText("menu.file.close"));
@@ -252,7 +256,8 @@ public class MenuView extends JMenuBar {
 		prefs.add(res);
 		this.database = new Menu(Constants.getText("keyword.database"));
 		ButtonGroup databaseGroup = new ButtonGroup();
-		this.sqlite = new RadioButtonMenuItem(Constants.getText("menu.prefs.database.sqlite"));
+		this.sqlite = new RadioButtonMenuItem(Constants
+				.getText("menu.prefs.database.sqlite"));
 		this.sqlite.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				mc.changeDatabase("1");
@@ -260,7 +265,8 @@ public class MenuView extends JMenuBar {
 		});
 		databaseGroup.add(this.sqlite);
 		this.database.add(this.sqlite);
-		this.mysql = new RadioButtonMenuItem(Constants.getText("menu.prefs.database.mysql"));
+		this.mysql = new RadioButtonMenuItem(Constants
+				.getText("menu.prefs.database.mysql"));
 		this.mysql.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				mc.changeDatabase("2");
@@ -268,11 +274,10 @@ public class MenuView extends JMenuBar {
 		});
 		databaseGroup.add(this.mysql);
 		this.database.add(this.mysql);
-		if (Constants.getHost() != null){
+		if (Constants.getHost() != null) {
 			this.mysql.setSelected(true);
 			this.mysql.setEnabled(false);
-		}
-		else{
+		} else {
 			this.sqlite.setSelected(true);
 			this.sqlite.setEnabled(false);
 		}

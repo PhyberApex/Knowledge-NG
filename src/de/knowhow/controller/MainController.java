@@ -159,11 +159,13 @@ public class MainController {
 	}
 
 	public void newDatabase() {
-		// TODO Auto-generated method stub
-	}
-
-	public void openDatabase() {
-		// TODO Auto-generated method stub
+		String name = JOptionPane.showInputDialog(Constants
+				.getText("newDatabase")
+				+ ":");
+		if (name != null) {
+			config.setProperty("defaultdb", name);
+		}
+		prefChange();
 	}
 
 	public void renameArticle() {
@@ -272,29 +274,39 @@ public class MainController {
 
 	public void changeDatabase(String string) {
 		if (string.equals("1")) {
-			config.setProperty("databasetyp", string);
-			config.setProperty("defaultdb", JOptionPane
-					.showInputDialog(Constants.getText("keyword.database")
-							+ ":"));
-			config.setProperty("host", "");
-			config.setProperty("user", "");
-			config.setProperty("pass", "");
-			prefChange();
+			String database = JOptionPane.showInputDialog(Constants
+					.getText("keyword.database")
+					+ ":");
+			if (database != null) {
+				config.setProperty("databasetyp", string);
+				config.setProperty("defaultdb", database);
+				config.setProperty("host", "");
+				config.setProperty("user", "");
+				config.setProperty("pass", "");
+				prefChange();
+			}
 		} else if (string.equals("2")) {
-			config.setProperty("databasetyp", string);
-			config.setProperty("host", JOptionPane.showInputDialog(Constants
+			String host = JOptionPane.showInputDialog(Constants
 					.getText("database.host")
-					+ ":"));
-			config.setProperty("defaultdb", JOptionPane
-					.showInputDialog(Constants.getText("keyword.database")
-							+ ":"));
-			config.setProperty("user", JOptionPane.showInputDialog(Constants
+					+ ":");
+			String database = JOptionPane.showInputDialog(Constants
+					.getText("keyword.database")
+					+ ":");
+			String user = JOptionPane.showInputDialog(Constants
 					.getText("database.user")
-					+ ":"));
-			config.setProperty("pass", JOptionPane.showInputDialog(Constants
+					+ ":");
+			String pass = JOptionPane.showInputDialog(Constants
 					.getText("database.password")
-					+ ":"));
-			prefChange();
+					+ ":");
+			if (host != null && database != null && user != null
+					&& pass != null) {
+				config.setProperty("databasetyp", string);
+				config.setProperty("host", host);
+				config.setProperty("defaultdb", database);
+				config.setProperty("user", user);
+				config.setProperty("pass", pass);
+				prefChange();
+			}
 		}
 	}
 }
