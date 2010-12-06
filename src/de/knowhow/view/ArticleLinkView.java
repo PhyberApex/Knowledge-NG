@@ -75,13 +75,12 @@ public class ArticleLinkView extends JFrame implements Observer {
 	public void update(Observable arg0, Object arg1) {
 		ArticleList artL = (ArticleList) arg0;
 		ArrayList<Article> arts = artL.getArticles();
-		String[] names = { "ID", "Name", "Content", "LastEdit" };
-		Object[][] rowData = new Object[arts.size()][4];
+		String[] names = { "ID", "Name", "LastEdit" };
+		Object[][] rowData = new Object[arts.size()][3];
 		for (int i = 0; i < arts.size(); i++) {
 			rowData[i][0] = arts.get(i).getArticle_ID();
 			rowData[i][1] = arts.get(i).getName();
-			rowData[i][2] = arts.get(i).getContent().substring(0, 50);
-			rowData[i][3] = arts.get(i).getLastEdit();
+			rowData[i][2] = arts.get(i).getLastEdit();
 		}
 		TableModel model = new TableModel(rowData, names);
 		this.tbArticles.setModel(model);

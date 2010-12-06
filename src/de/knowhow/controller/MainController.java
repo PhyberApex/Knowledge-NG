@@ -13,6 +13,7 @@ import de.knowhow.base.Config;
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.exception.DatabaseException;
+import de.knowhow.model.Search;
 import de.knowhow.model.Topic;
 import de.knowhow.model.db.DAO;
 import de.knowhow.model.db.DAO_MYSQL;
@@ -21,6 +22,7 @@ import de.knowhow.model.gui.HTMLEditor;
 import de.knowhow.view.AboutView;
 import de.knowhow.view.MainView;
 import de.knowhow.view.MenuView;
+import de.knowhow.view.SearchView;
 import de.knowhow.view.SplashScreen;
 import de.knowhow.view.TopicChooseView;
 
@@ -247,7 +249,6 @@ public class MainController {
 		int returnVal = fcUpload.showSaveDialog(mv);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fcUpload.getSelectedFile();
-			String path = file.getAbsolutePath();
 			try {
 				attL.newAttachment(file, image);
 			} catch (DatabaseException e1) {
@@ -312,12 +313,16 @@ public class MainController {
 	}
 
 	public void search(String text) {
-		// TODO Auto-generated method stub
-		
+		SearchView sV = new SearchView(Search.getArticles(text, acl
+				.getArticles()), this);
 	}
 
 	public void about() {
 		@SuppressWarnings("unused")
 		AboutView about = new AboutView();
+	}
+
+	public void setCurrArtByID(int iD) {
+		acl.setCurrArticle(acl.getArticleByID(iD));
 	}
 }
