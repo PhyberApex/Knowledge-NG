@@ -40,6 +40,9 @@ public class MenuView extends JMenuBar {
 	private Menu database;
 	private RadioButtonMenuItem sqlite;
 	private RadioButtonMenuItem mysql;
+	
+	private Menu help;
+	private MenuItem about;
 
 	private MainController mc;
 
@@ -282,9 +285,18 @@ public class MenuView extends JMenuBar {
 			this.sqlite.setEnabled(false);
 		}
 		this.prefs.add(this.database);
+		this.help = new Menu(Constants.getText("menu.help"));
+		this.about = new MenuItem(Constants.getText("menu.help.about"));
+		this.about.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				mc.about();;
+			}
+		});
+		this.help.add(about);
 		this.add(file);
 		this.add(edit);
 		this.add(prefs);
+		this.add(help);
 		this.setEditable(false);
 		this.setSize(ViewConstants.MENU_WIDTH, ViewConstants.MENU_HEIGTH);
 		this.setLocation(ViewConstants.MENU_POS_X, ViewConstants.MENU_POS_Y);

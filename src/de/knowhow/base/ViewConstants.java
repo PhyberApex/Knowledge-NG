@@ -19,13 +19,11 @@ public class ViewConstants {
 	// Render
 	public static int RENDER_WIDTH = 25;
 	public static int RENDER_HEIGTH = 25;
-	public static int RENDER_POS_X;
 	public static int RENDER_POS_Y = 0;
 
 	// Plain
 	public static int PLAIN_WIDTH = 25;
 	public static int PLAIN_HEIGTH = 25;
-	public static int PLAIN_POS_X;
 	public static int PLAIN_POS_Y = 0;
 
 	// Tree
@@ -84,13 +82,7 @@ public class ViewConstants {
 			MAIN_HEIGTH = 480;
 		}
 		// Menu
-		MENU_WIDTH = MAIN_WIDTH - 20/* FrameBuffer */- 50/* ButtonBuffer */;
-
-		// Render
-		RENDER_POS_X = MENU_POS_X + MENU_WIDTH;
-
-		// Plain
-		PLAIN_POS_X = MENU_POS_X + MENU_WIDTH + RENDER_WIDTH;
+		MENU_WIDTH = MAIN_WIDTH - 20/* FrameBuffer */- 50/* ButtonBuffer */ - 250 /* SearchBuffer */;
 
 		// Tree
 		TREE_HEIGTH = MAIN_HEIGTH - MENU_HEIGTH;

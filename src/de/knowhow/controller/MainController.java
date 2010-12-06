@@ -18,6 +18,7 @@ import de.knowhow.model.db.DAO;
 import de.knowhow.model.db.DAO_MYSQL;
 import de.knowhow.model.db.DAO_SQLite;
 import de.knowhow.model.gui.HTMLEditor;
+import de.knowhow.view.AboutView;
 import de.knowhow.view.MainView;
 import de.knowhow.view.MenuView;
 import de.knowhow.view.SplashScreen;
@@ -308,5 +309,15 @@ public class MainController {
 				prefChange();
 			}
 		}
+	}
+
+	public void search(String text) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void about() {
+		@SuppressWarnings("unused")
+		AboutView about = new AboutView();
 	}
 }
