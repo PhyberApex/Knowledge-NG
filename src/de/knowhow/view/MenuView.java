@@ -25,6 +25,7 @@ public class MenuView extends JMenuBar {
 	private Menu edit;
 	private MenuItem renameArticle;
 	private MenuItem deleteArticle;
+	private MenuItem subtopic;
 	private MenuItem renameTopic;
 	private MenuItem deleteTopic;
 	private MenuItem insertCode;
@@ -146,6 +147,13 @@ public class MenuView extends JMenuBar {
 			}
 		});
 		edit.add(renameTopic);
+		this.subtopic = new MenuItem(Constants.getText("menu.edit.subtopic"));
+		this.subtopic.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				mc.subTopic();
+			}
+		});
+		edit.add(subtopic);
 		edit.addSeparator();
 		insertCode = new MenuItem(Constants.getText("menu.edit.insertCode"));
 		insertCode.addActionListener(new java.awt.event.ActionListener() {

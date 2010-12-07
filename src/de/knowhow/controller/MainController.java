@@ -24,6 +24,7 @@ import de.knowhow.view.MainView;
 import de.knowhow.view.MenuView;
 import de.knowhow.view.SearchView;
 import de.knowhow.view.SplashScreen;
+import de.knowhow.view.SubtopicView;
 import de.knowhow.view.TopicChooseView;
 
 public class MainController {
@@ -324,5 +325,13 @@ public class MainController {
 
 	public void setCurrArtByID(int iD) {
 		acl.setCurrArticle(acl.getArticleByID(iD));
+	}
+
+	public void setCurrTopicByID(int iD) {
+		tcl.setCurrTopic(tcl.getTopicByID(iD));
+	}
+
+	public void subTopic() {
+		SubtopicView sub = new SubtopicView(this, this.tcl);
 	}
 }

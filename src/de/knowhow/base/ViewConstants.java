@@ -61,6 +61,10 @@ public class ViewConstants {
 	// ArticleLinkView
 	public static int ARTLINK_WIDTH = 300;
 	public static int ARTLINK_HEIGTH;
+	
+	//Subtopic
+	public static int SUBTOPIC_WIDTH = 350;
+	public static int SUBTOPIC_HEIGTH = 80;
 
 	public static void reload(Config conf) {
 		int res = Integer.parseInt(conf.getProperty("resolution"));
