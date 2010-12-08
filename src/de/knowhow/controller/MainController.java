@@ -327,11 +327,15 @@ public class MainController {
 		acl.setCurrArticle(acl.getArticleByID(iD));
 	}
 
-	public void setCurrTopicByID(int iD) {
-		tcl.setCurrTopic(tcl.getTopicByID(iD));
-	}
-
 	public void subTopic() {
 		SubtopicView sub = new SubtopicView(this, this.tcl);
+	}
+
+	public void setSubtopicByID(int topicID) {
+		try {
+			tcl.setCurrTopic_ID_FK(topicID);
+		} catch (DatabaseException e) {
+			error(e);
+		}
 	}
 }

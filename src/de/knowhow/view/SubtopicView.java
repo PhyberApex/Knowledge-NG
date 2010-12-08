@@ -57,7 +57,7 @@ public class SubtopicView extends JFrame {
 				+ this.cbTopic.getHeight() + 10);
 		this.btConfirm.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				mc.setCurrTopicByID(((Topic) cbTopic.getSelectedItem())
+				mc.setSubtopicByID(((Topic) cbTopic.getSelectedItem())
 						.getTopic_ID());
 				dispose();
 			}

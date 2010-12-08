@@ -77,7 +77,7 @@ public class Topic {
 			this.db
 					.prepareStatement("UPDATE topic SET topic_ID_FK = ? WHERE topic_ID = ?");
 			this.db.getStatement().setInt(1, this.getTopic_ID_FK());
-			this.db.getStatement().setInt(1, this.getTopic_ID());
+			this.db.getStatement().setInt(2, this.getTopic_ID());
 			this.db.executeBatch();
 		} catch (DatabaseException e) {
 			throw e;

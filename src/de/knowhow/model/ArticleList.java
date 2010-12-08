@@ -53,21 +53,27 @@ public class ArticleList extends Observable {
 	}
 
 	public void setCurrName(String pName) throws DatabaseException {
-		currArticle.setName(pName);
-		notifyObservers();
-		setChanged();
+		if (currArticle != null) {
+			currArticle.setName(pName);
+			notifyObservers();
+			setChanged();
+		}
 	}
 
 	public void setCurrContent(String pContent) throws DatabaseException {
-		currArticle.setContent(pContent);
-		notifyObservers();
-		setChanged();
+		if (currArticle != null) {
+			currArticle.setContent(pContent);
+			notifyObservers();
+			setChanged();
+		}
 	}
 
 	public void setCurrTopic_ID_FK(int pID) throws DatabaseException {
-		currArticle.setTopic_ID_FK(pID);
-		notifyObservers("update");//dirty hack
-		setChanged();
+		if (currArticle != null) {
+			currArticle.setTopic_ID_FK(pID);
+			notifyObservers("update");// dirty hack
+			setChanged();
+		}
 	}
 
 	public void setCurrArticle(Article art) {
@@ -75,12 +81,14 @@ public class ArticleList extends Observable {
 		notifyObservers();
 		setChanged();
 	}
-	public ArrayList<Article> getArticles(){
+
+	public ArrayList<Article> getArticles() {
 		return this.articles;
 	}
-	public Article getArticleByID(int ID){
-		for(int i = 0; i < this.articles.size(); i++){
-			if(articles.get(i).getArticle_ID() == ID){
+
+	public Article getArticleByID(int ID) {
+		for (int i = 0; i < this.articles.size(); i++) {
+			if (articles.get(i).getArticle_ID() == ID) {
 				return articles.get(i);
 			}
 		}
@@ -96,18 +104,20 @@ public class ArticleList extends Observable {
 	}
 
 	public void deleteCurrArt() throws DatabaseException {
-		currArticle.delete();
-		articles.remove(currArticle);
-		notifyObservers("delete");
-		setChanged();
+		if (currArticle != null) {
+			currArticle.delete();
+			articles.remove(currArticle);
+			notifyObservers("delete");
+			setChanged();
+		}
 	}
 
 	public void deleteArtByTopic(int topicID) throws DatabaseException {
 		ArrayList<Article> articles = getArticles();
 		Article art;
-		for (int i = 0 ; i <= articles.size(); i++){
+		for (int i = 0; i <= articles.size(); i++) {
 			art = articles.get(i);
-			if (art.getTopic_ID_FK() == topicID){
+			if (art.getTopic_ID_FK() == topicID) {
 				art.delete();
 				this.articles.remove(art);
 			}

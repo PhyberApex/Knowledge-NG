@@ -76,7 +76,6 @@ public class HTMLEditor extends JEditorPane {
 							try {
 								attachcl.writeAttToFS(att_ID, path);
 							} catch (DatabaseException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 						}

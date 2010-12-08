@@ -43,8 +43,6 @@ public abstract class DAO {
 		this.databaseName = databaseName;
 	}
 
-	
-
 	public void prepareStatement(String statement) throws DatabaseException {
 		try {
 			this.setStatement(this.getConnection().prepareStatement(statement));

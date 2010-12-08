@@ -54,7 +54,7 @@ public class TreeView extends JPanel implements Observer, TreeSelectionListener 
 				treeScrollPane.setViewportView(tree);
 			}
 		} else if (arg0.getClass() == TopicList.class) {
-			if (arg1 != null && (arg1.equals("new") || arg1.equals("delete"))) {
+			if (arg1 != null && (arg1.equals("new") || arg1.equals("delete") || arg1.equals("sub"))) {
 				this.tree.removeTreeSelectionListener(this);
 				this.tree = new Tree(treeC.getRootNode());
 				tree.addTreeSelectionListener(this);

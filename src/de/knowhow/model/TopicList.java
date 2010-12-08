@@ -58,15 +58,19 @@ public class TopicList extends Observable {
 	}
 
 	public void setCurrName(String pName) throws DatabaseException {
-		currTopic.setName(pName);
-		notifyObservers();
-		setChanged();
+		if (currTopic != null) {
+			currTopic.setName(pName);
+			notifyObservers();
+			setChanged();
+		}
 	}
 
 	public void setCurrTopic_ID_FK(int pID) throws DatabaseException {
-		currTopic.setTopic_ID_FK(pID);
-		notifyObservers();
-		setChanged();
+		if (currTopic != null) {
+			currTopic.setTopic_ID_FK(pID);
+			notifyObservers("sub");
+			setChanged();
+		}
 	}
 
 	public ArrayList<Topic> getTopics() {
@@ -91,7 +95,9 @@ public class TopicList extends Observable {
 	}
 
 	public void deleteCurrTopic() throws DatabaseException {
-		currTopic.delete();
-		topics.remove(currTopic);
+		if (currTopic != null) {
+			currTopic.delete();
+			topics.remove(currTopic);
+		}
 	}
 }

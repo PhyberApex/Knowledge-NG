@@ -87,4 +87,8 @@ public class TopicListController {
 	public void changeTopicOfCurrArticle(int i) {
 		mc.changeTopicOfCurrArticle(i);
 	}
+
+	public void setCurrTopic_ID_FK(int topicID) throws DatabaseException {
+		tl.setCurrTopic_ID_FK(topicID);
+	}
 }
