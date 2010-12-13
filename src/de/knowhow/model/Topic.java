@@ -2,8 +2,6 @@ package de.knowhow.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.apache.log4j.Logger;
-
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.db.DAO;
 
@@ -13,7 +11,6 @@ public class Topic {
 	private String name;
 	private int topic_ID_FK;
 	private DAO db;
-	private static Logger logger = Logger.getRootLogger();
 
 	public Topic(DAO db, int topic_ID, String name, int topic_ID_FK) {
 		this.db = db;
@@ -33,7 +30,6 @@ public class Topic {
 		} catch (DatabaseException e) {
 			throw e;
 		} catch (SQLException e) {
-			logger.error("Fehler im SQL-Syntax: " + e.getMessage());
 		}
 		this.topic_ID = getNextID();
 		this.name = "new Topic";
@@ -63,7 +59,6 @@ public class Topic {
 		} catch (DatabaseException e) {
 			throw e;
 		} catch (SQLException e) {
-			logger.error("Fehler im SQL-Syntax: " + e.getMessage());
 		}
 	}
 
@@ -82,7 +77,6 @@ public class Topic {
 		} catch (DatabaseException e) {
 			throw e;
 		} catch (SQLException e) {
-			logger.error("Fehler im SQL-Syntax: " + e.getMessage());
 		}
 	}
 
@@ -98,7 +92,6 @@ public class Topic {
 		} catch (DatabaseException e) {
 			throw e;
 		} catch (SQLException e) {
-			logger.error("Fehler im SQL-Syntax: " + e.getMessage());
 		}
 	}
 
@@ -116,7 +109,6 @@ public class Topic {
 		} catch (DatabaseException e) {
 			throw e;
 		} catch (SQLException e) {
-			logger.error("Fehler im SQL-Syntax: " + e.getMessage());
 		}
 		return nextID;
 	}

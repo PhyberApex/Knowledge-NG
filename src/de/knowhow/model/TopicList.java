@@ -4,9 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Observable;
-
-import org.apache.log4j.Logger;
-
 import de.knowhow.base.Constants;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.db.DAO;
@@ -16,7 +13,6 @@ public class TopicList extends Observable {
 	private ArrayList<Topic> topics;
 	private Topic currTopic;
 	private DAO db;
-	private static Logger logger = Logger.getRootLogger();
 
 	public TopicList(DAO db) {
 		this.db = db;
@@ -38,7 +34,6 @@ public class TopicList extends Observable {
 			}
 			rs.close();
 		} catch (SQLException e) {
-			logger.error("Fehler im SQL-Syntax: " + e.getMessage());
 		}
 	}
 

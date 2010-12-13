@@ -1,13 +1,6 @@
 package de.knowhow.model.db;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.sql.*;
-
-import org.apache.log4j.Logger;
-
 import de.knowhow.base.Constants;
 import de.knowhow.exception.DatabaseException;
 
@@ -16,8 +9,6 @@ public abstract class DAO {
 	private PreparedStatement statement;
 	private Connection connection;
 	private String databaseName = Constants.getDBName();
-	private static Logger logger = Logger.getRootLogger();
-	private boolean valid = false;
 
 	public PreparedStatement getStatement() {
 		return statement;
@@ -47,8 +38,6 @@ public abstract class DAO {
 		try {
 			this.setStatement(this.getConnection().prepareStatement(statement));
 		} catch (SQLException e) {
-			logger.error("There was an error in the SQL-Statement: "
-					+ e.getMessage());
 			throw new DatabaseException(e.getMessage());// "sqlError");
 		}
 	}
@@ -58,9 +47,6 @@ public abstract class DAO {
 			this.getStatement().addBatch();
 			this.getStatement().executeBatch();
 		} catch (SQLException e) {
-			logger
-					.error("There was an error in the Execution of the SQL-Statement: "
-							+ e.getMessage());
 			throw new DatabaseException("sqlExecuteError");
 		}
 	}
@@ -70,9 +56,6 @@ public abstract class DAO {
 		try {
 			rs = this.getStatement().executeQuery();
 		} catch (SQLException e) {
-			logger
-					.error("There was an error in the Execution of the SQL-Statement: "
-							+ e.getMessage());
 			throw new DatabaseException("sqlExecuteError");
 		}
 		return rs;
@@ -83,9 +66,6 @@ public abstract class DAO {
 			Statement stat = this.getConnection().createStatement();
 			stat.executeUpdate(pSQL);
 		} catch (SQLException e) {
-			logger
-					.error("There was an error in the Execution of the SQL-Statement: "
-							+ e.getMessage());
 			throw new DatabaseException("sqlExecuteError");
 		}
 	}
@@ -94,8 +74,6 @@ public abstract class DAO {
 		try {
 			this.getConnection().close();
 		} catch (SQLException e) {
-			logger.error("There was an error in closing the database: "
-					+ e.getMessage());
 			throw new DatabaseException("closeError");
 		}
 	}
@@ -110,6 +88,8 @@ public abstract class DAO {
 						.executeQuery("SELECT name, topic_ID, topic_id_fk FROM topic;");
 				state
 						.executeQuery("SELECT attachment_ID, name, article_ID_FK, binary, image FROM attachment;");
+				state
+						.executeQuery("SELECT css_ID, tag, rule FROM css;");
 			} catch (SQLException e) {
 				return false;
 			}

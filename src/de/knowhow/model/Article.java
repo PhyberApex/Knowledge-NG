@@ -2,7 +2,6 @@ package de.knowhow.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.apache.log4j.Logger;
 import de.knowhow.base.Constants;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.db.DAO;
@@ -15,7 +14,6 @@ public class Article {
 	private String content;
 	private int topic_ID_FK;
 	private DAO db;
-	private static Logger logger = Logger.getRootLogger();
 
 	public Article(DAO db, int article_ID, String name, String lastEdit,
 			String content, int topic_ID_FK) {
@@ -45,7 +43,6 @@ public class Article {
 		} catch (DatabaseException e) {
 			throw e;
 		} catch (SQLException e) {
-			logger.error("Fehler im SQL-Syntax: " + e.getMessage());
 		}
 		this.setArticle_ID(getNextID());
 		this.name = "new Article";
@@ -78,7 +75,6 @@ public class Article {
 			this.db.getStatement().setInt(3, this.getArticle_ID());
 			this.db.executeBatch();
 		} catch (SQLException e) {
-			logger.error("Fehler im SQL-Syntax: " + e.getMessage());
 		}
 	}
 
@@ -96,7 +92,6 @@ public class Article {
 			this.db.getStatement().setInt(2, this.getArticle_ID());
 			this.db.executeBatch();
 		} catch (SQLException e) {
-			logger.error("Fehler im SQL-Syntax: " + e.getMessage());
 		}
 	}
 
@@ -115,7 +110,6 @@ public class Article {
 			this.db.getStatement().setInt(3, this.getArticle_ID());
 			this.db.executeBatch();
 		} catch (SQLException e) {
-			logger.error("Fehler im SQL-Syntax: " + e.getMessage());
 		}
 	}
 
@@ -135,7 +129,6 @@ public class Article {
 		} catch (DatabaseException e) {
 			throw e;
 		} catch (SQLException e) {
-			logger.error("Fehler im SQL-Syntax: " + e.getMessage());
 		}
 	}
 
@@ -152,7 +145,6 @@ public class Article {
 		} catch (DatabaseException e) {
 			throw e;
 		} catch (SQLException e) {
-			logger.error("Fehler im SQL-Syntax: " + e.getMessage());
 		}
 	}
 
@@ -169,7 +161,6 @@ public class Article {
 		} catch (DatabaseException e) {
 			throw e;
 		} catch (SQLException e) {
-			logger.error("Fehler im SQL-Syntax: " + e.getMessage());
 		}
 		return nextID;
 	}

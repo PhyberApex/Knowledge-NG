@@ -57,14 +57,18 @@ public class ViewConstants {
 	// AttachmentsForArticleView
 	public static int ATTACH_WIDTH = 300;
 	public static int ATTACH_HEIGTH;
-	
+
 	// ArticleLinkView
 	public static int ARTLINK_WIDTH = 300;
 	public static int ARTLINK_HEIGTH;
-	
-	//Subtopic
+
+	// Subtopic
 	public static int SUBTOPIC_WIDTH = 350;
 	public static int SUBTOPIC_HEIGTH = 80;
+
+	// CSSPlainView
+	public static int CSSPLAIN_WIDTH;
+	public static int CSSPLAIN_HEIGTH;
 
 	public static void reload(Config conf) {
 		int res = Integer.parseInt(conf.getProperty("resolution"));
@@ -86,7 +90,7 @@ public class ViewConstants {
 			MAIN_HEIGTH = 480;
 		}
 		// Menu
-		MENU_WIDTH = MAIN_WIDTH - 20/* FrameBuffer */- 50/* ButtonBuffer */ - 250 /* SearchBuffer */;
+		MENU_WIDTH = MAIN_WIDTH - 20/* FrameBuffer */- 50/* ButtonBuffer */- 250 /* SearchBuffer */;
 
 		// Tree
 		TREE_HEIGTH = MAIN_HEIGTH - MENU_HEIGTH;
@@ -112,8 +116,13 @@ public class ViewConstants {
 
 		// AttachmentsForArticleView
 		ATTACH_HEIGTH = MAIN_HEIGTH / 2;
-		
+
 		// ArticleLinkView
 		ARTLINK_HEIGTH = MAIN_HEIGTH / 2;
+
+		// CSSPlainView
+		CSSPLAIN_WIDTH = MAIN_WIDTH / 3 * 2;
+		CSSPLAIN_HEIGTH = MAIN_HEIGTH / 3 * 2;
+
 	}
 }

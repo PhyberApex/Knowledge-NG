@@ -42,10 +42,7 @@ public class ReleaseNote {
 			+ "<h3>ToDos:</h3>\n"
 			+ "<ul>\n"
 			+ "<li>Exportfunktion die Wissensdatenbank in HTML exportieren.</li>\n"
-			+ "<li>Suchfunktion</li>\n"
-			+ "<li>Links klickbar machen</li>\n"
-			+ "<li>Links auf Dateien speicherbar machen<-Files werden in die Datenbank gespeichert! Mit einem Klick soll ein Speichern Dialog aufpoppen! Link auf einen anderen Artikel->Dieser wird ge�ffnet</li>\n"
-			+ "</ul>" + "</body>\n\n";
+			+ "<li><b>CSS Editor</b></li>\n" + "</ul>" + "</body>\n\n";
 
 	public static final String getReleaseNote() {
 		return note;

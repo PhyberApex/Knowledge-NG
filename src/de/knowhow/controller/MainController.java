@@ -34,6 +34,7 @@ public class MainController {
 	private TopicListController tcl;
 	private TreeController treeC;
 	private AttachmentListController attL;
+	private CSSController csc;
 	private MainView mv;
 	private MenuView menuV;
 	private Config config;
@@ -62,6 +63,8 @@ public class MainController {
 		mv = new MainView(this);
 		menuV = new MenuView(this);
 		mv.add(menuV);
+		splash.next();
+		this.csc = new CSSController(this.db, this);
 		splash.next();
 		this.attL = new AttachmentListController(this.db, this);
 		splash.next();
@@ -336,6 +339,15 @@ public class MainController {
 			tcl.setCurrTopic_ID_FK(topicID);
 		} catch (DatabaseException e) {
 			error(e);
+		}
+	}
+
+	public void editCSS(String string) {
+		if (string.equals("plain")){
+			csc.getPlainView().setVisible(true);
+		}
+		else if(string.equals("assist")){
+			//TODO
 		}
 	}
 }

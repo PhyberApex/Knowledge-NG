@@ -5,8 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
-
-import org.apache.log4j.Logger;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.db.DAO;
 
@@ -15,7 +13,6 @@ public class AttachmentList extends Observable {
 	private ArrayList<Attachment> attachments;
 	private ArrayList<Attachment> currAttachments;
 	private DAO db;
-	private static Logger logger = Logger.getRootLogger();
 
 	public AttachmentList(DAO db) {
 		this.db = db;
@@ -46,7 +43,6 @@ public class AttachmentList extends Observable {
 			}
 			rs.close();
 		} catch (SQLException e) {
-			logger.error("Fehler im SQL-Syntax: " + e.getMessage());
 		}
 	}
 

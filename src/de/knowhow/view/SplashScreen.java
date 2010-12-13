@@ -50,6 +50,7 @@ public class SplashScreen extends JFrame {
 		this.add(this.bar);
 		this.bar.add(this.label);
 		this.states = new ArrayList<String>();
+		this.states.add("splash.loadCSS");
 		this.states.add("splash.loadAttachment");
 		this.states.add("splash.loadArt");
 		this.states.add("splash.loadTopic");

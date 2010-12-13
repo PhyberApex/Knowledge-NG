@@ -26,6 +26,9 @@ public class MenuView extends JMenuBar {
 	private MenuItem renameArticle;
 	private MenuItem deleteArticle;
 	private MenuItem subtopic;
+	private Menu css;
+	private MenuItem plainCSS;
+	private MenuItem assistCSS;
 	private MenuItem renameTopic;
 	private MenuItem deleteTopic;
 	private MenuItem insertCode;
@@ -41,7 +44,7 @@ public class MenuView extends JMenuBar {
 	private Menu database;
 	private RadioButtonMenuItem sqlite;
 	private RadioButtonMenuItem mysql;
-	
+
 	private Menu help;
 	private MenuItem about;
 
@@ -154,6 +157,19 @@ public class MenuView extends JMenuBar {
 			}
 		});
 		edit.add(subtopic);
+		edit.addSeparator();
+		css = new Menu(Constants.getText("menu.edit.css"));
+		plainCSS = new MenuItem(Constants.getText("menu.edit.css.plain"));
+		plainCSS.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				mc.editCSS("plain");
+			}
+		});
+		css.add(plainCSS);
+		assistCSS = new MenuItem(Constants.getText("menu.edit.css.assist"));
+		assistCSS.setEnabled(false);
+		css.add(assistCSS);
+		edit.add(css);
 		edit.addSeparator();
 		insertCode = new MenuItem(Constants.getText("menu.edit.insertCode"));
 		insertCode.addActionListener(new java.awt.event.ActionListener() {
@@ -297,7 +313,8 @@ public class MenuView extends JMenuBar {
 		this.about = new MenuItem(Constants.getText("menu.help.about"));
 		this.about.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				mc.about();;
+				mc.about();
+				;
 			}
 		});
 		this.help.add(about);

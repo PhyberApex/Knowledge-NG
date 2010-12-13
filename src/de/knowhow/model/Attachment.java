@@ -2,7 +2,6 @@ package de.knowhow.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.apache.log4j.Logger;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.db.DAO;
 
@@ -14,7 +13,6 @@ public class Attachment {
 	private byte[] binary;
 	private DAO db;
 	private int article_ID_FK;
-	private Logger logger = Logger.getRootLogger();
 
 	public Attachment(DAO db, int attachment_ID, String name,
 			int article_ID_FK, boolean image) {
@@ -44,7 +42,6 @@ public class Attachment {
 		} catch (DatabaseException e) {
 			throw e;
 		} catch (SQLException e) {
-			logger.error("Fehler im SQL-Syntax: " + e.getMessage());
 		}
 	}
 
@@ -101,7 +98,6 @@ public class Attachment {
 		} catch (DatabaseException e) {
 			throw e;
 		} catch (SQLException e) {
-			logger.error("Fehler im SQL-Syntax: " + e.getMessage());
 		}
 		return nextID;
 	}
@@ -118,7 +114,6 @@ public class Attachment {
 		} catch (DatabaseException e) {
 			throw e;
 		} catch (SQLException e) {
-			logger.error("Fehler im SQL-Syntax: " + e.getMessage());
 		}
 	}
 }
