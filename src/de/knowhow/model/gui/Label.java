@@ -1,7 +1,6 @@
 package de.knowhow.model.gui;
 
 import java.awt.Font;
-
 import javax.swing.JLabel;
 
 public class Label extends JLabel {

@@ -16,6 +16,7 @@ import de.knowhow.model.gui.Textfield;
 
 public class MainView extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private MainController mc;
 	private JButton bt_render;
 	private JButton bt_plain;

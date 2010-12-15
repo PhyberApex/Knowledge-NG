@@ -4,9 +4,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.Observable;
 import java.util.Observer;
-
 import javax.swing.JFrame;
-
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.ArticleListController;
@@ -18,6 +16,7 @@ import de.knowhow.model.gui.Textfield;
 
 public class ArticleRenameView extends JFrame implements Observer {
 
+	private static final long serialVersionUID = 1L;
 	private ArticleListController acl;
 	private Label lbname;
 	private Textfield tfname;
@@ -79,8 +78,9 @@ public class ArticleRenameView extends JFrame implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		if (((ArticleList) arg0).getCurrArticle() != null){
-			this.tfname.setText(((ArticleList) arg0).getCurrArticle().getName());			
+		if (((ArticleList) arg0).getCurrArticle() != null) {
+			this.tfname
+					.setText(((ArticleList) arg0).getCurrArticle().getName());
 		}
 	}
 

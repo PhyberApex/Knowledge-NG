@@ -3,9 +3,7 @@ package de.knowhow.view;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
@@ -15,6 +13,7 @@ import de.knowhow.base.ViewConstants;
 
 public class SplashScreen extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JProgressBar bar;
 	private JLabel label;
 	private ArrayList<String> states;
@@ -41,7 +40,7 @@ public class SplashScreen extends JFrame {
 		this.bar = new JProgressBar();
 		this.bar.setSize(250, 25);
 		this.bar.setLocation((ViewConstants.SPLASH_WIDTH / 2)
-				- (this.bar.getWidth() / 2)+1, 60);
+				- (this.bar.getWidth() / 2) + 1, 60);
 		this.bar.setValue(0);
 		this.label = new JLabel(Constants.getText("splash.init"));
 		this.label.setSize(250, 25);

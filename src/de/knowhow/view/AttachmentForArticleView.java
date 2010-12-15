@@ -7,9 +7,6 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
-
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.AttachmentListController;
@@ -21,6 +18,7 @@ import de.knowhow.model.gui.TableModel;
 
 public class AttachmentForArticleView extends JFrame implements Observer {
 
+	private static final long serialVersionUID = 1L;
 	private AttachmentListController attL;
 	private Table tbAttachmentsFile;
 	private Table tbAttachmentsImage;

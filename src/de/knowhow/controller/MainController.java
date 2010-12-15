@@ -4,28 +4,22 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Observer;
-
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.plaf.FileChooserUI;
-
 import de.knowhow.base.Config;
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.Search;
-import de.knowhow.model.Topic;
 import de.knowhow.model.db.DAO;
 import de.knowhow.model.db.DAO_MYSQL;
 import de.knowhow.model.db.DAO_SQLite;
-import de.knowhow.model.gui.HTMLEditor;
 import de.knowhow.view.AboutView;
 import de.knowhow.view.MainView;
 import de.knowhow.view.MenuView;
 import de.knowhow.view.SearchView;
 import de.knowhow.view.SplashScreen;
 import de.knowhow.view.SubtopicView;
-import de.knowhow.view.TopicChooseView;
 
 public class MainController {
 
@@ -68,7 +62,7 @@ public class MainController {
 		splash.next();
 		this.attL = new AttachmentListController(this.db, this);
 		splash.next();
-		this.acl = new ArticleListController(this.db, this, attL);
+		this.acl = new ArticleListController(this.db, this, attL, csc);
 		splash.next();
 		this.tcl = new TopicListController(this.db, this);
 		this.treeC = new TreeController(acl, tcl);
@@ -90,6 +84,7 @@ public class MainController {
 	}
 
 	public static void main(String[] args) {
+		@SuppressWarnings("unused")
 		MainController mc = new MainController();
 	}
 
@@ -319,6 +314,7 @@ public class MainController {
 	public void search(String text) {
 		SearchView sV = new SearchView(Search.getArticles(text, acl
 				.getArticles()), this);
+		sV.setVisible(true);
 	}
 
 	public void about() {
@@ -332,6 +328,7 @@ public class MainController {
 
 	public void subTopic() {
 		SubtopicView sub = new SubtopicView(this, this.tcl);
+		sub.setVisible(true);
 	}
 
 	public void setSubtopicByID(int topicID) {
@@ -343,11 +340,10 @@ public class MainController {
 	}
 
 	public void editCSS(String string) {
-		if (string.equals("plain")){
+		if (string.equals("plain")) {
 			csc.getPlainView().setVisible(true);
-		}
-		else if(string.equals("assist")){
-			//TODO
+		} else if (string.equals("assist")) {
+			// TODO
 		}
 	}
 }

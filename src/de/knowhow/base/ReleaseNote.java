@@ -13,8 +13,9 @@ public class ReleaseNote {
 			+ "<li>Organize all your knowhow in topics and articles</li>\n"
 			+ "<li>The articles are saved in simple HTML</li>\n"
 			+ "<li>If you have not used this programm before a default databse will be created named as \"knowledge.db\"</li>\n"
-			+ "<li>Look of the article will can be defined via the style.css css-file</li>\n"
+			+ "<li>Look of the article is made via CSS, which is editable under \"Edit\"</li>\n"
 			+ "<li>Saving is made in a sqlite database</li>\n"
+			+ "<li>You can attach binary files to your articles, and images wich will be shown in the HTML-View</li>\n"
 			+ "<li>You can create new databases</li>\n"
 			+ "<li>Following data can be saved:<ul>\n"
 			+ "<li>Topics:<ul>\n"
@@ -37,12 +38,12 @@ public class ReleaseNote {
 			+ "</ul>\n"
 			+ "<h3>Known Bugs:</h3>\n"
 			+ "<ul>\n"
-			+ "<li>None up till now</li>\n"
+			+ "<li>None - untill now</li>\n"
 			+ "</ul>\n"
-			+ "<h3>ToDos:</h3>\n"
+			+ "<h3>Planned Features:</h3>\n"
 			+ "<ul>\n"
-			+ "<li>Exportfunktion die Wissensdatenbank in HTML exportieren.</li>\n"
-			+ "<li><b>CSS Editor</b></li>\n" + "</ul>" + "</body>\n\n";
+			+ "<li>Exportfunktionality to export Database to HTML files.</li>\n"
+			+ "<li>Assisted CSS Editor</li>\n" + "</ul>\n" + "</body>";
 
 	public static final String getReleaseNote() {
 		return note;

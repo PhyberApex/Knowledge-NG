@@ -2,24 +2,19 @@ package de.knowhow.view;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.util.ArrayList;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.MainController;
 import de.knowhow.controller.TopicListController;
-import de.knowhow.model.Article;
 import de.knowhow.model.Topic;
 import de.knowhow.model.gui.Button;
 import de.knowhow.model.gui.ComboBox;
-import de.knowhow.model.gui.Table;
 
 public class SubtopicView extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private ComboBox cbTopic;
 	private Button btConfirm;
 	private Button btCancel;

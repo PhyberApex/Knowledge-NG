@@ -4,15 +4,11 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.Observable;
 import java.util.Observer;
-
 import javax.swing.JFrame;
-
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
-import de.knowhow.controller.ArticleListController;
 import de.knowhow.controller.TopicListController;
 import de.knowhow.exception.DatabaseException;
-import de.knowhow.model.ArticleList;
 import de.knowhow.model.TopicList;
 import de.knowhow.model.gui.Button;
 import de.knowhow.model.gui.Label;
@@ -20,6 +16,7 @@ import de.knowhow.model.gui.Textfield;
 
 public class TopicRenameView extends JFrame implements Observer {
 
+	private static final long serialVersionUID = 1L;
 	private TopicListController tcl;
 	private Label lbname;
 	private Textfield tfname;

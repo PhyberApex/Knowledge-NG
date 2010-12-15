@@ -15,6 +15,7 @@ import de.knowhow.model.gui.TableModel;
 
 public class SearchView extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JScrollPane spSearch;
 	private Table tbSearch;
 	private Button btOpen;
@@ -58,7 +59,7 @@ public class SearchView extends JFrame {
 				+ this.spSearch.getHeight() + 10);
 		this.btOpen.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				mc.setCurrArtByID((Integer)(tbSearch.getValueAt(tbSearch
+				mc.setCurrArtByID((Integer) (tbSearch.getValueAt(tbSearch
 						.getSelectedRow(), 0)));
 				dispose();
 			}

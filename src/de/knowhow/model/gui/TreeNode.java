@@ -2,9 +2,11 @@ package de.knowhow.model.gui;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
-public class TreeNode extends DefaultMutableTreeNode{
+public class TreeNode extends DefaultMutableTreeNode {
 
-	public TreeNode(Object o){
+	private static final long serialVersionUID = 1L;
+
+	public TreeNode(Object o) {
 		super(o);
 	}
 }

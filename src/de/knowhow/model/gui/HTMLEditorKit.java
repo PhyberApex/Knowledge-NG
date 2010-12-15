@@ -8,6 +8,8 @@ import javax.swing.text.html.HTML;
 
 public class HTMLEditorKit extends javax.swing.text.html.HTMLEditorKit {
 
+	private static final long serialVersionUID = 1L;
+
 	public ViewFactory getViewFactory() {
 		return new HTMLFactoryX();
 	}

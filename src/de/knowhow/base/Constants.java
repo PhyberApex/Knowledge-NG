@@ -12,7 +12,8 @@ public class Constants {
 	private static String host;
 	private static String user;
 	private static String password;
-	private static ResourceBundle lang = ResourceBundle.getBundle("de.knowhow.resource.knowledge");
+	private static ResourceBundle lang = ResourceBundle
+			.getBundle("de.knowhow.resource.knowledge");
 
 	public static String getAppName() {
 		return APP_NAME;
@@ -29,12 +30,16 @@ public class Constants {
 	public static void setDBName(String newDB) {
 		db_name = newDB;
 	}
-	public static String getText(String key){
+
+	public static String getText(String key) {
 		return lang.getString(key);
 	}
-	public static void setLanguage(Locale locale){
-		lang = ResourceBundle.getBundle("de.knowhow.resource.knowledge", locale);
+
+	public static void setLanguage(Locale locale) {
+		lang = ResourceBundle
+				.getBundle("de.knowhow.resource.knowledge", locale);
 	}
+
 	public static String getHost() {
 		return host;
 	}
@@ -72,7 +77,8 @@ public class Constants {
 		}
 		return day + "." + month + "." + year;
 	}
-	public static ResourceBundle getBundle(){
+
+	public static ResourceBundle getBundle() {
 		return lang;
 	}
 }

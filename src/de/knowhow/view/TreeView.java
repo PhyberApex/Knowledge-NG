@@ -17,6 +17,7 @@ import de.knowhow.model.gui.Tree;
 
 public class TreeView extends JPanel implements Observer, TreeSelectionListener {
 
+	private static final long serialVersionUID = 1L;
 	private Tree tree;
 	private JScrollPane treeScrollPane;
 	private TreeController treeC;
@@ -54,7 +55,9 @@ public class TreeView extends JPanel implements Observer, TreeSelectionListener 
 				treeScrollPane.setViewportView(tree);
 			}
 		} else if (arg0.getClass() == TopicList.class) {
-			if (arg1 != null && (arg1.equals("new") || arg1.equals("delete") || arg1.equals("sub"))) {
+			if (arg1 != null
+					&& (arg1.equals("new") || arg1.equals("delete") || arg1
+							.equals("sub"))) {
 				this.tree.removeTreeSelectionListener(this);
 				this.tree = new Tree(treeC.getRootNode());
 				tree.addTreeSelectionListener(this);

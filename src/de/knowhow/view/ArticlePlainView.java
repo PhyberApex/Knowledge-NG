@@ -5,20 +5,17 @@ import java.util.Observer;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import de.knowhow.base.Constants;
 import de.knowhow.base.ReleaseNote;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.ArticleListController;
-import de.knowhow.controller.TopicListController;
 import de.knowhow.model.ArticleList;
-import de.knowhow.model.gui.Button;
-import de.knowhow.model.gui.ComboBox;
-import de.knowhow.model.gui.Label;
 
 public class ArticlePlainView extends JPanel implements Observer {
 
+	private static final long serialVersionUID = 1L;
 	private JScrollPane contentScrollPane;
 	private JTextArea ta_content;
+	@SuppressWarnings("unused")
 	private ArticleListController acl;
 
 	public ArticlePlainView(ArticleListController acl) {

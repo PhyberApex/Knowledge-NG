@@ -20,12 +20,11 @@ public class TopicListController {
 	public TopicListController(DAO db, MainController mc) {
 		this.db = db;
 		this.mc = mc;
-		tl = new TopicList(db);
+		tl = new TopicList(this.db);
 		try {
 			tl.load();
 		} catch (DatabaseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			mc.error(e);
 		}
 		this.tcv = new TopicChooseView(this);
 		this.tcv.setVisible(false);

@@ -2,10 +2,8 @@ package de.knowhow.view;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
-
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.model.gui.Button;
@@ -13,6 +11,7 @@ import de.knowhow.model.gui.Label;
 
 public class AboutView extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private Label lbAbout;
 	private Button btClose;
 

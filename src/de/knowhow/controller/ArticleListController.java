@@ -2,7 +2,6 @@ package de.knowhow.controller;
 
 import java.util.ArrayList;
 import java.util.Observer;
-
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.Article;
 import de.knowhow.model.ArticleList;
@@ -11,7 +10,6 @@ import de.knowhow.view.ArticleLinkView;
 import de.knowhow.view.ArticlePlainView;
 import de.knowhow.view.ArticleRenameView;
 import de.knowhow.view.ArticleRenderView;
-import de.knowhow.view.TreeView;
 
 public class ArticleListController {
 
@@ -23,20 +21,21 @@ public class ArticleListController {
 	private ArticleRenameView artRename;
 	private AttachmentListController attachcl;
 	private ArticleLinkView artLink;
+	private CSSController csc;
 
 	public ArticleListController(DAO db, MainController mc,
-			AttachmentListController attachcl) {
+			AttachmentListController attachcl, CSSController csc) {
 		this.db = db;
 		this.mc = mc;
 		this.attachcl = attachcl;
-		al = new ArticleList(db);
+		this.csc = csc;
+		al = new ArticleList(this.db);
 		try {
 			al.load();
 		} catch (DatabaseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			mc.error(e);
 		}
-		renderView = new ArticleRenderView(this, attachcl);
+		renderView = new ArticleRenderView(this, this.attachcl, this.csc);
 		renderView.setVisible(true);
 		plainView = new ArticlePlainView(this);
 		plainView.setVisible(false);

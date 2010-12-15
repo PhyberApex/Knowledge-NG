@@ -4,20 +4,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.ResourceBundle;
-
 import de.knowhow.base.Constants;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.ArticleList;
 import de.knowhow.model.Attachment;
 import de.knowhow.model.AttachmentList;
 import de.knowhow.model.db.DAO;
-import de.knowhow.view.ArticlePlainView;
 import de.knowhow.view.AttachmentForArticleView;
 
 public class AttachmentListController implements Observer {
@@ -60,10 +56,8 @@ public class AttachmentListController implements Observer {
 			fos.write(attach.getBinary());
 			fos.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -75,17 +69,14 @@ public class AttachmentListController implements Observer {
 			if (attachments.get(i).isImage()) {
 				Attachment attach = attachments.get(i);
 				attach.loadBin();
-				File tmp = new File("tmp/"
-						+ attach.getAttachment_ID());
+				File tmp = new File("tmp/" + attach.getAttachment_ID());
 				try {
 					FileOutputStream fos = new FileOutputStream(tmp);
 					fos.write(attach.getBinary());
 					fos.close();
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

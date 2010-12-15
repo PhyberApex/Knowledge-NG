@@ -2,10 +2,8 @@ package de.knowhow.view;
 
 import java.util.Observable;
 import java.util.Observer;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
-
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.TopicListController;
@@ -18,6 +16,7 @@ import de.knowhow.model.gui.ComboBox;
 
 public class TopicChooseView extends JPanel implements Observer {
 
+	private static final long serialVersionUID = 1L;
 	private Button confirmButton;
 	private ComboBox topicBox;
 	private Button cancelButton;

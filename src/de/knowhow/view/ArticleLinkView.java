@@ -12,14 +12,13 @@ import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.ArticleListController;
 import de.knowhow.model.Article;
 import de.knowhow.model.ArticleList;
-import de.knowhow.model.Attachment;
-import de.knowhow.model.AttachmentList;
 import de.knowhow.model.gui.Button;
 import de.knowhow.model.gui.Table;
 import de.knowhow.model.gui.TableModel;
 
 public class ArticleLinkView extends JFrame implements Observer {
 
+	private static final long serialVersionUID = 1L;
 	private ArticleListController acl;
 	private JScrollPane spArticles;
 	private Table tbArticles;

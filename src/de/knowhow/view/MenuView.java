@@ -12,6 +12,7 @@ import de.knowhow.model.gui.RadioButtonMenuItem;
 
 public class MenuView extends JMenuBar {
 
+	private static final long serialVersionUID = 1L;
 	private JMenu file;
 	private MenuItem newArticle;
 	private MenuItem newTopic;

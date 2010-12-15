@@ -1,9 +1,7 @@
 package de.knowhow.controller;
 
 import java.util.ArrayList;
-
 import javax.swing.tree.DefaultMutableTreeNode;
-
 import de.knowhow.model.Article;
 import de.knowhow.model.Topic;
 import de.knowhow.model.gui.TreeNode;
