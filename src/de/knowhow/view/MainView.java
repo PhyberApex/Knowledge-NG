@@ -28,6 +28,7 @@ public class MainView extends JFrame {
 		this.mc = mc;
 		this.setLayout(null);
 		this.setVisible(false);
+		this.setResizable(false);
 		init();
 		this.addWindowListener(new WindowAdapter() {
 			@Override

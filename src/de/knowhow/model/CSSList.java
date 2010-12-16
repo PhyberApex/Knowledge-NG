@@ -4,8 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
-
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.db.DAO;
 
@@ -96,13 +96,14 @@ public class CSSList extends Observable {
 	}
 
 	public void setAll(HashMap<String, String> rules2) throws DatabaseException {
-		for (int i = 0; i < this.rules.size(); i++){
+		for (int i = 0; i < this.rules.size(); i++) {
 			this.rules.get(i).delete();
 		}
 		this.rules.clear();
-		//Schleife alle elemente der HashMap
-		Just an Error
-		this.rules.add(new CSS(this.db, 0, ""/*TAG aus der HashMap*/, ""/*Rule aus der HashMap*/, true));
-		//Ende Schleife
+		for (Map.Entry<String, String> e : rules2.entrySet()) {
+			this.rules.add(new CSS(this.db, 0, e.getKey(), e.getValue(), true));
+		}
+		notifyObservers();
+		setChanged();
 	}
 }

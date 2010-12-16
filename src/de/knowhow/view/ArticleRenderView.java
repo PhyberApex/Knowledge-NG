@@ -51,6 +51,7 @@ public class ArticleRenderView extends JPanel implements Observer {
 		kit.getActions();
 		Document doc = kit.createDefaultDocument();
 		this.htmlEdit_content.setDocument(doc);
+		this.htmlEdit_content.setText(ReleaseNote.getReleaseNote());
 		this.contentScrollPane.setLocation(5, 0);
 		this.contentScrollPane.setSize(ViewConstants.ARTRENDER_WIDTH - 10,
 				ViewConstants.ARTRENDER_HEIGTH - 40);

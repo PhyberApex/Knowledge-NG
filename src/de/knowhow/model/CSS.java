@@ -21,7 +21,7 @@ public class CSS {
 		if (insert) {
 			try {
 				this.db
-						.prepareStatement("INSERT INTO css (tag, rule,) values(?, ?);");
+						.prepareStatement("INSERT INTO css (tag, rule) values(?, ?);");
 				this.db.getStatement().setString(1, tag);
 				this.db.getStatement().setString(2, rule);
 				this.db.executeBatch();

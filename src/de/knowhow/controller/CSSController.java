@@ -69,6 +69,9 @@ public class CSSController {
 	}
 
 	private void saveRules(HashMap<String, String> rules) {
+		if (rules == null) {
+			return;
+		}
 		try {
 			cssl.setAll(rules);
 		} catch (DatabaseException e) {
@@ -79,19 +82,26 @@ public class CSSController {
 	private HashMap<String, String> convertFromPlain(String text) {
 		HashMap<String, String> output = new HashMap<String, String>();
 		boolean eof = false;
-		text.replaceAll("\n", "");
-		text.replace("\n", "");
-		text.replaceAll("\t", "");
+		text = text.replaceAll("\n", "");
+		text = text.replaceAll("\t", "");
 		while (!eof) {
 			text = text.trim();
 			if (text.equals("")) {
 				eof = true;
 			} else {
-				String tag = text.substring(0, text.indexOf("{")).trim();
-				text = text.substring(text.indexOf("{") + 1);
-				String rules = text.substring(0, text.indexOf("}") - 1).trim();
-				text = text.substring(text.indexOf("}") + 1);
-				output.put(tag, rules);
+				try {
+					String tag = text.substring(0, text.indexOf("{")).trim();
+					text = text.substring(text.indexOf("{") + 1);
+					String rules = text.substring(0, text.indexOf("}") - 1)
+							.trim();
+					text = text.substring(text.indexOf("}") + 1);
+					output.put(tag, rules);
+				} catch (Exception e) {
+					mc.error(new DatabaseException("css"));
+
+					eof = true;
+					return null;
+				}
 			}
 		}
 		return output;
