@@ -87,7 +87,7 @@ public abstract class DAO {
 				state
 						.executeQuery("SELECT name, topic_ID, topic_id_fk FROM topic;");
 				state
-						.executeQuery("SELECT attachment_ID, name, article_ID_FK, binary, image FROM attachment;");
+						.executeQuery("SELECT attachment_ID, name, article_ID_FK, bin, image FROM attachment;");
 				state
 						.executeQuery("SELECT css_ID, tag, rule FROM css;");
 			} catch (SQLException e) {
