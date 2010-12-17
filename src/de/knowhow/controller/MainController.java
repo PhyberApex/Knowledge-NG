@@ -1,6 +1,7 @@
 package de.knowhow.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -347,7 +348,7 @@ public class MainController {
 		if (string.equals("plain")) {
 			csc.getPlainView().setVisible(true);
 		} else if (string.equals("assist")) {
-			// TODO
+			// TODO assisted CSSEditor
 		}
 	}
 
@@ -355,61 +356,99 @@ public class MainController {
 		if (action.equals("HTML")) {
 			JFileChooser fcExport = new JFileChooser();
 			fcExport.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			int returnVal = fcExport.showOpenDialog(mv);
+			int returnVal = fcExport.showSaveDialog(mv);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fcExport.getSelectedFile();
-				exportHTML(file.getAbsolutePath(), 0);
+				try {
+					exportHTML(file.getAbsolutePath());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		// TODO other export types
 	}
 
-	private void exportHTML(String absolutePath, int ID) {
+	private void exportHTML(String absolutePath) throws IOException {
+		absolutePath = absolutePath + "/" + Constants.getDBName();
+		new File(absolutePath).mkdir();
+		new File(absolutePath + "/articles").mkdir();
+		new File(absolutePath + "/attachments").mkdir();
+		String stylesheet = csc.getStyleSheet();
+		FileOutputStream stylesheetOut = new FileOutputStream(absolutePath
+				+ "/style.css");
+		for (int i = 0; i < stylesheet.length(); i++) {
+			stylesheetOut.write((byte) stylesheet.charAt(i));
+		}
+		stylesheetOut.close();
+		String html = "<html>\n<head>\n"
+				+ "<link rel=\"stylesheet\" href=\"style.css\" type=\"text/css\" />\n"
+				+ "<title>" + Constants.getDBName()
+				+ "</title>\n</head>\n<body>\n<h1>" + Constants.getDBName()
+				+ "</h1>\n<ul>";
+		html = appendHTMLBody(html, 0);
+		html += "\n</ul></body>\n</html>";
+		File index = new File(absolutePath + "/index.html");
+		index.createNewFile();
+		FileOutputStream fileOut = new FileOutputStream(index);
+		for (int i = 0; i < html.length(); i++) {
+			fileOut.write((byte) html.charAt(i));
+		}
+		fileOut.close();
+		ArrayList<Article> al = acl.getArticles();
+		for (int i = 0; i < al.size(); i++) {
+			String content = al.get(i).getContent();
+			content = content.replaceAll("<img src=\"tmp/",
+					"<img src=\"../attachments/");
+			content = content.replaceAll("<a href=\"attachment://",
+					"<a href=\"../attachments/");
+			content = content.replaceAll("<a href=\"article://",
+					"<a href=\"../articles/");
+			FileOutputStream writeStream = new FileOutputStream(absolutePath
+					+ "/articles/" + al.get(i).getArticle_ID() + "");
+			for (int j = 0; j < content.length(); j++) {
+				writeStream.write((byte) content.charAt(j));
+			}
+			writeStream.close();
+		}
+		ArrayList<Attachment> attl = attL.getAttachments();
+		for (int i = 0; i < attl.size(); i++) {
+			try {
+				attl.get(i).loadBin();
+			} catch (DatabaseException e) {
+				error(e);
+			}
+			FileOutputStream writeStream = new FileOutputStream(absolutePath
+					+ "/attachments/"
+					+ attl.get(i).getAttachment_ID()
+					+ attl.get(i).getName().substring(
+							attl.get(i).getName().length()));
+			for (int j = 0; j < attl.get(i).getBinary().length; j++) {
+				writeStream.write(attl.get(i).getBinary()[j]);
+			}
+			writeStream.close();
+		}
+	}
+
+	private String appendHTMLBody(String html, int iD) {
 		ArrayList<Topic> tl = tcl.getTopics();
 		ArrayList<Article> al = acl.getArticles();
-		ArrayList<Attachment> attl = attL.getAttachments();
 		for (int i = 0; i < tl.size(); i++) {
-			if (tl.get(i).getTopic_ID_FK() == ID) {
-				String relativeTopicPath = String.valueOf(tl.get(i)
-						.getTopic_ID());
-				absolutePath += "/" + relativeTopicPath;
-				new File(absolutePath).mkdir();
-				exportHTML(absolutePath, tl.get(i).getTopic_ID());
+			if (tl.get(i).getTopic_ID_FK() == iD) {
+				html += "\n<li><ul>" + tl.get(i).getName();
+				html = appendHTMLBody(html, tl.get(i).getTopic_ID());
 				for (int j = 0; j < al.size(); j++) {
 					if (al.get(j).getTopic_ID_FK() == tl.get(i).getTopic_ID()) {
-						String relativeArticlePath = String.valueOf(al.get(j)
-								.getArticle_ID());
-						absolutePath += "/" + relativeArticlePath;
-						try {
-							new File(absolutePath).createNewFile();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						for (int k = 0; k < attl.size(); k++) {
-							if (attl.get(k).getArticle_ID_FK() == al.get(j)
-									.getArticle_ID()) {
-								String relativeAttachPath = "/attach";
-								absolutePath += relativeAttachPath;
-								new File(absolutePath).mkdir();
-								absolutePath = absolutePath.substring(0,
-										absolutePath.length()
-												- relativeAttachPath.length());
-							}
-						}
-						absolutePath = absolutePath.substring(0, absolutePath
-								.length()
-								- relativeArticlePath.length());
+						html += "\n<li><a href=\"articles/"
+								+ al.get(j).getArticle_ID() + "\">"
+								+ al.get(j).getName() + "</a></li>";
 					}
-					absolutePath = absolutePath.substring(0, absolutePath
-							.length()
-							- relativeTopicPath.length());
 				}
+				html += "\n</ul></li>";
 			} else {
 				continue;
 			}
-			/*
-			 * if (!addNode.isLeaf()) { }
-			 */
 		}
+		return html;
 	}
 }
