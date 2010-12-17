@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 public class Constants {
 
 	private static final String APP_NAME = "Knowledge-NG";
-	private static final String APP_VERSION = "1.0";
+	private static final String APP_VERSION = "1.2";
 	private static String db_name;
 	private static String host;
 	private static String user;

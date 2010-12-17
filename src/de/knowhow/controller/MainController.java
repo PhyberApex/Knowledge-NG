@@ -2,6 +2,7 @@ package de.knowhow.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Observer;
 import javax.swing.JFileChooser;
@@ -10,7 +11,10 @@ import de.knowhow.base.Config;
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.exception.DatabaseException;
+import de.knowhow.model.Article;
+import de.knowhow.model.Attachment;
 import de.knowhow.model.Search;
+import de.knowhow.model.Topic;
 import de.knowhow.model.db.DAO;
 import de.knowhow.model.db.DAO_MYSQL;
 import de.knowhow.model.db.DAO_SQLite;
@@ -344,6 +348,68 @@ public class MainController {
 			csc.getPlainView().setVisible(true);
 		} else if (string.equals("assist")) {
 			// TODO
+		}
+	}
+
+	public void export(String action) {
+		if (action.equals("HTML")) {
+			JFileChooser fcExport = new JFileChooser();
+			fcExport.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			int returnVal = fcExport.showOpenDialog(mv);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = fcExport.getSelectedFile();
+				exportHTML(file.getAbsolutePath(), 0);
+			}
+		}
+		// TODO other export types
+	}
+
+	private void exportHTML(String absolutePath, int ID) {
+		ArrayList<Topic> tl = tcl.getTopics();
+		ArrayList<Article> al = acl.getArticles();
+		ArrayList<Attachment> attl = attL.getAttachments();
+		for (int i = 0; i < tl.size(); i++) {
+			if (tl.get(i).getTopic_ID_FK() == ID) {
+				String relativeTopicPath = String.valueOf(tl.get(i)
+						.getTopic_ID());
+				absolutePath += "/" + relativeTopicPath;
+				new File(absolutePath).mkdir();
+				exportHTML(absolutePath, tl.get(i).getTopic_ID());
+				for (int j = 0; j < al.size(); j++) {
+					if (al.get(j).getTopic_ID_FK() == tl.get(i).getTopic_ID()) {
+						String relativeArticlePath = String.valueOf(al.get(j)
+								.getArticle_ID());
+						absolutePath += "/" + relativeArticlePath;
+						try {
+							new File(absolutePath).createNewFile();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						for (int k = 0; k < attl.size(); k++) {
+							if (attl.get(k).getArticle_ID_FK() == al.get(j)
+									.getArticle_ID()) {
+								String relativeAttachPath = "/attach";
+								absolutePath += relativeAttachPath;
+								new File(absolutePath).mkdir();
+								absolutePath = absolutePath.substring(0,
+										absolutePath.length()
+												- relativeAttachPath.length());
+							}
+						}
+						absolutePath = absolutePath.substring(0, absolutePath
+								.length()
+								- relativeArticlePath.length());
+					}
+					absolutePath = absolutePath.substring(0, absolutePath
+							.length()
+							- relativeTopicPath.length());
+				}
+			} else {
+				continue;
+			}
+			/*
+			 * if (!addNode.isLeaf()) { }
+			 */
 		}
 	}
 }

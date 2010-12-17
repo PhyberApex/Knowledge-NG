@@ -21,6 +21,8 @@ public class MenuView extends JMenuBar {
 	private MenuItem uploadFile;
 	private MenuItem newDatabase;
 	private MenuItem openDatabase;
+	private Menu export;
+	private MenuItem exportHTML;
 	private MenuItem close;
 
 	private Menu edit;
@@ -106,6 +108,16 @@ public class MenuView extends JMenuBar {
 		upload.add(uploadFile);
 		file.addSeparator();
 		file.add(upload);
+		file.addSeparator();
+		export = new Menu(Constants.getText("menu.file.export"));
+		exportHTML = new MenuItem(Constants.getText("menu.file.export.HTML"));
+		exportHTML.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				mc.export("HTML");
+			}
+		});
+		export.add(exportHTML);
+		file.add(export);
 		file.addSeparator();
 		newDatabase = new MenuItem(Constants.getText("menu.file.newDatabase"));
 		newDatabase.addActionListener(new java.awt.event.ActionListener() {

@@ -124,4 +124,8 @@ public class AttachmentListController implements Observer {
 	public void insertFileLink(int iD) {
 		mc.insertHTMLLink("FILE", iD);
 	}
+
+	public ArrayList<Attachment> getAttachments() {
+		return this.al.getAttachments();
+	}
 }
