@@ -51,8 +51,8 @@ public class ImageView extends View implements ImageObserver, MouseListener,
 			if (isURL()) {
 				URL src = getSourceURL();
 				if (src != null) {
-					Dictionary<?, ?> cache = (Dictionary<?, ?>) getDocument().getProperty(
-							IMAGE_CACHE_PROPERTY);
+					Dictionary<?, ?> cache = (Dictionary<?, ?>) getDocument()
+							.getProperty(IMAGE_CACHE_PROPERTY);
 					if (cache != null)
 						fImage = (Image) cache.get(src);
 					else
@@ -645,8 +645,9 @@ public class ImageView extends View implements ImageObserver, MouseListener,
 		MutableAttributeSet attr = new SimpleAttributeSet();
 		attr.addAttribute(HTML.Attribute.WIDTH, Integer.toString(width));
 		attr.addAttribute(HTML.Attribute.HEIGHT, Integer.toString(height));
-		((StyledDocument) getDocument()).setCharacterAttributes(fElement
-				.getStartOffset(), fElement.getEndOffset(), attr, false);
+		((StyledDocument) getDocument())
+				.setCharacterAttributes(fElement.getStartOffset(),
+						fElement.getEndOffset(), attr, false);
 	}
 
 	// --- Mouse event handling --------------------------------------------
@@ -743,7 +744,7 @@ public class ImageView extends View implements ImageObserver, MouseListener,
 		 * used to load additional classes. Class.getResourceAsStream just
 		 * returns raw bytes, which we can convert to an image.
 		 */
-		InputStream resource = ImageView.class.getResourceAsStream(gifFile);
+		InputStream resource = ClassLoader.getSystemResourceAsStream(gifFile);
 
 		if (resource == null) {
 			System.err.println(ImageView.class.getName() + "/" + gifFile
@@ -771,9 +772,9 @@ public class ImageView extends View implements ImageObserver, MouseListener,
 	private void loadIcons() {
 		try {
 			if (sPendingImageIcon == null)
-				sPendingImageIcon = makeIcon(PENDING_IMAGE_SRC);
+				sPendingImageIcon = makeIcon("de/knowhow/resource/img/pendingImage.png");
 			if (sMissingImageIcon == null)
-				sMissingImageIcon = makeIcon(MISSING_IMAGE_SRC);
+				sMissingImageIcon = makeIcon("de/knowhow/resource/img/missingImage.png");
 		} catch (Exception x) {
 			System.err.println("ImageView: Couldn't load image icons");
 		}
@@ -803,12 +804,7 @@ public class ImageView extends View implements ImageObserver, MouseListener,
 	// --- constants and static stuff --------------------------------
 
 	private static Icon sPendingImageIcon, sMissingImageIcon;
-	private static final String PENDING_IMAGE_SRC = "icons/image-delayed.gif", // both
-																				// stolen
-																				// from
-																				// HotJava
-			MISSING_IMAGE_SRC = "icons/image-failed.gif";
-
+	
 	private static final boolean DEBUG = false;
 
 	// $ move this someplace public
