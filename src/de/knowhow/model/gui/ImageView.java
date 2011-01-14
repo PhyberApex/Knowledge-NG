@@ -48,11 +48,10 @@ public class ImageView extends View implements ImageObserver, MouseListener,
 			fElement = elem;
 
 			// Request image from document's cache:
-			AttributeSet attr = elem.getAttributes();
 			if (isURL()) {
 				URL src = getSourceURL();
 				if (src != null) {
-					Dictionary cache = (Dictionary) getDocument().getProperty(
+					Dictionary<?, ?> cache = (Dictionary<?, ?>) getDocument().getProperty(
 							IMAGE_CACHE_PROPERTY);
 					if (cache != null)
 						fImage = (Image) cache.get(src);
@@ -215,6 +214,7 @@ public class ImageView extends View implements ImageObserver, MouseListener,
 	}
 
 	/** Returns the image's vertical alignment. */
+	@SuppressWarnings("static-access")
 	float getVerticalAlignment() {
 		String align = (String) fElement.getAttributes().getAttribute(
 				HTML.Attribute.ALIGN);
@@ -663,7 +663,6 @@ public class ImageView extends View implements ImageObserver, MouseListener,
 			Point loc = fComponent.getLocationOnScreen();
 			fGrowBase = new Point(loc.x + e.getX() - fWidth, loc.y + e.getY()
 					- fHeight);
-			fGrowProportionally = e.isShiftDown();
 		} else {
 			// Else select image:
 			fGrowBase = null;
@@ -795,7 +794,6 @@ public class ImageView extends View implements ImageObserver, MouseListener,
 	private Rectangle fBounds;
 	private Component fComponent;
 	private Point fGrowBase; // base of drag while growing image
-	private boolean fGrowProportionally; // should grow be proportional?
 	/**
 	 * Set to true, while the receiver is locked, to indicate the reciever is
 	 * loading the image. This is used in imageUpdate.
