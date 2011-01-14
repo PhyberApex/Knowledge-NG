@@ -54,6 +54,9 @@ public class HTMLEditor extends JEditorPane {
 							}
 						}
 					}
+					else if (protocol.equals("http")) {
+						//TODO browser öffnen mit dem link
+					}
 				}
 			}
 		});

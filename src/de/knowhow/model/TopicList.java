@@ -80,7 +80,7 @@ public class TopicList extends Observable {
 		return null;
 	}
 
-	public void newArticle() throws DatabaseException {
+	public void newTopic() throws DatabaseException {
 		Topic topic = new Topic(db);
 		this.topics.add(topic);
 		setCurrTopic(topic);
