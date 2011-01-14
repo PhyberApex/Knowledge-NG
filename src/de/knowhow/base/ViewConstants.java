@@ -13,7 +13,7 @@ public class ViewConstants {
 	// Menu
 	public static int MENU_WIDTH;
 	public static int MENU_HEIGTH = 25;
-	public static int MENU_POS_X = 10;
+	public static int MENU_POS_X = 0;
 	public static int MENU_POS_Y = 0;
 
 	// Render
@@ -70,6 +70,10 @@ public class ViewConstants {
 	public static int CSSPLAIN_WIDTH;
 	public static int CSSPLAIN_HEIGTH;
 
+	// LoadingView
+	public static int LOADINGVIEW_WIDTH;
+	public static int LOADINGVIEW_HEIGTH;
+
 	public static void reload(Config conf) {
 		int res = Integer.parseInt(conf.getProperty("resolution"));
 		switch (res) {
@@ -90,7 +94,7 @@ public class ViewConstants {
 			MAIN_HEIGTH = 480;
 		}
 		// Menu
-		MENU_WIDTH = MAIN_WIDTH - 20/* FrameBuffer */- 50/* ButtonBuffer */- 250 /* SearchBuffer */;
+		MENU_WIDTH = MAIN_WIDTH - 10/* FrameBuffer */- 50/* ButtonBuffer */- 250 /* SearchBuffer */;
 
 		// Tree
 		TREE_HEIGTH = MAIN_HEIGTH - MENU_HEIGTH;
@@ -124,5 +128,8 @@ public class ViewConstants {
 		CSSPLAIN_WIDTH = MAIN_WIDTH / 3 * 2;
 		CSSPLAIN_HEIGTH = MAIN_HEIGTH / 3 * 2;
 
+		// LoadingView
+		LOADINGVIEW_HEIGTH = 60;
+		LOADINGVIEW_WIDTH = MAIN_WIDTH / 3 * 2;
 	}
 }
