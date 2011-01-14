@@ -18,8 +18,14 @@ public class TreeController {
 	public TreeController(ArticleListController acl, TopicListController tcl) {
 		this.acl = acl;
 		this.tcl = tcl;
+	}
+
+	public void loadData() {
 		this.al = this.acl.getArticles();
 		this.tl = this.tcl.getTopics();
+	}
+
+	public void loadGUI() {
 		this.treeV = new TreeView(this);
 		this.tcl.addObserver(this.treeV);
 		this.acl.addObserver(this.treeV);

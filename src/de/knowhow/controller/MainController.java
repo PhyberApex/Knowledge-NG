@@ -1,21 +1,22 @@
 package de.knowhow.controller;
 
+import java.awt.Image;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.net.URL;
 import java.util.Locale;
-import java.util.Observer;
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+
 import de.knowhow.base.Config;
 import de.knowhow.base.Constants;
+import de.knowhow.base.Export;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.exception.DatabaseException;
-import de.knowhow.model.Article;
-import de.knowhow.model.Attachment;
 import de.knowhow.model.Search;
-import de.knowhow.model.Topic;
 import de.knowhow.model.db.DAO;
 import de.knowhow.model.db.DAO_MYSQL;
 import de.knowhow.model.db.DAO_SQLite;
@@ -23,7 +24,7 @@ import de.knowhow.view.AboutView;
 import de.knowhow.view.MainView;
 import de.knowhow.view.MenuView;
 import de.knowhow.view.SearchView;
-import de.knowhow.view.SplashScreen;
+import de.knowhow.view.Splash;
 import de.knowhow.view.SubtopicView;
 
 public class MainController {
@@ -37,13 +38,29 @@ public class MainController {
 	private MainView mv;
 	private MenuView menuV;
 	private Config config;
+	public static Splash splash;
 
 	public MainController() {
-		SplashScreen splash = new SplashScreen();
-		splash.setVisible(true);
+		try {
+		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+		        if ("Nimbus".equals(info.getName())) {
+		            UIManager.setLookAndFeel(info.getClassName());
+		            break;
+		        }
+		    }
+		} catch (Exception e) {
+		    // If Nimbus is not available, you can set the GUI to another look and feel.
+		}
+
 		config = new Config();
 		Constants.setLanguage(new Locale(config.getProperty("lang")));
 		ViewConstants.reload(config);
+		URL url = ClassLoader.getSystemResource("de/knowhow/resource/img/splash.png");
+        Image image = null;
+        if (url != null)
+            try {image = ImageIO.read(url);} catch (IOException ex) {}
+        splash = new Splash( image, Constants.getText("splash.init"));
+		splash.setVisible(true);
 		Constants.setDBName(config.getProperty("defaultdb"));
 		if (config.getProperty("databasetyp").equals("1")) {
 			db = new DAO_SQLite();
@@ -59,38 +76,45 @@ public class MainController {
 			error(e1);
 		}
 		db.checkDB();
-		mv = new MainView(this);
-		menuV = new MenuView(this);
-		mv.add(menuV);
-		splash.next();
 		this.csc = new CSSController(this.db, this);
-		splash.next();
 		this.attL = new AttachmentListController(this.db, this);
-		splash.next();
 		this.acl = new ArticleListController(this.db, this, attL, csc);
-		splash.next();
 		this.tcl = new TopicListController(this.db, this);
 		this.treeC = new TreeController(acl, tcl);
-		this.attL.init();
-		splash.next();
+		splash.showStatus(Constants.getText("splash.loadCSS"),15);
+		this.csc.loadData();
+		splash.showStatus(Constants.getText("splash.loadAttachment"),28);
+		this.attL.loadData();
+		splash.showStatus(Constants.getText("splash.loadArt"),42);
+		this.acl.loadData();
+		splash.showStatus(Constants.getText("splash.loadTopic"),57);
+		this.tcl.loadData();
+		this.treeC.loadData();
+		splash.showStatus(Constants.getText("splash.caching"),71);
 		try {
 			attL.cacheImages();
 		} catch (DatabaseException e) {
 			error(e);
 		}
-		splash.next();
+		splash.showStatus(Constants.getText("splash.paint"),85);
+		this.csc.loadGUI();
+		this.attL.loadGUI();
+		this.acl.loadGUI();
+		this.tcl.loadGUI();
+		this.treeC.loadGUI();
+		mv = new MainView(this);
+		menuV = new MenuView(this);
+		mv.add(menuV);
 		mv.add(acl.getPlainView());
 		mv.add(acl.getRenderView());
 		mv.add(tcl.getTopicChooseView());
 		mv.add(treeC.getTreeView());
-		splash.next();
 		mv.setVisible(true);
-		splash.dispose();
+		splash.close();
 	}
 
 	public static void main(String[] args) {
-		@SuppressWarnings("unused")
-		MainController mc = new MainController();
+		new MainController();
 	}
 
 	public void cancel() {
@@ -243,10 +267,6 @@ public class MainController {
 		}
 	}
 
-	public void addArticleListObserver(Observer obs) {
-		acl.addObserver(obs);
-	}
-
 	public void upload(boolean image) {
 		JFileChooser fcUpload = new JFileChooser();
 		fcUpload.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -323,8 +343,7 @@ public class MainController {
 	}
 
 	public void about() {
-		@SuppressWarnings("unused")
-		AboutView about = new AboutView();
+		new AboutView();
 	}
 
 	public void setCurrArtByID(int iD) {
@@ -353,102 +372,25 @@ public class MainController {
 	}
 
 	public void export(String action) {
-		if (action.equals("HTML")) {
-			JFileChooser fcExport = new JFileChooser();
-			fcExport.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			int returnVal = fcExport.showSaveDialog(mv);
-			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				File file = fcExport.getSelectedFile();
-				try {
-					exportHTML(file.getAbsolutePath());
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		// TODO other export types
+		Export ex = new Export(action, this);	
+		Thread tr = new Thread(ex);
+		tr.start();
 	}
 
-	private void exportHTML(String absolutePath) throws IOException {
-		absolutePath = absolutePath + "/" + Constants.getDBName();
-		new File(absolutePath).mkdir();
-		new File(absolutePath + "/articles").mkdir();
-		new File(absolutePath + "/attachments").mkdir();
-		String stylesheet = csc.getStyleSheet();
-		FileOutputStream stylesheetOut = new FileOutputStream(absolutePath
-				+ "/style.css");
-		for (int i = 0; i < stylesheet.length(); i++) {
-			stylesheetOut.write((byte) stylesheet.charAt(i));
-		}
-		stylesheetOut.close();
-		String html = "<html>\n<head>\n"
-				+ "<link rel=\"stylesheet\" href=\"style.css\" type=\"text/css\" />\n"
-				+ "<title>" + Constants.getDBName()
-				+ "</title>\n</head>\n<body>\n<h1>" + Constants.getDBName()
-				+ "</h1>\n<ul>";
-		html = appendHTMLBody(html, 0);
-		html += "\n</ul></body>\n</html>";
-		File index = new File(absolutePath + "/index.html");
-		index.createNewFile();
-		FileOutputStream fileOut = new FileOutputStream(index);
-		for (int i = 0; i < html.length(); i++) {
-			fileOut.write((byte) html.charAt(i));
-		}
-		fileOut.close();
-		ArrayList<Article> al = acl.getArticles();
-		for (int i = 0; i < al.size(); i++) {
-			String content = al.get(i).getContent();
-			content = content.replaceAll("<img src=\"tmp/",
-					"<img src=\"../attachments/");
-			content = content.replaceAll("<a href=\"attachment://",
-					"<a href=\"../attachments/");
-			content = content.replaceAll("<a href=\"article://",
-					"<a href=\"../articles/");
-			FileOutputStream writeStream = new FileOutputStream(absolutePath
-					+ "/articles/" + al.get(i).getArticle_ID() + "");
-			for (int j = 0; j < content.length(); j++) {
-				writeStream.write((byte) content.charAt(j));
-			}
-			writeStream.close();
-		}
-		ArrayList<Attachment> attl = attL.getAttachments();
-		for (int i = 0; i < attl.size(); i++) {
-			try {
-				attl.get(i).loadBin();
-			} catch (DatabaseException e) {
-				error(e);
-			}
-			FileOutputStream writeStream = new FileOutputStream(absolutePath
-					+ "/attachments/"
-					+ attl.get(i).getAttachment_ID()
-					+ attl.get(i).getName().substring(
-							attl.get(i).getName().length()));
-			for (int j = 0; j < attl.get(i).getBinary().length; j++) {
-				writeStream.write(attl.get(i).getBinary()[j]);
-			}
-			writeStream.close();
-		}
+	public CSSController getCsc() {
+		return this.csc;
 	}
 
-	private String appendHTMLBody(String html, int iD) {
-		ArrayList<Topic> tl = tcl.getTopics();
-		ArrayList<Article> al = acl.getArticles();
-		for (int i = 0; i < tl.size(); i++) {
-			if (tl.get(i).getTopic_ID_FK() == iD) {
-				html += "\n<li><ul>" + tl.get(i).getName();
-				html = appendHTMLBody(html, tl.get(i).getTopic_ID());
-				for (int j = 0; j < al.size(); j++) {
-					if (al.get(j).getTopic_ID_FK() == tl.get(i).getTopic_ID()) {
-						html += "\n<li><a href=\"articles/"
-								+ al.get(j).getArticle_ID() + "\">"
-								+ al.get(j).getName() + "</a></li>";
-					}
-				}
-				html += "\n</ul></li>";
-			} else {
-				continue;
-			}
-		}
-		return html;
+	public ArticleListController getAcl() {
+		return this.acl;
 	}
+
+	public AttachmentListController getAttL() {
+		return this.attL;
+	}
+
+	public TopicListController getTcl() {
+		return this.tcl;
+	}
+
 }

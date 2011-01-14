@@ -18,11 +18,17 @@ public class CSSController {
 		this.mc = mainController;
 		this.db = db;
 		this.cssl = new CSSList(this.db);
+	}
+
+	public void loadData() {
 		try {
 			cssl.load();
 		} catch (DatabaseException e) {
 			mc.error(e);
 		}
+	}
+
+	public void loadGUI() {
 		this.plainView = new CSSPlainEditView(this);
 		this.plainView.setVisible(false);
 		this.cssl.addObserver(plainView);

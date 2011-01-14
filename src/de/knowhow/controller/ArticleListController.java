@@ -29,12 +29,18 @@ public class ArticleListController {
 		this.mc = mc;
 		this.attachcl = attachcl;
 		this.csc = csc;
+	}
+
+	public void loadData() {
 		al = new ArticleList(this.db);
 		try {
 			al.load();
 		} catch (DatabaseException e) {
 			mc.error(e);
 		}
+	}
+
+	public void loadGUI() {
 		renderView = new ArticleRenderView(this, this.attachcl, this.csc);
 		renderView.setVisible(true);
 		plainView = new ArticlePlainView(this);

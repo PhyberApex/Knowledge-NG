@@ -21,17 +21,23 @@ public class TopicListController {
 		this.db = db;
 		this.mc = mc;
 		tl = new TopicList(this.db);
+	}
+
+	public void loadData() {
 		try {
 			tl.load();
 		} catch (DatabaseException e) {
 			mc.error(e);
 		}
+	}
+
+	public void loadGUI() {
 		this.tcv = new TopicChooseView(this);
 		this.tcv.setVisible(false);
 		this.topicRename = new TopicRenameView(this);
 		tl.addObserver(tcv);
 		tl.addObserver(topicRename);
-		mc.addArticleListObserver(tcv);
+		mc.getAcl().addObserver(tcv);
 	}
 
 	public TopicChooseView getTopicChooseView() {
@@ -75,7 +81,7 @@ public class TopicListController {
 	}
 
 	public void newTopic() throws DatabaseException {
-		tl.newArticle();
+		tl.newTopic();
 	}
 
 	public void delete() throws DatabaseException {

@@ -28,18 +28,21 @@ public class AttachmentListController implements Observer {
 		this.db = db;
 		this.mc = mc;
 		al = new AttachmentList(db);
+	}
+
+	public void loadData() {
 		try {
 			al.load();
 		} catch (DatabaseException e) {
 			mc.error(e);
 		}
+	}
+
+	public void loadGUI() {
 		attachArtView = new AttachmentForArticleView(this);
 		attachArtView.setVisible(false);
 		al.addObserver(attachArtView);
-	}
-
-	public void init() {
-		mc.addArticleListObserver(this);
+		mc.getAcl().addObserver(this);
 	}
 
 	public void reload(int iD) {
