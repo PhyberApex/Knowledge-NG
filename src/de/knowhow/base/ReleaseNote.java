@@ -34,7 +34,12 @@ public class ReleaseNote {
 			+ "<ul>\n"
 			+ "<li>1.0<ul>\n"
 			+ "<li>RELEASE</li>\n"
-			+ "</ul></li>\n"
+			+ "</ul></li>\n" 
+			+ "<li>1.2<ul>\n"
+			+ "<li>New look and feel</li>\n"
+			+ "<li>Export of all data(Articles as HTML)</li>\n"
+			+ "<li>CSS Plaintext-Editor</li>\n"
+			+ "</ul></li>\n" 
 			+ "</ul>\n"
 			+ "<h3>Known Bugs:</h3>\n"
 			+ "<ul>\n"
@@ -42,7 +47,6 @@ public class ReleaseNote {
 			+ "</ul>\n"
 			+ "<h3>Planned Features:</h3>\n"
 			+ "<ul>\n"
-			+ "<li>Exportfunktionality to export Database to HTML files.</li>\n"
 			+ "<li>Assisted CSS Editor</li>\n" + "</ul>\n" + "</body>";
 
 	public static final String getReleaseNote() {
