@@ -12,7 +12,7 @@ import de.knowhow.model.gui.Button;
 import de.knowhow.model.gui.ComboBox;
 import de.knowhow.model.gui.Dialog;
 
-public class SubtopicView extends Dialog {
+public class SubtopicView extends Dialog implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 	private ComboBox cbTopic;
@@ -25,10 +25,6 @@ public class SubtopicView extends Dialog {
 		super();
 		this.mc = mc;
 		this.tcl = tcl;
-		this.setLayout(null);
-		init();
-		this.setVisible(true);
-		this.setAlwaysOnTop(true);
 	}
 
 	private void init() {
@@ -68,5 +64,13 @@ public class SubtopicView extends Dialog {
 		this.add(this.cbTopic);
 		this.add(this.btConfirm);
 		this.add(this.btCancel);
+	}
+
+	@Override
+	public void run() {
+		this.setLayout(null);
+		init();
+		this.setVisible(true);
+		this.setAlwaysOnTop(true);
 	}
 }

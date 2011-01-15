@@ -13,7 +13,7 @@ import de.knowhow.model.gui.Dialog;
 import de.knowhow.model.gui.Table;
 import de.knowhow.model.gui.TableModel;
 
-public class SearchView extends Dialog {
+public class SearchView extends Dialog implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 	private JScrollPane spSearch;
@@ -27,10 +27,6 @@ public class SearchView extends Dialog {
 		super();
 		this.result = result;
 		this.mc = mc;
-		this.setLayout(null);
-		init();
-		this.setVisible(true);
-		this.setAlwaysOnTop(true);
 	}
 
 	private void init() {
@@ -77,5 +73,13 @@ public class SearchView extends Dialog {
 		this.add(spSearch);
 		this.add(btOpen);
 		this.add(btClose);
+	}
+
+	@Override
+	public void run() {
+		this.setLayout(null);
+		init();
+		this.setVisible(true);
+		this.setAlwaysOnTop(true);
 	}
 }

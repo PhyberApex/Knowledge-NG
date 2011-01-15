@@ -1,14 +1,18 @@
 package de.knowhow.view;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.MainController;
+import de.knowhow.model.gui.Button;
 import de.knowhow.model.gui.Menu;
 import de.knowhow.model.gui.MenuItem;
 import de.knowhow.model.gui.RadioButtonMenuItem;
+import de.knowhow.model.gui.Textfield;
 
 public class MenuView extends JMenuBar {
 
@@ -50,6 +54,11 @@ public class MenuView extends JMenuBar {
 
 	private Menu help;
 	private MenuItem about;
+
+	private Textfield tfSearch;
+	private Button btSearch;
+	private JButton bt_plain;
+	private JButton bt_render;
 
 	private MainController mc;
 
@@ -331,10 +340,44 @@ public class MenuView extends JMenuBar {
 			}
 		});
 		this.help.add(about);
+		this.bt_plain = new JButton(new ImageIcon(ClassLoader
+				.getSystemResource("de/knowhow/resource/img/plain.PNG")));
+		this.bt_plain.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				mc.setPlainVisible(true);
+				bt_render.setEnabled(true);
+				mc.setTopicChooserVisible(true);
+				mc.setRenderVisible(false);
+				bt_plain.setEnabled(false);
+			}
+		});
+		this.bt_render = new JButton(new ImageIcon(ClassLoader
+				.getSystemResource("de/knowhow/resource/img/render.PNG")));
+		this.bt_render.setEnabled(false);
+		this.bt_render.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				mc.setRenderVisible(true);
+				bt_plain.setEnabled(true);
+				mc.setTopicChooserVisible(false);
+				mc.setPlainVisible(false);
+				bt_render.setEnabled(false);
+			}
+		});
+		this.tfSearch = new Textfield("");
+		this.btSearch = new Button(Constants.getText("mainView.btSearch"));
+		this.btSearch.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				mc.search(tfSearch.getText());
+			}
+		});
 		this.add(file);
 		this.add(edit);
 		this.add(prefs);
 		this.add(help);
+		this.add(tfSearch);
+		this.add(btSearch);
+		this.add(bt_plain);
+		this.add(bt_render);
 		this.setEditable(false);
 		this.setSize(ViewConstants.MENU_WIDTH, ViewConstants.MENU_HEIGTH);
 		this.setLocation(ViewConstants.MENU_POS_X, ViewConstants.MENU_POS_Y);

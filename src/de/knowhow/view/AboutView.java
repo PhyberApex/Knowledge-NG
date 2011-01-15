@@ -12,7 +12,7 @@ import de.knowhow.model.gui.Button;
 import de.knowhow.model.gui.Dialog;
 import de.knowhow.model.gui.Label;
 
-public class AboutView extends Dialog {
+public class AboutView extends Dialog implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -25,10 +25,6 @@ public class AboutView extends Dialog {
 
 	public AboutView() {
 		super();
-		this.setLayout(null);
-		init();
-		this.setAlwaysOnTop(true);
-		this.setVisible(true);
 	}
 
 	private void init() {
@@ -93,14 +89,17 @@ public class AboutView extends Dialog {
 		this.lbLicense = new Label(
 				"<html>License: <a href=\"ignore\">GNU GPL v2</a></html>");
 		this.lbLicense.setSize(this.lbInfo.getPreferredSize());
-		this.lbLicense.setLocation(10, lbInfo.getY()
-				+ lbAppAuthor.getHeight() + 15);
+		this.lbLicense.setLocation(10, lbInfo.getY() + lbAppAuthor.getHeight()
+				+ 15);
 		this.lbLicense.addMouseListener(new java.awt.event.MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					java.awt.Desktop.getDesktop().browse(
-							new URI("http://www.gnu.org/licenses/old-licenses/gpl-2.0.html"));
+					java.awt.Desktop
+							.getDesktop()
+							.browse(
+									new URI(
+											"http://www.gnu.org/licenses/old-licenses/gpl-2.0.html"));
 					AboutView.this.dispose();
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -138,5 +137,13 @@ public class AboutView extends Dialog {
 		});
 		this.contentPane.add(btClose);
 		this.add(contentPane);
+	}
+
+	@Override
+	public void run() {
+		this.setLayout(null);
+		init();
+		this.setAlwaysOnTop(true);
+		this.setVisible(true);
 	}
 }

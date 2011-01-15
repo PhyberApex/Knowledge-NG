@@ -8,6 +8,7 @@ import java.util.Locale;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
@@ -42,24 +43,29 @@ public class MainController {
 
 	public MainController() {
 		try {
-		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-		        if ("Nimbus".equals(info.getName())) {
-		            UIManager.setLookAndFeel(info.getClassName());
-		            break;
-		        }
-		    }
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
 		} catch (Exception e) {
-		    // If Nimbus is not available, you can set the GUI to another look and feel.
+			// If Nimbus is not available, you can set the GUI to another look
+			// and feel.
 		}
 
 		config = new Config();
 		Constants.setLanguage(new Locale(config.getProperty("lang")));
 		ViewConstants.reload(config);
-		URL url = ClassLoader.getSystemResource("de/knowhow/resource/img/splash.png");
-        Image image = null;
-        if (url != null)
-            try {image = ImageIO.read(url);} catch (IOException ex) {}
-        splash = new Splash( image, Constants.getText("splash.init"));
+		URL url = ClassLoader
+				.getSystemResource("de/knowhow/resource/img/splash.png");
+		Image image = null;
+		if (url != null)
+			try {
+				image = ImageIO.read(url);
+			} catch (IOException ex) {
+			}
+		splash = new Splash(image, Constants.getText("splash.init"));
 		splash.setVisible(true);
 		Constants.setDBName(config.getProperty("defaultdb"));
 		if (config.getProperty("databasetyp").equals("1")) {
@@ -81,22 +87,22 @@ public class MainController {
 		this.acl = new ArticleListController(this.db, this, attL, csc);
 		this.tcl = new TopicListController(this.db, this);
 		this.treeC = new TreeController(acl, tcl);
-		splash.showStatus(Constants.getText("splash.loadCSS"),15);
+		splash.showStatus(Constants.getText("splash.loadCSS"), 15);
 		this.csc.loadData();
-		splash.showStatus(Constants.getText("splash.loadAttachment"),28);
+		splash.showStatus(Constants.getText("splash.loadAttachment"), 28);
 		this.attL.loadData();
-		splash.showStatus(Constants.getText("splash.loadArt"),42);
+		splash.showStatus(Constants.getText("splash.loadArt"), 42);
 		this.acl.loadData();
-		splash.showStatus(Constants.getText("splash.loadTopic"),57);
+		splash.showStatus(Constants.getText("splash.loadTopic"), 57);
 		this.tcl.loadData();
 		this.treeC.loadData();
-		splash.showStatus(Constants.getText("splash.caching"),71);
+		splash.showStatus(Constants.getText("splash.caching"), 71);
 		try {
 			attL.cacheImages();
 		} catch (DatabaseException e) {
 			error(e);
 		}
-		splash.showStatus(Constants.getText("splash.paint"),85);
+		splash.showStatus(Constants.getText("splash.paint"), 85);
 		this.csc.loadGUI();
 		this.attL.loadGUI();
 		this.acl.loadGUI();
@@ -109,7 +115,7 @@ public class MainController {
 		mv.add(acl.getRenderView());
 		mv.add(tcl.getTopicChooseView());
 		mv.add(treeC.getTreeView());
-		mv.setVisible(true);
+		SwingUtilities.invokeLater(mv);
 		splash.close();
 	}
 
@@ -337,13 +343,12 @@ public class MainController {
 	}
 
 	public void search(String text) {
-		SearchView sV = new SearchView(Search.getArticles(text, acl
-				.getArticles()), this);
-		sV.setVisible(true);
+		SwingUtilities.invokeLater(new SearchView(Search.getArticles(text, acl
+				.getArticles()), this));
 	}
 
 	public void about() {
-		new AboutView();
+		SwingUtilities.invokeLater(new AboutView());
 	}
 
 	public void setCurrArtByID(int iD) {
@@ -351,8 +356,7 @@ public class MainController {
 	}
 
 	public void subTopic() {
-		SubtopicView sub = new SubtopicView(this, this.tcl);
-		sub.setVisible(true);
+		SwingUtilities.invokeLater(new SubtopicView(this, this.tcl));
 	}
 
 	public void setSubtopicByID(int topicID) {
@@ -372,7 +376,7 @@ public class MainController {
 	}
 
 	public void export(String action) {
-		Export ex = new Export(action, this);	
+		Export ex = new Export(action, this);
 		Thread tr = new Thread(ex);
 		tr.start();
 	}

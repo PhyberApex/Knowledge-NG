@@ -90,7 +90,7 @@ public class ViewConstants {
 			MAIN_HEIGTH = 480;
 		}
 		// Menu
-		MENU_WIDTH = MAIN_WIDTH - 10/* FrameBuffer */- 50/* ButtonBuffer */- 250 /* SearchBuffer */;
+		MENU_WIDTH = MAIN_WIDTH ;//- 10/* FrameBuffer */- 50/* ButtonBuffer */- 250 /* SearchBuffer */;
 
 		// Tree
 		TREE_HEIGTH = MAIN_HEIGTH - MENU_HEIGTH;
