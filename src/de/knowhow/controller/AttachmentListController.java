@@ -1,14 +1,12 @@
 package de.knowhow.controller;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import de.knowhow.base.Constants;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.extra.Upload;
 import de.knowhow.model.ArticleList;
