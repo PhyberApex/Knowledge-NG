@@ -1,10 +1,16 @@
-package de.knowhow.base;
+package de.knowhow.extra;
 
+import java.awt.Image;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+
+import de.knowhow.base.Constants;
 import de.knowhow.controller.MainController;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.Article;
@@ -12,33 +18,40 @@ import de.knowhow.model.Attachment;
 import de.knowhow.model.Topic;
 import de.knowhow.view.Splash;
 
-public class Export implements Runnable{
+public class Export implements Runnable {
 
 	private MainController mc;
 	private String format;
 	public static Splash splash;
-	
-	
-	public Export(String format, MainController mc){
+
+	public Export(String format, MainController mc) {
 		this.format = format;
 		this.mc = mc;
 	}
-	
+
 	public void doHTML() {
 		JFileChooser fcExport = new JFileChooser();
 		fcExport.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		int returnVal = fcExport.showSaveDialog(null);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-				File file = fcExport.getSelectedFile();
-				splash = new Splash(null, Constants.getText("splash.init"));
-				splash.setVisible(true);
+			File file = fcExport.getSelectedFile();
+			URL url = ClassLoader
+					.getSystemResource("de/knowhow/resource/img/loading.png");
+			Image image = null;
+			if (url != null)
 				try {
-					exportHTML(file.getAbsolutePath());
-				} catch (IOException e) {
-					e.printStackTrace();
+					image = ImageIO.read(url);
+				} catch (IOException ex) {
 				}
-				splash.close();
+			splash = new Splash(image, Constants.getText("splash.init"));
+			splash.setVisible(true);
+			try {
+				exportHTML(file.getAbsolutePath());
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
+			splash.close();
+		}
 	}
 
 	private void exportHTML(String absolutePath) throws IOException {
@@ -104,16 +117,16 @@ public class Export implements Runnable{
 			FileOutputStream writeStream = new FileOutputStream(absolutePath
 					+ "/attachments/"
 					+ attl.get(i).getAttachment_ID()
-					+ attl.get(i).getName()
-							.substring(attl.get(i).getName().length()));
+					+ attl.get(i).getName().substring(
+							attl.get(i).getName().length()));
 			for (int j = 0; j < attl.get(i).getBinary().length; j++) {
 				splash.showStatus(Constants.getText("export.attachment") + " "
-						+ (i + 1) + "/" + attl.size() + "...", (attl.get(i)
-						.getBinary().length / (j + 1)));
+						+ (i + 1) + "/" + attl.size() + "...", (100 / (attl.get(i)
+						.getBinary().length / (j + 1))));
 				writeStream.write(attl.get(i).getBinary()[j]);
 			}
 			splash.showStatus(Constants.getText("export.attachment") + " "
-					+ (i + 1) + "/" + attl.size() ,100);
+					+ (i + 1) + "/" + attl.size(), 100);
 			writeStream.close();
 		}
 	}
@@ -144,10 +157,8 @@ public class Export implements Runnable{
 	public void run() {
 		if (this.format.equals("HTML")) {
 			doHTML();
+		} else {
+			// TODO more Export types
 		}
-		else{
-			//TODO more Export types
-		}
-		
 	}
 }

@@ -14,9 +14,9 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import de.knowhow.base.Config;
 import de.knowhow.base.Constants;
-import de.knowhow.base.Export;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.exception.DatabaseException;
+import de.knowhow.extra.Export;
 import de.knowhow.model.Search;
 import de.knowhow.model.db.DAO;
 import de.knowhow.model.db.DAO_MYSQL;

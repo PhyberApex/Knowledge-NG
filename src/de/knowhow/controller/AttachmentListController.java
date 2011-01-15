@@ -10,11 +10,13 @@ import java.util.Observable;
 import java.util.Observer;
 import de.knowhow.base.Constants;
 import de.knowhow.exception.DatabaseException;
+import de.knowhow.extra.Upload;
 import de.knowhow.model.ArticleList;
 import de.knowhow.model.Attachment;
 import de.knowhow.model.AttachmentList;
 import de.knowhow.model.db.DAO;
 import de.knowhow.view.AttachmentForArticleView;
+import de.knowhow.view.Splash;
 
 public class AttachmentListController implements Observer {
 
@@ -23,6 +25,7 @@ public class AttachmentListController implements Observer {
 	private MainController mc;
 	private int currID;
 	private AttachmentForArticleView attachArtView;
+	public static Splash splash;
 
 	public AttachmentListController(DAO db, MainController mc) {
 		this.db = db;
@@ -88,27 +91,9 @@ public class AttachmentListController implements Observer {
 
 	public void newAttachment(File file, boolean image)
 			throws DatabaseException, IOException {
-		FileInputStream is = new FileInputStream(file);
-		long length = file.length();
-		if (length > Integer.MAX_VALUE) {
-			throw new DatabaseException(Constants
-					.getText("message.error.sizeError"));
-		}
-		byte[] bytes = new byte[(int) length];
-		int offset = 0;
-		int numRead = 0;
-		while (offset < bytes.length
-				&& (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
-			offset += numRead;
-		}
-		if (offset < bytes.length) {
-			throw new DatabaseException(Constants
-					.getText("message.error.readError")
-					+ " " + file.getName());
-		}
-		Attachment attach = new Attachment(this.db, file.getName(), currID,
-				bytes, image);
-		al.addAttachment(attach);
+		Upload ul = new Upload(this.db, image, file, this.al, currID);
+		Thread tr = new Thread(ul);
+		tr.start();
 	}
 
 	public AttachmentForArticleView getAttachArtView() {

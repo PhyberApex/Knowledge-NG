@@ -2,6 +2,7 @@ package de.knowhow.view;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 
 public class Splash extends JWindow {
 
@@ -61,8 +62,8 @@ public class Splash extends JWindow {
 		myPanel.add(progress, BorderLayout.SOUTH);
 		progress.setStringPainted(true); // progressbar mit Beschriftung
 		progress.setPreferredSize(preferredSize); //schmalere progressbar
-		// progress.setBorderPainted(false) ; //progressbar ohne Rand
-		// myPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
+		progress.setBorderPainted(false) ; //progressbar ohne Rand
+		myPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
 		// myPanel.setBorder(new LineBorder(fgX, 2));
 		progress.setBackground(new Color(254, 243, 224));
 		getContentPane().add(myPanel);
@@ -77,7 +78,7 @@ public class Splash extends JWindow {
 
 	/**
 	 * Den splash screen schliessen und alle resources freigeben die damit
-	 * zusammenhängen. Diese Methode ist thread safe und kann von jedem Thread
+	 * zusammenhï¿½ngen. Diese Methode ist thread safe und kann von jedem Thread
 	 * aufgerufen werden.
 	 */
 	public void close() {
@@ -98,7 +99,7 @@ public class Splash extends JWindow {
 	}
 
 	/**
-	 * Status der progressbar ändern. Diese Methode ist thread safe und kann von
+	 * Status der progressbar ï¿½ndern. Diese Methode ist thread safe und kann von
 	 * jedem Thread aufgerufen werden.
 	 */
 	public void showStatus(String message, int percent) {

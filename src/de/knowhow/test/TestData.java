@@ -1,4 +1,5 @@
 package de.knowhow.test;
+
 import de.knowhow.model.ArticleList;
 import de.knowhow.model.Attachment;
 import de.knowhow.model.AttachmentList;
@@ -9,6 +10,9 @@ import de.knowhow.model.db.DAO_SQLite;
 
 public class TestData {
 	public static void main(String[] args) {
+		args = new String[2];
+		args[0]= "test.db";
+		args[1]= "SQLITE";
 		if (args.length < 2) {
 			System.out.println("Keine Datenbank oder Typ angegeben.\n"
 					+ "Param 1 = Datenbankname\n"
@@ -36,7 +40,7 @@ public class TestData {
 					db.setDatabaseName(args[0]);
 				}
 			} else {
-				System.out.println("Ungüliger Datenbanktyp\n"
+				System.out.println("Ungï¿½liger Datenbanktyp\n"
 						+ "Programm wird beendet");
 				exit();
 			}
