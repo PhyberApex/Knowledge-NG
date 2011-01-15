@@ -3,7 +3,6 @@ package de.knowhow.view;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JFrame;
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.MainController;
@@ -11,8 +10,9 @@ import de.knowhow.controller.TopicListController;
 import de.knowhow.model.Topic;
 import de.knowhow.model.gui.Button;
 import de.knowhow.model.gui.ComboBox;
+import de.knowhow.model.gui.Dialog;
 
-public class SubtopicView extends JFrame {
+public class SubtopicView extends Dialog {
 
 	private static final long serialVersionUID = 1L;
 	private ComboBox cbTopic;
@@ -26,7 +26,6 @@ public class SubtopicView extends JFrame {
 		this.mc = mc;
 		this.tcl = tcl;
 		this.setLayout(null);
-		this.setUndecorated(true);
 		init();
 		this.setVisible(true);
 		this.setAlwaysOnTop(true);

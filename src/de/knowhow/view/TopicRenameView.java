@@ -4,17 +4,17 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.JFrame;
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.TopicListController;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.TopicList;
 import de.knowhow.model.gui.Button;
+import de.knowhow.model.gui.Dialog;
 import de.knowhow.model.gui.Label;
 import de.knowhow.model.gui.Textfield;
 
-public class TopicRenameView extends JFrame implements Observer {
+public class TopicRenameView extends Dialog implements Observer {
 
 	private static final long serialVersionUID = 1L;
 	private TopicListController tcl;
@@ -32,7 +32,6 @@ public class TopicRenameView extends JFrame implements Observer {
 
 	private void init() {
 		this.setVisible(false);
-		this.setUndecorated(true);
 		this.setAlwaysOnTop(true);
 		this.setSize(ViewConstants.RENAME_WIDTH, ViewConstants.RENAME_HEIGTH);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();

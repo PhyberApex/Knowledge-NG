@@ -70,10 +70,6 @@ public class ViewConstants {
 	public static int CSSPLAIN_WIDTH;
 	public static int CSSPLAIN_HEIGTH;
 
-	// LoadingView
-	public static int LOADINGVIEW_WIDTH;
-	public static int LOADINGVIEW_HEIGTH;
-
 	public static void reload(Config conf) {
 		int res = Integer.parseInt(conf.getProperty("resolution"));
 		switch (res) {
@@ -127,9 +123,5 @@ public class ViewConstants {
 		// CSSPlainView
 		CSSPLAIN_WIDTH = MAIN_WIDTH / 3 * 2;
 		CSSPLAIN_HEIGTH = MAIN_HEIGTH / 3 * 2;
-
-		// LoadingView
-		LOADINGVIEW_HEIGTH = 60;
-		LOADINGVIEW_WIDTH = MAIN_WIDTH / 3 * 2;
 	}
 }

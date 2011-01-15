@@ -5,7 +5,6 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
@@ -13,10 +12,11 @@ import de.knowhow.controller.AttachmentListController;
 import de.knowhow.model.Attachment;
 import de.knowhow.model.AttachmentList;
 import de.knowhow.model.gui.Button;
+import de.knowhow.model.gui.Dialog;
 import de.knowhow.model.gui.Table;
 import de.knowhow.model.gui.TableModel;
 
-public class AttachmentForArticleView extends JFrame implements Observer {
+public class AttachmentForArticleView extends Dialog implements Observer {
 
 	private static final long serialVersionUID = 1L;
 	private AttachmentListController attL;
@@ -32,7 +32,6 @@ public class AttachmentForArticleView extends JFrame implements Observer {
 		this.attL = attL;
 		this.setLayout(null);
 		this.setAlwaysOnTop(true);
-		this.setUndecorated(true);
 		init();
 	}
 

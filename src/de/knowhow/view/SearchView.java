@@ -3,17 +3,17 @@ package de.knowhow.view;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.MainController;
 import de.knowhow.model.Article;
 import de.knowhow.model.gui.Button;
+import de.knowhow.model.gui.Dialog;
 import de.knowhow.model.gui.Table;
 import de.knowhow.model.gui.TableModel;
 
-public class SearchView extends JFrame {
+public class SearchView extends Dialog {
 
 	private static final long serialVersionUID = 1L;
 	private JScrollPane spSearch;
@@ -28,7 +28,6 @@ public class SearchView extends JFrame {
 		this.result = result;
 		this.mc = mc;
 		this.setLayout(null);
-		this.setUndecorated(true);
 		init();
 		this.setVisible(true);
 		this.setAlwaysOnTop(true);

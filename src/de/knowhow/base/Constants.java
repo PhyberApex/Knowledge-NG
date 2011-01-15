@@ -8,6 +8,7 @@ public class Constants {
 
 	private static final String APP_NAME = "Knowledge-NG";
 	private static final String APP_VERSION = "1.2";
+	private static final String APP_AUTHOR = "Janis Walliser";
 	private static String db_name;
 	private static String host;
 	private static String user;
@@ -21,6 +22,10 @@ public class Constants {
 
 	public static String getAppVersion() {
 		return APP_VERSION;
+	}
+
+	public static String getAppAuthor() {
+		return APP_AUTHOR;
 	}
 
 	public static String getDBName() {

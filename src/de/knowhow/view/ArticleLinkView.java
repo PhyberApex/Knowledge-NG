@@ -5,7 +5,6 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
@@ -13,10 +12,11 @@ import de.knowhow.controller.ArticleListController;
 import de.knowhow.model.Article;
 import de.knowhow.model.ArticleList;
 import de.knowhow.model.gui.Button;
+import de.knowhow.model.gui.Dialog;
 import de.knowhow.model.gui.Table;
 import de.knowhow.model.gui.TableModel;
 
-public class ArticleLinkView extends JFrame implements Observer {
+public class ArticleLinkView extends Dialog implements Observer {
 
 	private static final long serialVersionUID = 1L;
 	private ArticleListController acl;
@@ -29,7 +29,6 @@ public class ArticleLinkView extends JFrame implements Observer {
 		super();
 		this.acl = acl;
 		this.setLayout(null);
-		this.setUndecorated(true);
 		init();
 	}
 
