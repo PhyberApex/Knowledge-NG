@@ -116,4 +116,8 @@ public class Attachment {
 		} catch (SQLException e) {
 		}
 	}
+
+	public void clearBinary() {
+		this.binary = null;
+	}
 }

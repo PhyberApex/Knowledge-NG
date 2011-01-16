@@ -121,6 +121,7 @@ public class Export implements Runnable {
 							attl.get(i).getName().length()));
 			writeStream.write(attl.get(i).getBinary());
 			writeStream.close();
+			attl.get(i).clearBinary();
 		}
 	}
 
