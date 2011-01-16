@@ -60,9 +60,6 @@ public class Upload implements Runnable {
 			while (offset < bytes.length
 					&& (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
 				offset += numRead;
-				splash
-						.showStatus("Uploading...",
-								100 / (bytes.length / offset));
 			}
 			if (offset < bytes.length) {
 				throw new DatabaseException(Constants

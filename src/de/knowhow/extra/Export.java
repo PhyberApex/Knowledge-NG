@@ -108,7 +108,7 @@ public class Export implements Runnable {
 		ArrayList<Attachment> attl = mc.getAttL().getAttachments();
 		for (int i = 0; i < attl.size(); i++) {
 			splash.showStatus(Constants.getText("export.attachment") + " "
-					+ (i + 1) + "/" + attl.size() + "...", 0);
+					+ (i + 1) + "/" + attl.size() + "...", 101);
 			try {
 				attl.get(i).loadBin();
 			} catch (DatabaseException e) {
@@ -119,14 +119,7 @@ public class Export implements Runnable {
 					+ attl.get(i).getAttachment_ID()
 					+ attl.get(i).getName().substring(
 							attl.get(i).getName().length()));
-			for (int j = 0; j < attl.get(i).getBinary().length; j++) {
-				splash.showStatus(Constants.getText("export.attachment") + " "
-						+ (i + 1) + "/" + attl.size() + "...", (100 / (attl.get(i)
-						.getBinary().length / (j + 1))));
-				writeStream.write(attl.get(i).getBinary()[j]);
-			}
-			splash.showStatus(Constants.getText("export.attachment") + " "
-					+ (i + 1) + "/" + attl.size(), 100);
+			writeStream.write(attl.get(i).getBinary());
 			writeStream.close();
 		}
 	}
