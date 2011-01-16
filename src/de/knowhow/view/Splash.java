@@ -1,6 +1,7 @@
 package de.knowhow.view;
 
 import java.awt.*;
+
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
@@ -50,9 +51,10 @@ public class Splash extends JWindow {
 		setLocationRelativeTo(null);
 		MyPanel myPanel = new MyPanel(getSize());
 
-		Color fgX = new Color(85, 43, 0);
+		Color fgX = new Color(0, 0, 0);
 		progress = new JProgressBar(0, 100);
 		progress.setForeground(fgX);
+		progress.setFont(new Font("Verdana", Font.BOLD, 12));
 		Dimension preferredSize = progress.getPreferredSize();
 		double height = preferredSize.getHeight();
 		double width = preferredSize.getWidth();
