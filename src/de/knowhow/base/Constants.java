@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 
 public class Constants {
 
-	private static final String APP_NAME = "Knowledge-NG";
+	private static final String APP_NAME = "KnowledgeNG";
 	private static final String APP_VERSION = "1.2";
 	private static final String APP_AUTHOR = "Janis Walliser";
 	private static String db_name;
