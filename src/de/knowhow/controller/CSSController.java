@@ -2,6 +2,9 @@ package de.knowhow.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.swing.SwingUtilities;
+
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.CSSList;
 import de.knowhow.model.db.DAO;
@@ -31,6 +34,7 @@ public class CSSController {
 	public void loadGUI() {
 		this.plainView = new CSSPlainEditView(this);
 		this.plainView.setVisible(false);
+		SwingUtilities.invokeLater(plainView);
 		this.cssl.addObserver(plainView);
 	}
 

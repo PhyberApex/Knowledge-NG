@@ -14,7 +14,7 @@ import de.knowhow.model.gui.Dialog;
 import de.knowhow.model.gui.Label;
 import de.knowhow.model.gui.Textfield;
 
-public class ArticleRenameView extends Dialog implements Observer {
+public class ArticleRenameView extends Dialog implements Observer{
 
 	private static final long serialVersionUID = 1L;
 	private ArticleListController acl;
@@ -26,17 +26,15 @@ public class ArticleRenameView extends Dialog implements Observer {
 	public ArticleRenameView(ArticleListController acl) {
 		super();
 		this.acl = acl;
-		this.setLayout(null);
 		init();
 	}
 
 	private void init() {
-		this.setVisible(false);
-		this.setAlwaysOnTop(true);
 		this.setSize(ViewConstants.RENAME_WIDTH, ViewConstants.RENAME_HEIGTH);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation((d.width - this.getSize().width) / 2, (d.height - this
 				.getSize().height) / 2);
+		this.initPane();
 		this.lbname = new Label(Constants.getText("keyword.article"));
 		this.lbname.setSize(50, 25);
 		this.lbname.setLocation(10, ((this.getHeight() - 30) / 2)
@@ -69,10 +67,10 @@ public class ArticleRenameView extends Dialog implements Observer {
 				setVisible(false);
 			}
 		});
-		this.add(lbname);
-		this.add(tfname);
-		this.add(confirm);
-		this.add(cancel);
+		this.getPane().add(lbname);
+		this.getPane().add(tfname);
+		this.getPane().add(confirm);
+		this.getPane().add(cancel);
 	}
 
 	@Override

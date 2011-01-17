@@ -16,7 +16,7 @@ import de.knowhow.model.gui.Dialog;
 import de.knowhow.model.gui.Table;
 import de.knowhow.model.gui.TableModel;
 
-public class AttachmentForArticleView extends Dialog implements Observer {
+public class AttachmentForArticleView extends Dialog implements Observer, Runnable {
 
 	private static final long serialVersionUID = 1L;
 	private AttachmentListController attL;
@@ -30,9 +30,6 @@ public class AttachmentForArticleView extends Dialog implements Observer {
 	public AttachmentForArticleView(AttachmentListController attL) {
 		super();
 		this.attL = attL;
-		this.setLayout(null);
-		this.setAlwaysOnTop(true);
-		init();
 	}
 
 	private void init() {
@@ -40,6 +37,7 @@ public class AttachmentForArticleView extends Dialog implements Observer {
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation((d.width - this.getSize().width) / 2, (d.height - this
 				.getSize().height) / 2);
+		this.initPane();
 		this.spAttachments = new JScrollPane();
 		this.spAttachments.setSize(ViewConstants.ATTACH_WIDTH,
 				ViewConstants.ATTACH_HEIGTH - 40);
@@ -76,9 +74,9 @@ public class AttachmentForArticleView extends Dialog implements Observer {
 				setVisible(false);
 			}
 		});
-		this.add(spAttachments);
-		this.add(btConfirm);
-		this.add(btCancel);
+		this.getPane().add(spAttachments);
+		this.getPane().add(btConfirm);
+		this.getPane().add(btCancel);
 	}
 
 	@Override
@@ -122,5 +120,10 @@ public class AttachmentForArticleView extends Dialog implements Observer {
 		} else {
 			this.spAttachments.setViewportView(tbAttachmentsFile);
 		}
+	}
+
+	@Override
+	public void run() {
+		init();
 	}
 }

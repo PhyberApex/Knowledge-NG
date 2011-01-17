@@ -15,7 +15,8 @@ import de.knowhow.model.Topic;
 import de.knowhow.model.TopicList;
 import de.knowhow.model.gui.Tree;
 
-public class TreeView extends JPanel implements Observer, TreeSelectionListener {
+public class TreeView extends JPanel implements Observer,
+		TreeSelectionListener, Runnable {
 
 	private static final long serialVersionUID = 1L;
 	private Tree tree;
@@ -26,7 +27,6 @@ public class TreeView extends JPanel implements Observer, TreeSelectionListener 
 		super();
 		this.treeC = treeC;
 		this.setLayout(null);
-		init();
 	}
 
 	private void init() {
@@ -79,5 +79,10 @@ public class TreeView extends JPanel implements Observer, TreeSelectionListener 
 			Topic newTop = (Topic) nodeInfo;
 			treeC.setCurrTopic(newTop);
 		}
+	}
+
+	@Override
+	public void run() {
+		init();
 	}
 }

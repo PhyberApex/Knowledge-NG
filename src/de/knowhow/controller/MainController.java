@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
-
 import de.knowhow.base.Config;
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
@@ -116,11 +115,13 @@ public class MainController {
 		mv.add(tcl.getTopicChooseView());
 		mv.add(treeC.getTreeView());
 		SwingUtilities.invokeLater(mv);
+		SwingUtilities.invokeLater(menuV);
 		splash.close();
 	}
 
 	public static void main(String[] args) {
 		new MainController();
+
 	}
 
 	public void cancel() {
@@ -168,8 +169,8 @@ public class MainController {
 	}
 
 	private void prefChange() {
-		JOptionPane.showMessageDialog(mv, Constants
-				.getText("message.warning.restart"), "Information",
+		JOptionPane.showMessageDialog(mv,
+				Constants.getText("message.warning.restart"), "Information",
 				JOptionPane.INFORMATION_MESSAGE);
 		config.saveChanges();
 	}
@@ -197,8 +198,7 @@ public class MainController {
 
 	public void newDatabase() {
 		String name = JOptionPane.showInputDialog(Constants
-				.getText("newDatabase")
-				+ ":");
+				.getText("newDatabase") + ":");
 		if (name != null) {
 			config.setProperty("defaultdb", name);
 		}
@@ -222,8 +222,8 @@ public class MainController {
 	}
 
 	public void deleteArticle() {
-		int ret = JOptionPane.showConfirmDialog(mv, Constants
-				.getText("message.warning.deleteArticle"), "Warning",
+		int ret = JOptionPane.showConfirmDialog(mv,
+				Constants.getText("message.warning.deleteArticle"), "Warning",
 				JOptionPane.OK_CANCEL_OPTION);
 		if (ret == JOptionPane.OK_OPTION) {
 			try {
@@ -235,8 +235,8 @@ public class MainController {
 	}
 
 	public void deleteTopic() {
-		int ret = JOptionPane.showConfirmDialog(mv, Constants
-				.getText("message.warning.deleteTopic"), "Warning",
+		int ret = JOptionPane.showConfirmDialog(mv,
+				Constants.getText("message.warning.deleteTopic"), "Warning",
 				JOptionPane.OK_CANCEL_OPTION);
 		if (ret == JOptionPane.OK_OPTION) {
 			try {
@@ -307,8 +307,7 @@ public class MainController {
 	public void changeDatabase(String string) {
 		if (string.equals("1")) {
 			String database = JOptionPane.showInputDialog(Constants
-					.getText("keyword.database")
-					+ ":");
+					.getText("keyword.database") + ":");
 			if (database != null) {
 				config.setProperty("databasetyp", string);
 				config.setProperty("defaultdb", database);
@@ -319,17 +318,13 @@ public class MainController {
 			}
 		} else if (string.equals("2")) {
 			String host = JOptionPane.showInputDialog(Constants
-					.getText("database.host")
-					+ ":");
+					.getText("database.host") + ":");
 			String database = JOptionPane.showInputDialog(Constants
-					.getText("keyword.database")
-					+ ":");
+					.getText("keyword.database") + ":");
 			String user = JOptionPane.showInputDialog(Constants
-					.getText("database.user")
-					+ ":");
+					.getText("database.user") + ":");
 			String pass = JOptionPane.showInputDialog(Constants
-					.getText("database.password")
-					+ ":");
+					.getText("database.password") + ":");
 			if (host != null && database != null && user != null
 					&& pass != null) {
 				config.setProperty("databasetyp", string);
@@ -343,8 +338,10 @@ public class MainController {
 	}
 
 	public void search(String text) {
-		SwingUtilities.invokeLater(new SearchView(Search.getArticles(text, acl
-				.getArticles()), this));
+		SearchView sV = new SearchView(Search.getArticles(text,
+				acl.getArticles()), this);
+		sV.setVisible(true);
+		SwingUtilities.invokeLater(sV);
 	}
 
 	public void about() {

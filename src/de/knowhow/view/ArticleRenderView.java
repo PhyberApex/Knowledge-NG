@@ -17,7 +17,7 @@ import de.knowhow.model.gui.HTMLEditor;
 import de.knowhow.model.gui.HTMLEditorKit;
 import de.knowhow.model.gui.Label;
 
-public class ArticleRenderView extends JPanel implements Observer {
+public class ArticleRenderView extends JPanel implements Observer, Runnable {
 
 	private static final long serialVersionUID = 1L;
 	private JScrollPane contentScrollPane;
@@ -33,7 +33,6 @@ public class ArticleRenderView extends JPanel implements Observer {
 		this.attachcl = attachcl;
 		this.acl = acl;
 		this.csc = csc;
-		init();
 	}
 
 	private void init() {
@@ -85,5 +84,10 @@ public class ArticleRenderView extends JPanel implements Observer {
 
 	public String getArticleContent() {
 		return this.htmlEdit_content.getText();
+	}
+
+	@Override
+	public void run() {
+		init();
 	}
 }

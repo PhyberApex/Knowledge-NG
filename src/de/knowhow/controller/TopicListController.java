@@ -2,6 +2,9 @@ package de.knowhow.controller;
 
 import java.util.ArrayList;
 import java.util.Observer;
+
+import javax.swing.SwingUtilities;
+
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.Topic;
 import de.knowhow.model.TopicList;
@@ -34,7 +37,9 @@ public class TopicListController {
 	public void loadGUI() {
 		this.tcv = new TopicChooseView(this);
 		this.tcv.setVisible(false);
+		SwingUtilities.invokeLater(tcv);
 		this.topicRename = new TopicRenameView(this);
+		SwingUtilities.invokeLater(topicRename);
 		tl.addObserver(tcv);
 		tl.addObserver(topicRename);
 		mc.getAcl().addObserver(tcv);

@@ -27,6 +27,7 @@ public class SearchView extends Dialog implements Runnable {
 		super();
 		this.result = result;
 		this.mc = mc;
+		init();
 	}
 
 	private void init() {
@@ -34,6 +35,7 @@ public class SearchView extends Dialog implements Runnable {
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation((d.width - this.getSize().width) / 2, (d.height - this
 				.getSize().height) / 2);
+		this.initPane();
 		this.spSearch = new JScrollPane();
 		this.spSearch.setSize(this.getWidth() - 20, this.getHeight() - 50);
 		this.spSearch.setLocation(10, 10);
@@ -70,16 +72,13 @@ public class SearchView extends Dialog implements Runnable {
 				dispose();
 			}
 		});
-		this.add(spSearch);
-		this.add(btOpen);
-		this.add(btClose);
+		this.getPane().add(spSearch);
+		this.getPane().add(btOpen);
+		this.getPane().add(btClose);
 	}
 
 	@Override
 	public void run() {
-		this.setLayout(null);
 		init();
-		this.setVisible(true);
-		this.setAlwaysOnTop(true);
 	}
 }

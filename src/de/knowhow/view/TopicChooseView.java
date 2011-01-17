@@ -14,7 +14,7 @@ import de.knowhow.model.Topic;
 import de.knowhow.model.gui.Button;
 import de.knowhow.model.gui.ComboBox;
 
-public class TopicChooseView extends JPanel implements Observer {
+public class TopicChooseView extends JPanel implements Observer, Runnable {
 
 	private static final long serialVersionUID = 1L;
 	private Button confirmButton;
@@ -26,7 +26,6 @@ public class TopicChooseView extends JPanel implements Observer {
 		super();
 		this.tcl = topicListController;
 		this.setLayout(null);
-		init();
 	}
 
 	private void init() {
@@ -96,5 +95,10 @@ public class TopicChooseView extends JPanel implements Observer {
 			}
 			this.topicBox.setModel(model);
 		}
+	}
+
+	@Override
+	public void run() {
+		init();
 	}
 }

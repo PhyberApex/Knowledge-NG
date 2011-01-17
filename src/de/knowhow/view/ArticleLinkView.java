@@ -16,7 +16,7 @@ import de.knowhow.model.gui.Dialog;
 import de.knowhow.model.gui.Table;
 import de.knowhow.model.gui.TableModel;
 
-public class ArticleLinkView extends Dialog implements Observer {
+public class ArticleLinkView extends Dialog implements Observer, Runnable {
 
 	private static final long serialVersionUID = 1L;
 	private ArticleListController acl;
@@ -28,8 +28,6 @@ public class ArticleLinkView extends Dialog implements Observer {
 	public ArticleLinkView(ArticleListController acl) {
 		super();
 		this.acl = acl;
-		this.setLayout(null);
-		init();
 	}
 
 	private void init() {
@@ -37,6 +35,7 @@ public class ArticleLinkView extends Dialog implements Observer {
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation((d.width - this.getSize().width) / 2, (d.height - this
 				.getSize().height) / 2);
+		this.initPane();
 		this.spArticles = new JScrollPane();
 		this.spArticles.setSize(ViewConstants.ARTLINK_WIDTH,
 				ViewConstants.ARTLINK_HEIGTH - 40);
@@ -64,9 +63,9 @@ public class ArticleLinkView extends Dialog implements Observer {
 				setVisible(false);
 			}
 		});
-		this.add(spArticles);
-		this.add(btConfirm);
-		this.add(btCancel);
+		this.getPane().add(spArticles);
+		this.getPane().add(btConfirm);
+		this.getPane().add(btCancel);
 	}
 
 	@Override
@@ -82,5 +81,10 @@ public class ArticleLinkView extends Dialog implements Observer {
 		}
 		TableModel model = new TableModel(rowData, names);
 		this.tbArticles.setModel(model);
+	}
+
+	@Override
+	public void run() {
+		init();
 	}
 }

@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+
+import javax.swing.SwingUtilities;
+
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.extra.Upload;
 import de.knowhow.model.ArticleList;
@@ -42,6 +45,7 @@ public class AttachmentListController implements Observer {
 	public void loadGUI() {
 		attachArtView = new AttachmentForArticleView(this);
 		attachArtView.setVisible(false);
+		SwingUtilities.invokeLater(attachArtView);
 		al.addObserver(attachArtView);
 		mc.getAcl().addObserver(this);
 	}

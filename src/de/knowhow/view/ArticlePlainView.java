@@ -10,7 +10,7 @@ import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.ArticleListController;
 import de.knowhow.model.ArticleList;
 
-public class ArticlePlainView extends JPanel implements Observer {
+public class ArticlePlainView extends JPanel implements Observer, Runnable {
 
 	private static final long serialVersionUID = 1L;
 	private JScrollPane contentScrollPane;
@@ -21,7 +21,6 @@ public class ArticlePlainView extends JPanel implements Observer {
 	public ArticlePlainView(ArticleListController acl) {
 		super();
 		this.acl = acl;
-		init();
 	}
 
 	private void init() {
@@ -104,5 +103,10 @@ public class ArticlePlainView extends JPanel implements Observer {
 				ta_content.getText().length());
 		ta_content.setText(newContent);
 		ta_content.setCaretPosition(0);
+	}
+
+	@Override
+	public void run() {
+		init();
 	}
 }

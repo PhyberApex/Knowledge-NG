@@ -5,7 +5,7 @@ import javax.swing.JTextField;
 
 public class Textfield extends JTextField {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1564L;
 
 	public Textfield(String text) {
 		super(text);

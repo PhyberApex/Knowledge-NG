@@ -12,7 +12,7 @@ import de.knowhow.model.gui.Button;
 import de.knowhow.model.gui.Dialog;
 import de.knowhow.model.gui.TextArea;
 
-public class CSSPlainEditView extends Dialog implements Observer {
+public class CSSPlainEditView extends Dialog implements Observer, Runnable {
 
 	private static final long serialVersionUID = 1L;
 	private CSSController csc;
@@ -24,16 +24,14 @@ public class CSSPlainEditView extends Dialog implements Observer {
 	public CSSPlainEditView(CSSController csc) {
 		super();
 		this.csc = csc;
-		this.setLayout(null);
-		init();
 	}
 
 	public void init() {
 		this.setSize(ViewConstants.CSSPLAIN_WIDTH,
 				ViewConstants.CSSPLAIN_HEIGTH);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		this.setLocation((d.width - this.getSize().width) / 2, (d.height - this
-				.getSize().height) / 2);
+		this.setLocation((d.width - this.getSize().width) / 2,
+				(d.height - this.getSize().height) / 2);
 		this.spCSS = new JScrollPane();
 		this.spCSS.setSize(this.getWidth() - 20, this.getHeight() - 50);
 		this.spCSS.setLocation(10, 10);
@@ -43,8 +41,8 @@ public class CSSPlainEditView extends Dialog implements Observer {
 		this.spCSS.setViewportView(this.taCSS);
 		this.btConfirm = new Button(Constants.getText("button.confirm"));
 		this.btConfirm.setSize(this.getWidth() / 2 - 40, 20);
-		this.btConfirm.setLocation(20, this.spCSS.getY()
-				+ this.spCSS.getHeight() + 10);
+		this.btConfirm.setLocation(20,
+				this.spCSS.getY() + this.spCSS.getHeight() + 10);
 		this.btConfirm.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				csc.confirm(taCSS.getText());
@@ -60,13 +58,18 @@ public class CSSPlainEditView extends Dialog implements Observer {
 				setVisible(false);
 			}
 		});
-		this.add(spCSS);
-		this.add(this.btConfirm);
-		this.add(this.btCancel);
+		this.getPane().add(spCSS);
+		this.getPane().add(this.btConfirm);
+		this.getPane().add(this.btCancel);
 	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		taCSS.setText(csc.getStyleSheet());
+	}
+
+	@Override
+	public void run() {
+		init();
 	}
 }

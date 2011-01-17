@@ -33,6 +33,7 @@ public class SubtopicView extends Dialog implements Runnable {
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation((d.width - this.getSize().width) / 2, (d.height - this
 				.getSize().height) / 2);
+		this.initPane();
 		this.cbTopic = new ComboBox();
 		this.cbTopic.setSize(this.getWidth() - 40, 25);
 		this.cbTopic.setLocation(20, 10);
@@ -61,16 +62,13 @@ public class SubtopicView extends Dialog implements Runnable {
 				dispose();
 			}
 		});
-		this.add(this.cbTopic);
-		this.add(this.btConfirm);
-		this.add(this.btCancel);
+		this.getPane().add(this.cbTopic);
+		this.getPane().add(this.btConfirm);
+		this.getPane().add(this.btCancel);
 	}
 
 	@Override
 	public void run() {
-		this.setLayout(null);
 		init();
-		this.setVisible(true);
-		this.setAlwaysOnTop(true);
 	}
 }

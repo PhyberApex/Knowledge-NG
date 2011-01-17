@@ -2,6 +2,7 @@ package de.knowhow.controller;
 
 import java.util.ArrayList;
 import java.util.Observer;
+import javax.swing.SwingUtilities;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.Article;
 import de.knowhow.model.ArticleList;
@@ -43,10 +44,14 @@ public class ArticleListController {
 	public void loadGUI() {
 		renderView = new ArticleRenderView(this, this.attachcl, this.csc);
 		renderView.setVisible(true);
+		SwingUtilities.invokeLater(renderView);
 		plainView = new ArticlePlainView(this);
 		plainView.setVisible(false);
+		SwingUtilities.invokeLater(plainView);
 		artRename = new ArticleRenameView(this);
+		//SwingUtilities.invokeLater(artRename);
 		artLink = new ArticleLinkView(this);
+		SwingUtilities.invokeLater(artLink);
 		al.addObserver(plainView);
 		al.addObserver(renderView);
 		al.addObserver(artRename);

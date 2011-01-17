@@ -14,7 +14,7 @@ import de.knowhow.model.gui.MenuItem;
 import de.knowhow.model.gui.RadioButtonMenuItem;
 import de.knowhow.model.gui.Textfield;
 
-public class MenuView extends JMenuBar {
+public class MenuView extends JMenuBar implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 	private JMenu file;
@@ -65,7 +65,6 @@ public class MenuView extends JMenuBar {
 	public MenuView(MainController mc) {
 		super();
 		this.mc = mc;
-		init();
 	}
 
 	public void init() {
@@ -77,8 +76,8 @@ public class MenuView extends JMenuBar {
 			}
 		});
 		file.add(newArticle);
-		deleteArticle = new MenuItem(Constants
-				.getText("menu.file.deleteArticle"));
+		deleteArticle = new MenuItem(
+				Constants.getText("menu.file.deleteArticle"));
 		deleteArticle.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				mc.deleteArticle();
@@ -157,8 +156,8 @@ public class MenuView extends JMenuBar {
 		});
 		file.add(close);
 		edit = new Menu(Constants.getText("menu.edit"));
-		renameArticle = new MenuItem(Constants
-				.getText("menu.edit.renameArticle"));
+		renameArticle = new MenuItem(
+				Constants.getText("menu.edit.renameArticle"));
 		renameArticle.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				mc.renameArticle();
@@ -209,8 +208,8 @@ public class MenuView extends JMenuBar {
 		edit.add(insertList);
 		insertLink = new Menu(Constants.getText("menu.edit.insertLink"));
 
-		insertLinkArticle = new MenuItem(Constants
-				.getText("menu.edit.insertLink.article"));
+		insertLinkArticle = new MenuItem(
+				Constants.getText("menu.edit.insertLink.article"));
 		insertLinkArticle
 				.addActionListener(new java.awt.event.ActionListener() {
 					public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -218,16 +217,16 @@ public class MenuView extends JMenuBar {
 					}
 				});
 		insertLink.add(insertLinkArticle);
-		insertLinkImage = new MenuItem(Constants
-				.getText("menu.edit.insertLink.image"));
+		insertLinkImage = new MenuItem(
+				Constants.getText("menu.edit.insertLink.image"));
 		insertLinkImage.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				mc.insertLink("Image");
 			}
 		});
 		insertLink.add(insertLinkImage);
-		insertLinkFile = new MenuItem(Constants
-				.getText("menu.edit.insertLink.file"));
+		insertLinkFile = new MenuItem(
+				Constants.getText("menu.edit.insertLink.file"));
 		insertLinkFile.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				mc.insertLink("File");
@@ -305,8 +304,8 @@ public class MenuView extends JMenuBar {
 		prefs.add(res);
 		this.database = new Menu(Constants.getText("keyword.database"));
 		ButtonGroup databaseGroup = new ButtonGroup();
-		this.sqlite = new RadioButtonMenuItem(Constants
-				.getText("menu.prefs.database.sqlite"));
+		this.sqlite = new RadioButtonMenuItem(
+				Constants.getText("menu.prefs.database.sqlite"));
 		this.sqlite.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				mc.changeDatabase("1");
@@ -314,8 +313,8 @@ public class MenuView extends JMenuBar {
 		});
 		databaseGroup.add(this.sqlite);
 		this.database.add(this.sqlite);
-		this.mysql = new RadioButtonMenuItem(Constants
-				.getText("menu.prefs.database.mysql"));
+		this.mysql = new RadioButtonMenuItem(
+				Constants.getText("menu.prefs.database.mysql"));
 		this.mysql.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				mc.changeDatabase("2");
@@ -340,8 +339,9 @@ public class MenuView extends JMenuBar {
 			}
 		});
 		this.help.add(about);
-		this.bt_plain = new JButton(new ImageIcon(ClassLoader
-				.getSystemResource("de/knowhow/resource/img/plain.PNG")));
+		this.bt_plain = new JButton(
+				new ImageIcon(ClassLoader
+						.getSystemResource("de/knowhow/resource/img/plain.PNG")));
 		this.bt_plain.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				mc.setPlainVisible(true);
@@ -351,8 +351,10 @@ public class MenuView extends JMenuBar {
 				bt_plain.setEnabled(false);
 			}
 		});
-		this.bt_render = new JButton(new ImageIcon(ClassLoader
-				.getSystemResource("de/knowhow/resource/img/render.PNG")));
+		this.bt_render = new JButton(
+				new ImageIcon(
+						ClassLoader
+								.getSystemResource("de/knowhow/resource/img/render.PNG")));
 		this.bt_render.setEnabled(false);
 		this.bt_render.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -387,5 +389,10 @@ public class MenuView extends JMenuBar {
 		this.insertCode.setEnabled(b);
 		this.insertList.setEnabled(b);
 		this.insertLink.setEnabled(b);
+	}
+
+	@Override
+	public void run() {
+		init();
 	}
 }

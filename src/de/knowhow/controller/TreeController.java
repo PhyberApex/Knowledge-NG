@@ -1,6 +1,8 @@
 package de.knowhow.controller;
 
 import java.util.ArrayList;
+
+import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import de.knowhow.model.Article;
 import de.knowhow.model.Topic;
@@ -27,6 +29,7 @@ public class TreeController {
 
 	public void loadGUI() {
 		this.treeV = new TreeView(this);
+		SwingUtilities.invokeLater(treeV);
 		this.tcl.addObserver(this.treeV);
 		this.acl.addObserver(this.treeV);
 	}
