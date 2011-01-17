@@ -238,6 +238,9 @@ public class MenuView extends JMenuBar implements Runnable {
 		lang = new Menu(Constants.getText("menu.prefs.lang"));
 		ButtonGroup langGroup = new ButtonGroup();
 		RadioButtonMenuItem langDE = new RadioButtonMenuItem("Deutsch");
+		langDE.setIcon(new ImageIcon(
+				ClassLoader
+						.getSystemResource("de/knowhow/resource/img/country/de_DE_Icon.png")));
 		if (Constants.getBundle().getLocale().getLanguage().equals("de")) {
 			langDE.setSelected(true);
 		}
@@ -249,6 +252,9 @@ public class MenuView extends JMenuBar implements Runnable {
 		langGroup.add(langDE);
 		lang.add(langDE);
 		RadioButtonMenuItem langEN = new RadioButtonMenuItem("English");
+		langEN.setIcon(new ImageIcon(
+				ClassLoader
+						.getSystemResource("de/knowhow/resource/img/country/en_EN_Icon.png")));
 		if (Constants.getBundle().getLocale().getLanguage().equals("en")) {
 			langEN.setSelected(true);
 		}
