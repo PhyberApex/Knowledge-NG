@@ -11,6 +11,8 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 import de.knowhow.base.Config;
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
@@ -39,8 +41,10 @@ public class MainController {
 	private MenuView menuV;
 	private Config config;
 	public static Splash splash;
+	private static Logger logger = Logger.getRootLogger();
 
 	public MainController() {
+		DOMConfigurator.configure("logger.xml");
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -52,7 +56,6 @@ public class MainController {
 			// If Nimbus is not available, you can set the GUI to another look
 			// and feel.
 		}
-
 		config = new Config();
 		Constants.setLanguage(new Locale(config.getProperty("lang")));
 		ViewConstants.reload(config);
@@ -77,8 +80,9 @@ public class MainController {
 		}
 		try {
 			db.openDB();
-		} catch (DatabaseException e1) {
-			error(e1);
+		} catch (DatabaseException e) {
+			error(e);
+			logger.error("Database Exception " + e.getMessage());
 		}
 		db.checkDB();
 		this.csc = new CSSController(this.db, this);
@@ -100,6 +104,7 @@ public class MainController {
 			attL.cacheImages();
 		} catch (DatabaseException e) {
 			error(e);
+			logger.error("Database Exception " + e.getMessage());
 		}
 		splash.showStatus(Constants.getText("splash.paint"), 85);
 		this.csc.loadGUI();
@@ -136,7 +141,8 @@ public class MainController {
 				tcl.confirm(action);
 			}
 		} catch (DatabaseException e) {
-			mv.error(e);
+			error(e);
+			logger.error("Database Exception " + e.getMessage());
 		}
 	}
 
@@ -367,6 +373,7 @@ public class MainController {
 	public void editCSS(String string) {
 		if (string.equals("plain")) {
 			csc.getPlainView().setVisible(true);
+			logger.debug("Starting CSS Editor");
 		} else if (string.equals("assist")) {
 			// TODO assisted CSSEditor
 		}
