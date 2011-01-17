@@ -70,6 +70,9 @@ public class MenuView extends JMenuBar implements Runnable {
 	public void init() {
 		file = new Menu(Constants.getText("menu.file"));
 		newArticle = new MenuItem(Constants.getText("menu.file.newArticle"));
+		newArticle.setIcon(new ImageIcon(
+				ClassLoader
+						.getSystemResource("de/knowhow/resource/img/icon/add_file.png")));
 		newArticle.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				mc.newArticle();
@@ -78,6 +81,9 @@ public class MenuView extends JMenuBar implements Runnable {
 		file.add(newArticle);
 		deleteArticle = new MenuItem(
 				Constants.getText("menu.file.deleteArticle"));
+		deleteArticle.setIcon(new ImageIcon(
+				ClassLoader
+						.getSystemResource("de/knowhow/resource/img/icon/delete_file.png")));
 		deleteArticle.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				mc.deleteArticle();
@@ -85,6 +91,9 @@ public class MenuView extends JMenuBar implements Runnable {
 		});
 		file.add(deleteArticle);
 		newTopic = new MenuItem(Constants.getText("menu.file.newTopic"));
+		newTopic.setIcon(new ImageIcon(
+				ClassLoader
+						.getSystemResource("de/knowhow/resource/img/icon/add_folder.png")));
 		newTopic.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				mc.newTopic();
@@ -93,6 +102,9 @@ public class MenuView extends JMenuBar implements Runnable {
 		file.addSeparator();
 		file.add(newTopic);
 		deleteTopic = new MenuItem(Constants.getText("menu.file.deleteTopic"));
+		deleteTopic.setIcon(new ImageIcon(
+				ClassLoader
+						.getSystemResource("de/knowhow/resource/img/icon/delete_folder.png")));
 		deleteTopic.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				mc.deleteTopic();
