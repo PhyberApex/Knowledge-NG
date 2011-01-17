@@ -49,7 +49,7 @@ public class ArticleListController {
 		plainView.setVisible(false);
 		SwingUtilities.invokeLater(plainView);
 		artRename = new ArticleRenameView(this);
-		//SwingUtilities.invokeLater(artRename);
+		// SwingUtilities.invokeLater(artRename);
 		artLink = new ArticleLinkView(this);
 		SwingUtilities.invokeLater(artLink);
 		al.addObserver(plainView);
