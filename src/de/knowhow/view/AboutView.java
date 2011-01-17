@@ -35,7 +35,7 @@ public class AboutView extends Dialog implements Runnable {
 				(d.height - this.getSize().height) / 2);
 		this.initPane();
 		this.lbLogo = new JLabel(new ImageIcon(ClassLoader
-				.getSystemResource("de/knowhow/resource/img/logo.PNG")));
+				.getSystemResource("de/knowhow/resource/img/logo.png")));
 		this.lbLogo.setSize(this.lbLogo.getPreferredSize());
 		this.lbLogo.setLocation(this.getWidth() - this.lbLogo.getWidth() - 10,
 				20);
