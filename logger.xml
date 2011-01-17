@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC
+"http://logging.apache.org/log4j/docs/api/org/apache/log4j/xml/log4j.dtd">
+<log4j:configuration>
+  <!-- Appender für eine einzeilige Ausgabe an der Konsole -->
+  <appender name="RollingFileAppender" class="RollingFileAppender">
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern"
+        value="%d{ABSOLUTE} %5p %c{1}:%L - %m%n" />
+    </layout>
+  </appender>
+ 
+  <!-- FATAL-Logger für die gesamte Applikation (inkl. Bibliotheken) -->
+  <root>
+    <level value="debug" />
+ 
+    <!-- loggt auf Konsole - wenn nicht in Sub-Loggern anders definiert -->
+    <appender-ref ref="RollingFileAppender" />
+  </root>
+</log4j:configuration>
