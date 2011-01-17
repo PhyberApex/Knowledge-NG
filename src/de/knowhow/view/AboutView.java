@@ -6,12 +6,8 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-<<<<<<< .mine
-=======
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
->>>>>>> .r65
 import de.knowhow.base.Constants;
 import de.knowhow.model.gui.Button;
 import de.knowhow.model.gui.Dialog;
@@ -43,7 +39,7 @@ public class AboutView extends Dialog implements Runnable {
 		this.lbLogo.setSize(this.lbLogo.getPreferredSize());
 		this.lbLogo.setLocation(this.getWidth() - this.lbLogo.getWidth() - 10,
 				20);
-		this.contentPane.add(lbLogo);
+		this.getPane().add(lbLogo);
 		this.lbAppName = new Label("Appliaction Name: "
 				+ Constants.getAppName());
 		this.lbAppName.setSize(this.lbAppName.getPreferredSize());
