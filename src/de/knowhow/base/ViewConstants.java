@@ -1,5 +1,8 @@
 package de.knowhow.base;
 
+/**
+ * This class holds all the positions of the view elements
+ */
 public class ViewConstants {
 
 	// Splash-Screen

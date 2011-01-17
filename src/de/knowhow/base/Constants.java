@@ -1,4 +1,7 @@
 package de.knowhow.base;
+/**
+ * This class holds the basic information for this application
+ */
 
 import java.util.Calendar;
 import java.util.Locale;

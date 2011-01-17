@@ -14,7 +14,7 @@ import de.knowhow.model.gui.Dialog;
 import de.knowhow.model.gui.Label;
 import de.knowhow.model.gui.Textfield;
 
-public class ArticleRenameView extends Dialog implements Observer{
+public class ArticleRenameView extends Dialog implements Observer, Runnable {
 
 	private static final long serialVersionUID = 1L;
 	private ArticleListController acl;
@@ -26,25 +26,23 @@ public class ArticleRenameView extends Dialog implements Observer{
 	public ArticleRenameView(ArticleListController acl) {
 		super();
 		this.acl = acl;
-		init();
 	}
 
 	private void init() {
 		this.setSize(ViewConstants.RENAME_WIDTH, ViewConstants.RENAME_HEIGTH);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		this.setLocation((d.width - this.getSize().width) / 2, (d.height - this
-				.getSize().height) / 2);
+		this.setLocation((d.width - this.getSize().width) / 2,
+				(d.height - this.getSize().height) / 2);
 		this.initPane();
 		this.lbname = new Label(Constants.getText("keyword.article"));
 		this.lbname.setSize(50, 25);
-		this.lbname.setLocation(10, ((this.getHeight() - 30) / 2)
-				- (lbname.getHeight() / 2));
+		this.lbname.setLocation(10,
+				((this.getHeight() - 30) / 2) - (lbname.getHeight() / 2));
 		this.tfname = new Textfield(Constants.getText("renameArticle.tfname"));
 		this.tfname.setSize(ViewConstants.RENAME_WIDTH - lbname.getWidth()
 				- lbname.getX() - 10, 25);
-		this.tfname.setLocation(lbname.getX() + lbname.getWidth() + 5, ((this
-				.getHeight() - 30) / 2)
-				- (lbname.getHeight() / 2));
+		this.tfname.setLocation(lbname.getX() + lbname.getWidth() + 5,
+				((this.getHeight() - 30) / 2) - (lbname.getHeight() / 2));
 		this.confirm = new Button(Constants.getText("button.confirm"));
 		this.confirm.setSize(ViewConstants.RENAME_WIDTH / 2 - 20, 20);
 		this.confirm.setLocation(10, ViewConstants.RENAME_HEIGTH - 30);
@@ -60,8 +58,9 @@ public class ArticleRenameView extends Dialog implements Observer{
 		});
 		this.cancel = new Button(Constants.getText("button.cancel"));
 		this.cancel.setSize(ViewConstants.RENAME_WIDTH / 2 - 20, 20);
-		this.cancel.setLocation(ViewConstants.RENAME_WIDTH - 10
-				- this.cancel.getWidth(), ViewConstants.RENAME_HEIGTH - 30);
+		this.cancel.setLocation(
+				ViewConstants.RENAME_WIDTH - 10 - this.cancel.getWidth(),
+				ViewConstants.RENAME_HEIGTH - 30);
 		this.cancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				setVisible(false);
@@ -83,5 +82,10 @@ public class ArticleRenameView extends Dialog implements Observer{
 
 	public String getArtName() {
 		return tfname.getText();
+	}
+
+	@Override
+	public void run() {
+		init();
 	}
 }

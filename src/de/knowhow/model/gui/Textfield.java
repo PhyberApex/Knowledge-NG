@@ -9,6 +9,6 @@ public class Textfield extends JTextField {
 
 	public Textfield(String text) {
 		super(text);
-		this.setFont(new Font("Verdana", Font.PLAIN, 12));
+		this.setFont(new Font("Verdana", Font.PLAIN, 11));
 	}
 }

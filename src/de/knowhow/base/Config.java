@@ -1,5 +1,9 @@
 package de.knowhow.base;
 
+/**
+ * Class for handling with the configuration file
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -10,31 +14,29 @@ import java.util.Properties;
 public class Config {
 
 	private Properties prop;
-	private boolean created = false;
-	
+
 	public Config() {
 		FileReader reader = null;
+		this.prop = new Properties();
+		// Read file if exist, if not create it
 		try {
 			reader = new FileReader("knowledge.cfg");
 		} catch (FileNotFoundException e) {
 			File prop = new File("knowledge.cfg");
 			try {
+				// Create file and set default values
 				prop.createNewFile();
 				reader = new FileReader("knowledge.cfg");
-				created = true;
+				this.prop.setProperty("databasetyp", "1");
+				this.prop.setProperty("resolution", "1");
+				this.prop.setProperty("lang", "EN");
+				this.prop.setProperty("defaultdb", "knowledge.db");
+				saveChanges();
 			} catch (IOException e1) {
 			}
 		}
-		this.prop = new Properties();
 		try {
 			this.prop.load(reader);
-			if (this.created){
-				prop.setProperty("databasetyp", "1");
-				prop.setProperty("resolution", "1");
-				prop.setProperty("lang", "EN");
-				prop.setProperty("defaultdb", "knowledge.db");
-				saveChanges();
-			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -48,6 +50,7 @@ public class Config {
 		return this.prop.getProperty(key);
 	}
 
+	//This method writes all changes to the file
 	public void saveChanges() {
 		FileWriter writer = null;
 		try {
