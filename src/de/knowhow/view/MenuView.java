@@ -168,6 +168,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		file.add(export);
 		file.addSeparator();
 		newDatabase = new MenuItem(Constants.getText("menu.file.newDatabase"));
+		newDatabase.setIcon(new ImageIcon(ClassLoader
+				.getSystemResource("de/knowhow/resource/img/icon/new_db.png")));
 		newDatabase.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("new database clicked");
@@ -179,6 +181,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		}
 		file.add(newDatabase);
 		openDatabase = new MenuItem(Constants.getText("menu.file.openDatabase"));
+		openDatabase.setIcon(new ImageIcon(ClassLoader
+				.getSystemResource("de/knowhow/resource/img/icon/open_db.png")));
 		openDatabase.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("open database clicked");
@@ -426,6 +430,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		this.prefs.add(this.database);
 		this.help = new Menu(Constants.getText("menu.help"));
 		this.about = new MenuItem(Constants.getText("menu.help.about"));
+		this.about.setIcon(new ImageIcon(ClassLoader
+				.getSystemResource("de/knowhow/resource/img/icon/about.png")));
 		this.about.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("about clicked");
