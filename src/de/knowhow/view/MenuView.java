@@ -112,6 +112,9 @@ public class MenuView extends JMenuBar implements Runnable {
 		});
 		file.add(deleteTopic);
 		upload = new Menu(Constants.getText("menu.file.upload"));
+		upload.setIcon(new ImageIcon(
+				ClassLoader
+						.getSystemResource("de/knowhow/resource/img/icon/upload.png")));
 		uploadImage = new MenuItem(Constants.getText("menu.file.upload.image"));
 		uploadImage.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -130,6 +133,9 @@ public class MenuView extends JMenuBar implements Runnable {
 		file.add(upload);
 		file.addSeparator();
 		export = new Menu(Constants.getText("menu.file.export"));
+		export.setIcon(new ImageIcon(
+				ClassLoader
+						.getSystemResource("de/knowhow/resource/img/icon/export.png")));
 		exportHTML = new MenuItem(Constants.getText("menu.file.export.HTML"));
 		exportHTML.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -161,6 +167,9 @@ public class MenuView extends JMenuBar implements Runnable {
 		file.add(openDatabase);
 		file.addSeparator();
 		close = new MenuItem(Constants.getText("menu.file.close"));
+		close.setIcon(new ImageIcon(
+				ClassLoader
+						.getSystemResource("de/knowhow/resource/img/icon/close.png")));
 		close.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				mc.exit();
@@ -192,6 +201,9 @@ public class MenuView extends JMenuBar implements Runnable {
 		edit.add(subtopic);
 		edit.addSeparator();
 		css = new Menu(Constants.getText("menu.edit.css"));
+		css.setIcon(new ImageIcon(
+				ClassLoader
+						.getSystemResource("de/knowhow/resource/img/icon/css.png")));
 		plainCSS = new MenuItem(Constants.getText("menu.edit.css.plain"));
 		plainCSS.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -248,6 +260,9 @@ public class MenuView extends JMenuBar implements Runnable {
 		edit.add(insertLink);
 		prefs = new Menu(Constants.getText("menu.prefs"));
 		lang = new Menu(Constants.getText("menu.prefs.lang"));
+		lang.setIcon(new ImageIcon(
+				ClassLoader
+						.getSystemResource("de/knowhow/resource/img/icon/prefs_language.png")));
 		ButtonGroup langGroup = new ButtonGroup();
 		RadioButtonMenuItem langDE = new RadioButtonMenuItem("Deutsch");
 		langDE.setIcon(new ImageIcon(
@@ -279,6 +294,9 @@ public class MenuView extends JMenuBar implements Runnable {
 		lang.add(langEN);
 		prefs.add(lang);
 		res = new Menu(Constants.getText("menu.prefs.res"));
+		res.setIcon(new ImageIcon(
+				ClassLoader
+						.getSystemResource("de/knowhow/resource/img/icon/prefs_resolution.png")));
 		ButtonGroup resGroup = new ButtonGroup();
 		RadioButtonMenuItem res600 = new RadioButtonMenuItem("600x480");
 		resGroup.add(res600);
@@ -321,6 +339,9 @@ public class MenuView extends JMenuBar implements Runnable {
 		}
 		prefs.add(res);
 		this.database = new Menu(Constants.getText("keyword.database"));
+		database.setIcon(new ImageIcon(
+				ClassLoader
+						.getSystemResource("de/knowhow/resource/img/icon/prefs_database.png")));
 		ButtonGroup databaseGroup = new ButtonGroup();
 		this.sqlite = new RadioButtonMenuItem(
 				Constants.getText("menu.prefs.database.sqlite"));
