@@ -5,6 +5,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+
+import org.apache.log4j.Logger;
+
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.MainController;
@@ -51,6 +54,7 @@ public class MenuView extends JMenuBar implements Runnable {
 	private Menu database;
 	private RadioButtonMenuItem sqlite;
 	private RadioButtonMenuItem mysql;
+	private MenuItem mysql_change;
 
 	private Menu help;
 	private MenuItem about;
@@ -62,6 +66,8 @@ public class MenuView extends JMenuBar implements Runnable {
 
 	private MainController mc;
 
+	private static Logger logger = Logger.getLogger(MenuView.class.getName());
+
 	public MenuView(MainController mc) {
 		super();
 		this.mc = mc;
@@ -70,22 +76,26 @@ public class MenuView extends JMenuBar implements Runnable {
 	public void init() {
 		file = new Menu(Constants.getText("menu.file"));
 		newArticle = new MenuItem(Constants.getText("menu.file.newArticle"));
-		newArticle.setIcon(new ImageIcon(
-				ClassLoader
-						.getSystemResource("de/knowhow/resource/img/icon/add_file.png")));
+		newArticle
+				.setIcon(new ImageIcon(
+						ClassLoader
+								.getSystemResource("de/knowhow/resource/img/icon/add_file.png")));
 		newArticle.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("new article clicked");
 				mc.newArticle();
 			}
 		});
 		file.add(newArticle);
 		deleteArticle = new MenuItem(
 				Constants.getText("menu.file.deleteArticle"));
-		deleteArticle.setIcon(new ImageIcon(
-				ClassLoader
-						.getSystemResource("de/knowhow/resource/img/icon/delete_file.png")));
+		deleteArticle
+				.setIcon(new ImageIcon(
+						ClassLoader
+								.getSystemResource("de/knowhow/resource/img/icon/delete_file.png")));
 		deleteArticle.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("delete article clicked");
 				mc.deleteArticle();
 			}
 		});
@@ -96,35 +106,47 @@ public class MenuView extends JMenuBar implements Runnable {
 						.getSystemResource("de/knowhow/resource/img/icon/add_folder.png")));
 		newTopic.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("new topic clicked");
 				mc.newTopic();
 			}
 		});
 		file.addSeparator();
 		file.add(newTopic);
 		deleteTopic = new MenuItem(Constants.getText("menu.file.deleteTopic"));
-		deleteTopic.setIcon(new ImageIcon(
-				ClassLoader
-						.getSystemResource("de/knowhow/resource/img/icon/delete_folder.png")));
+		deleteTopic
+				.setIcon(new ImageIcon(
+						ClassLoader
+								.getSystemResource("de/knowhow/resource/img/icon/delete_folder.png")));
 		deleteTopic.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("delete topic clicked");
 				mc.deleteTopic();
 			}
 		});
 		file.add(deleteTopic);
 		upload = new Menu(Constants.getText("menu.file.upload"));
-		upload.setIcon(new ImageIcon(
-				ClassLoader
-						.getSystemResource("de/knowhow/resource/img/icon/upload.png")));
+		upload.setIcon(new ImageIcon(ClassLoader
+				.getSystemResource("de/knowhow/resource/img/icon/upload.png")));
 		uploadImage = new MenuItem(Constants.getText("menu.file.upload.image"));
+		uploadImage
+				.setIcon(new ImageIcon(
+						ClassLoader
+								.getSystemResource("de/knowhow/resource/img/icon/upload_image.png")));
 		uploadImage.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("upload image clicked");
 				mc.upload(true);
 			}
 		});
 		upload.add(uploadImage);
 		uploadFile = new MenuItem(Constants.getText("menu.file.upload.file"));
+		uploadFile
+				.setIcon(new ImageIcon(
+						ClassLoader
+								.getSystemResource("de/knowhow/resource/img/icon/upload_file.png")));
 		uploadFile.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("upload file clicked");
 				mc.upload(false);
 			}
 		});
@@ -133,12 +155,12 @@ public class MenuView extends JMenuBar implements Runnable {
 		file.add(upload);
 		file.addSeparator();
 		export = new Menu(Constants.getText("menu.file.export"));
-		export.setIcon(new ImageIcon(
-				ClassLoader
-						.getSystemResource("de/knowhow/resource/img/icon/export.png")));
+		export.setIcon(new ImageIcon(ClassLoader
+				.getSystemResource("de/knowhow/resource/img/icon/export.png")));
 		exportHTML = new MenuItem(Constants.getText("menu.file.export.HTML"));
 		exportHTML.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("export to HTML clicked");
 				mc.export("HTML");
 			}
 		});
@@ -148,6 +170,7 @@ public class MenuView extends JMenuBar implements Runnable {
 		newDatabase = new MenuItem(Constants.getText("menu.file.newDatabase"));
 		newDatabase.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("new database clicked");
 				mc.newDatabase();
 			}
 		});
@@ -158,6 +181,7 @@ public class MenuView extends JMenuBar implements Runnable {
 		openDatabase = new MenuItem(Constants.getText("menu.file.openDatabase"));
 		openDatabase.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("open database clicked");
 				mc.newDatabase();
 			}
 		});
@@ -167,11 +191,11 @@ public class MenuView extends JMenuBar implements Runnable {
 		file.add(openDatabase);
 		file.addSeparator();
 		close = new MenuItem(Constants.getText("menu.file.close"));
-		close.setIcon(new ImageIcon(
-				ClassLoader
-						.getSystemResource("de/knowhow/resource/img/icon/close.png")));
+		close.setIcon(new ImageIcon(ClassLoader
+				.getSystemResource("de/knowhow/resource/img/icon/close.png")));
 		close.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("exit clicked");
 				mc.exit();
 			}
 		});
@@ -181,6 +205,7 @@ public class MenuView extends JMenuBar implements Runnable {
 				Constants.getText("menu.edit.renameArticle"));
 		renameArticle.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("rename article clicked");
 				mc.renameArticle();
 			}
 		});
@@ -188,6 +213,7 @@ public class MenuView extends JMenuBar implements Runnable {
 		renameTopic = new MenuItem(Constants.getText("menu.edit.renameTopic"));
 		renameTopic.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("rename topic clicked");
 				mc.renameTopic();
 			}
 		});
@@ -195,18 +221,19 @@ public class MenuView extends JMenuBar implements Runnable {
 		this.subtopic = new MenuItem(Constants.getText("menu.edit.subtopic"));
 		this.subtopic.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("make subtopic clicked");
 				mc.subTopic();
 			}
 		});
 		edit.add(subtopic);
 		edit.addSeparator();
 		css = new Menu(Constants.getText("menu.edit.css"));
-		css.setIcon(new ImageIcon(
-				ClassLoader
-						.getSystemResource("de/knowhow/resource/img/icon/css.png")));
+		css.setIcon(new ImageIcon(ClassLoader
+				.getSystemResource("de/knowhow/resource/img/icon/css.png")));
 		plainCSS = new MenuItem(Constants.getText("menu.edit.css.plain"));
 		plainCSS.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("css plain editor clicked");
 				mc.editCSS("plain");
 			}
 		});
@@ -219,6 +246,7 @@ public class MenuView extends JMenuBar implements Runnable {
 		insertCode = new MenuItem(Constants.getText("menu.edit.insertCode"));
 		insertCode.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("insert HTML tag \"<code>\" clicked");
 				mc.insertHTML("CODE");
 			}
 		});
@@ -226,17 +254,18 @@ public class MenuView extends JMenuBar implements Runnable {
 		insertList = new MenuItem(Constants.getText("menu.edit.insertList"));
 		insertList.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("insert HTML tag \"<ul>\" clicked");
 				mc.insertHTML("LIST");
 			}
 		});
 		edit.add(insertList);
 		insertLink = new Menu(Constants.getText("menu.edit.insertLink"));
-
 		insertLinkArticle = new MenuItem(
 				Constants.getText("menu.edit.insertLink.article"));
 		insertLinkArticle
 				.addActionListener(new java.awt.event.ActionListener() {
 					public void actionPerformed(java.awt.event.ActionEvent e) {
+						logger.debug("insert HTML tag \"<a>\" with article clicked");
 						mc.insertLink("Article");
 					}
 				});
@@ -245,6 +274,7 @@ public class MenuView extends JMenuBar implements Runnable {
 				Constants.getText("menu.edit.insertLink.image"));
 		insertLinkImage.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("insert HTML tag \"<a>\" with image clicked");
 				mc.insertLink("Image");
 			}
 		});
@@ -253,6 +283,7 @@ public class MenuView extends JMenuBar implements Runnable {
 				Constants.getText("menu.edit.insertLink.file"));
 		insertLinkFile.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("insert HTML tag \"<a>\" with file clicked");
 				mc.insertLink("File");
 			}
 		});
@@ -273,6 +304,7 @@ public class MenuView extends JMenuBar implements Runnable {
 		}
 		langDE.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("change language to DE clicked");
 				mc.changeLanguage("DE");
 			}
 		});
@@ -287,6 +319,7 @@ public class MenuView extends JMenuBar implements Runnable {
 		}
 		langEN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("change language to EN clicked");
 				mc.changeLanguage("EN");
 			}
 		});
@@ -303,6 +336,7 @@ public class MenuView extends JMenuBar implements Runnable {
 		res.add(res600);
 		res600.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("change resolution to 1 clicked");
 				mc.changeResolution("1");
 			}
 		});
@@ -312,6 +346,7 @@ public class MenuView extends JMenuBar implements Runnable {
 		res.add(res800);
 		res800.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("change resolution to 2 clicked");
 				mc.changeResolution("2");
 			}
 		});
@@ -320,6 +355,7 @@ public class MenuView extends JMenuBar implements Runnable {
 		resGroup.add(res1024);
 		res1024.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("change resolution to 3 clicked");
 				mc.changeResolution("3");
 			}
 		});
@@ -347,6 +383,9 @@ public class MenuView extends JMenuBar implements Runnable {
 				Constants.getText("menu.prefs.database.sqlite"));
 		this.sqlite.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("change database to sqlite clicked");
+				sqlite.setEnabled(false);
+				mysql.setEnabled(true);
 				mc.changeDatabase("1");
 			}
 		});
@@ -356,25 +395,41 @@ public class MenuView extends JMenuBar implements Runnable {
 				Constants.getText("menu.prefs.database.mysql"));
 		this.mysql.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("change database to mysql clicked");
+				mysql.setEnabled(false);
+				sqlite.setEnabled(true);
 				mc.changeDatabase("2");
 			}
 		});
 		databaseGroup.add(this.mysql);
 		this.database.add(this.mysql);
+		this.mysql_change = new MenuItem(
+				Constants.getText("menu.prefs.database.mysql_change"));
+		this.mysql_change
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent e) {
+						logger.debug("change mysql details clicked");
+						mc.changeDatabase("2");
+					}
+				});
+		databaseGroup.add(this.mysql_change);
+		this.database.add(this.mysql_change);
 		if (Constants.getHost() != null) {
 			this.mysql.setSelected(true);
 			this.mysql.setEnabled(false);
+			this.mysql_change.setEnabled(true);
 		} else {
 			this.sqlite.setSelected(true);
 			this.sqlite.setEnabled(false);
+			this.mysql_change.setEnabled(false);
 		}
 		this.prefs.add(this.database);
 		this.help = new Menu(Constants.getText("menu.help"));
 		this.about = new MenuItem(Constants.getText("menu.help.about"));
 		this.about.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("about clicked");
 				mc.about();
-				;
 			}
 		});
 		this.help.add(about);
@@ -383,6 +438,7 @@ public class MenuView extends JMenuBar implements Runnable {
 						.getSystemResource("de/knowhow/resource/img/plain.PNG")));
 		this.bt_plain.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("plain article view clicked");
 				mc.setPlainVisible(true);
 				bt_render.setEnabled(true);
 				mc.setTopicChooserVisible(true);
@@ -397,6 +453,7 @@ public class MenuView extends JMenuBar implements Runnable {
 		this.bt_render.setEnabled(false);
 		this.bt_render.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("rendered article view clicked");
 				mc.setRenderVisible(true);
 				bt_plain.setEnabled(true);
 				mc.setTopicChooserVisible(false);

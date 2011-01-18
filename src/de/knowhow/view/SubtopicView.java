@@ -70,5 +70,6 @@ public class SubtopicView extends Dialog implements Runnable {
 	@Override
 	public void run() {
 		init();
+		this.setVisible(true);
 	}
 }

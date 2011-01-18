@@ -21,7 +21,7 @@
   <!-- FATAL-Logger für die gesamte Applikation (inkl. Bibliotheken) -->
   <root>
     <level value="debug" />
-    <appender-ref ref="Logfile" />
+   <!-- <appender-ref ref="Logfile" /> -->
     <appender-ref ref="Konsole" />
   </root>
 </log4j:configuration>

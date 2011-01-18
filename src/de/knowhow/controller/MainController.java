@@ -41,7 +41,7 @@ public class MainController {
 	private MenuView menuV;
 	private Config config;
 	public static Splash splash;
-	private static Logger logger = Logger.getRootLogger();
+	private static Logger logger = Logger.getLogger(MainController.class.getName());
 
 	public MainController() {
 		DOMConfigurator.configure("logger.xml");
