@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project KnowledgeNG with Jar-in-Jar Loader">
+	<!--this file was created by Eclipse Runnable JAR Export Wizard-->
+	<!--ANT 1.7 is required                                        -->
+	<property name="project-name" value="KnowledgeNG" />
+	<property name="folder-to-zip" value="build/1.2/content/" />
+
+	<target name="create_run_jar">
+		<jar destfile="${folder-to-zip}/KnowledgeNG.jar">
+			<manifest>
+				<attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader" />
+				<attribute name="Rsrc-Main-Class" value="de.knowhow.controller.MainController" />
+				<attribute name="Class-Path" value="." />
+				<attribute name="Rsrc-Class-Path" value="./ sqlitejdbc-v056.jar mysql-connector-java-5.1.13-bin.jar log4j-1.2.16.jar" />
+			</manifest>
+			<zipfileset src="jar-in-jar-loader.zip" />
+			<fileset dir="bin/" />
+			<zipfileset dir="libs/" includes="sqlitejdbc-v056.jar" />
+			<zipfileset dir="libs/" includes="mysql-connector-java-5.1.13-bin.jar" />
+			<zipfileset dir="libs/" includes="log4j-1.2.16.jar" />
+		</jar>
+		<copy todir="${folder-to-zip}" overwrite="true">
+			<fileset dir="">
+				<include name="logger.xml" />
+			</fileset>
+		</copy>
+		<delete file="build/1.2/${project-name}.zip" />
+		<zip destfile="build/1.2/${project-name}.zip" basedir="${folder-to-zip}" />
+	</target>
+</project>
