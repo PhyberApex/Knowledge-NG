@@ -22,6 +22,7 @@
 		<copy todir="${folder-to-zip}" overwrite="true">
 			<fileset dir="">
 				<include name="logger.xml" />
+				<include name="gpl-2.0.txt" />
 			</fileset>
 		</copy>
 		<delete file="build/1.2/${project-name}.zip" />
