@@ -83,11 +83,11 @@ public class Config {
 	public synchronized DAO getDBHandle() {
 		if (dbHandle == null) {
 			String dbtype = prop.getProperty("databasetyp");
-			if (dbtype.equals(SQLITE)) {
+			if (dbtype.equals(String.valueOf(SQLITE))) {
 				dbHandle = new DAO_SQLite();
-			} else if (dbtype.equals(MYSQL)) {
+			} else if (dbtype.equals(String.valueOf(MYSQL))) {
 				dbHandle = new DAO_MYSQL();
-				
+
 			} else {
 				// unknown databasetype switching to SQlite
 				logger.info("unknown databasetype switching to SQLite");

@@ -1,7 +1,6 @@
 package de.knowhow.controller;
 
-import java.util.ArrayList;
-
+import java.util.Iterator;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import de.knowhow.model.Article;
@@ -13,8 +12,6 @@ public class TreeController {
 
 	private ArticleListController acl;
 	private TopicListController tcl;
-	private ArrayList<Article> al;
-	private ArrayList<Topic> tl;
 	private TreeView treeV;
 
 	public TreeController(ArticleListController acl, TopicListController tcl) {
@@ -23,8 +20,6 @@ public class TreeController {
 	}
 
 	public void loadData() {
-		this.al = this.acl.getArticles();
-		this.tl = this.tcl.getTopics();
 	}
 
 	public void loadGUI() {
@@ -47,9 +42,11 @@ public class TreeController {
 
 	private void addUnsortedArticles(DefaultMutableTreeNode node) {
 		TreeNode addNode = new TreeNode("unsorted");
-		for (int i = 0; i < al.size(); i++) {
-			if (al.get(i).getTopic_ID_FK() == 0) {
-				addNode.add(new TreeNode(al.get(i)));
+		Iterator<Article> iterator = acl.getArticles().iterator();
+		while (iterator.hasNext()) {
+			Article currArticle = iterator.next();
+			if (currArticle.getTopic_ID_FK() == 0) {
+				addNode.add(new TreeNode(currArticle));
 			}
 		}
 		if (!addNode.isLeaf()) {
@@ -58,14 +55,19 @@ public class TreeController {
 	}
 
 	private void createNode(DefaultMutableTreeNode node, int ID) {
-		for (int i = 0; i < tl.size(); i++) {
+		Iterator<Topic> topicIterator = tcl.getTopics().iterator();
+		while (topicIterator.hasNext()) {
+			Topic currTopic = topicIterator.next();
 			TreeNode addNode = null;
-			if (tl.get(i).getTopic_ID_FK() == ID) {
-				addNode = new TreeNode(tl.get(i));
-				createNode(addNode, tl.get(i).getTopic_ID());
-				for (int j = 0; j < al.size(); j++) {
-					if (al.get(j).getTopic_ID_FK() == tl.get(i).getTopic_ID()) {
-						addNode.add(new TreeNode(al.get(j)));
+			if (currTopic.getTopic_ID_FK() == ID) {
+				addNode = new TreeNode(currTopic);
+				createNode(addNode, currTopic.getTopic_ID());
+				Iterator<Article> articleIterator = acl.getArticles()
+						.iterator();
+				while (articleIterator.hasNext()) {
+					Article currArticle = articleIterator.next();
+					if (currArticle.getTopic_ID_FK() == currTopic.getTopic_ID()) {
+						addNode.add(new TreeNode(currArticle));
 					}
 				}
 			} else {
