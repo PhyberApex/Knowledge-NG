@@ -1,4 +1,5 @@
 package de.knowhow.base;
+
 /**
  * This class holds the basic information for this application
  */
@@ -13,9 +14,6 @@ public class Constants {
 	private static final String APP_VERSION = "1.2";
 	private static final String APP_AUTHOR = "Janis Walliser";
 	private static String db_name;
-	private static String host;
-	private static String user;
-	private static String password;
 	private static ResourceBundle lang = ResourceBundle
 			.getBundle("de.knowhow.resource.knowledge");
 
@@ -46,30 +44,6 @@ public class Constants {
 	public static void setLanguage(Locale locale) {
 		lang = ResourceBundle
 				.getBundle("de.knowhow.resource.knowledge", locale);
-	}
-
-	public static String getHost() {
-		return host;
-	}
-
-	public static void setHost(String host) {
-		Constants.host = host;
-	}
-
-	public static String getUser() {
-		return user;
-	}
-
-	public static void setUser(String user) {
-		Constants.user = user;
-	}
-
-	public static String getPassword() {
-		return password;
-	}
-
-	public static void setPassword(String password) {
-		Constants.password = password;
 	}
 
 	public static String getDate() {

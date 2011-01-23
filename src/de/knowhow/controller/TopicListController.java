@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import javax.swing.SwingUtilities;
 
+import de.knowhow.base.Config;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.Topic;
 import de.knowhow.model.TopicList;
@@ -20,8 +21,8 @@ public class TopicListController {
 	private TopicChooseView tcv;
 	private TopicRenameView topicRename;
 
-	public TopicListController(DAO db, MainController mc) {
-		this.db = db;
+	public TopicListController(MainController mc) {
+		this.db = Config.getInstance().getDBHandle();
 		this.mc = mc;
 		tl = new TopicList(this.db);
 	}

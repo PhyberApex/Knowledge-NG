@@ -8,9 +8,13 @@ import javax.swing.JMenuBar;
 
 import org.apache.log4j.Logger;
 
+import de.knowhow.base.Config;
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.MainController;
+import de.knowhow.model.db.DAO;
+import de.knowhow.model.db.DAO_MYSQL;
+import de.knowhow.model.db.DAO_SQLite;
 import de.knowhow.model.gui.Button;
 import de.knowhow.model.gui.Menu;
 import de.knowhow.model.gui.MenuItem;
@@ -87,8 +91,8 @@ public class MenuView extends JMenuBar implements Runnable {
 			}
 		});
 		file.add(newArticle);
-		deleteArticle = new MenuItem(
-				Constants.getText("menu.file.deleteArticle"));
+		deleteArticle = new MenuItem(Constants
+				.getText("menu.file.deleteArticle"));
 		deleteArticle
 				.setIcon(new ImageIcon(
 						ClassLoader
@@ -101,9 +105,10 @@ public class MenuView extends JMenuBar implements Runnable {
 		});
 		file.add(deleteArticle);
 		newTopic = new MenuItem(Constants.getText("menu.file.newTopic"));
-		newTopic.setIcon(new ImageIcon(
-				ClassLoader
-						.getSystemResource("de/knowhow/resource/img/icon/add_folder.png")));
+		newTopic
+				.setIcon(new ImageIcon(
+						ClassLoader
+								.getSystemResource("de/knowhow/resource/img/icon/add_folder.png")));
 		newTopic.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("new topic clicked");
@@ -176,22 +181,18 @@ public class MenuView extends JMenuBar implements Runnable {
 				mc.newDatabase();
 			}
 		});
-		if (Constants.getHost() != null) {
-			newDatabase.setEnabled(false);
-		}
 		file.add(newDatabase);
 		openDatabase = new MenuItem(Constants.getText("menu.file.openDatabase"));
-		openDatabase.setIcon(new ImageIcon(ClassLoader
-				.getSystemResource("de/knowhow/resource/img/icon/open_db.png")));
+		openDatabase
+				.setIcon(new ImageIcon(
+						ClassLoader
+								.getSystemResource("de/knowhow/resource/img/icon/open_db.png")));
 		openDatabase.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("open database clicked");
 				mc.newDatabase();
 			}
 		});
-		if (Constants.getHost() != null) {
-			openDatabase.setEnabled(false);
-		}
 		file.add(openDatabase);
 		file.addSeparator();
 		close = new MenuItem(Constants.getText("menu.file.close"));
@@ -205,8 +206,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		});
 		file.add(close);
 		edit = new Menu(Constants.getText("menu.edit"));
-		renameArticle = new MenuItem(
-				Constants.getText("menu.edit.renameArticle"));
+		renameArticle = new MenuItem(Constants
+				.getText("menu.edit.renameArticle"));
 		renameArticle.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("rename article clicked");
@@ -264,18 +265,19 @@ public class MenuView extends JMenuBar implements Runnable {
 		});
 		edit.add(insertList);
 		insertLink = new Menu(Constants.getText("menu.edit.insertLink"));
-		insertLinkArticle = new MenuItem(
-				Constants.getText("menu.edit.insertLink.article"));
+		insertLinkArticle = new MenuItem(Constants
+				.getText("menu.edit.insertLink.article"));
 		insertLinkArticle
 				.addActionListener(new java.awt.event.ActionListener() {
 					public void actionPerformed(java.awt.event.ActionEvent e) {
-						logger.debug("insert HTML tag \"<a>\" with article clicked");
+						logger
+								.debug("insert HTML tag \"<a>\" with article clicked");
 						mc.insertLink("Article");
 					}
 				});
 		insertLink.add(insertLinkArticle);
-		insertLinkImage = new MenuItem(
-				Constants.getText("menu.edit.insertLink.image"));
+		insertLinkImage = new MenuItem(Constants
+				.getText("menu.edit.insertLink.image"));
 		insertLinkImage.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("insert HTML tag \"<a>\" with image clicked");
@@ -283,8 +285,8 @@ public class MenuView extends JMenuBar implements Runnable {
 			}
 		});
 		insertLink.add(insertLinkImage);
-		insertLinkFile = new MenuItem(
-				Constants.getText("menu.edit.insertLink.file"));
+		insertLinkFile = new MenuItem(Constants
+				.getText("menu.edit.insertLink.file"));
 		insertLinkFile.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("insert HTML tag \"<a>\" with file clicked");
@@ -295,14 +297,16 @@ public class MenuView extends JMenuBar implements Runnable {
 		edit.add(insertLink);
 		prefs = new Menu(Constants.getText("menu.prefs"));
 		lang = new Menu(Constants.getText("menu.prefs.lang"));
-		lang.setIcon(new ImageIcon(
-				ClassLoader
-						.getSystemResource("de/knowhow/resource/img/icon/prefs_language.png")));
+		lang
+				.setIcon(new ImageIcon(
+						ClassLoader
+								.getSystemResource("de/knowhow/resource/img/icon/prefs_language.png")));
 		ButtonGroup langGroup = new ButtonGroup();
 		RadioButtonMenuItem langDE = new RadioButtonMenuItem("Deutsch");
-		langDE.setIcon(new ImageIcon(
-				ClassLoader
-						.getSystemResource("de/knowhow/resource/img/icon/de_DE_Icon.png")));
+		langDE
+				.setIcon(new ImageIcon(
+						ClassLoader
+								.getSystemResource("de/knowhow/resource/img/icon/de_DE_Icon.png")));
 		if (Constants.getBundle().getLocale().getLanguage().equals("de")) {
 			langDE.setSelected(true);
 		}
@@ -315,9 +319,10 @@ public class MenuView extends JMenuBar implements Runnable {
 		langGroup.add(langDE);
 		lang.add(langDE);
 		RadioButtonMenuItem langEN = new RadioButtonMenuItem("English");
-		langEN.setIcon(new ImageIcon(
-				ClassLoader
-						.getSystemResource("de/knowhow/resource/img/icon/en_EN_Icon.png")));
+		langEN
+				.setIcon(new ImageIcon(
+						ClassLoader
+								.getSystemResource("de/knowhow/resource/img/icon/en_EN_Icon.png")));
 		if (Constants.getBundle().getLocale().getLanguage().equals("en")) {
 			langEN.setSelected(true);
 		}
@@ -331,9 +336,10 @@ public class MenuView extends JMenuBar implements Runnable {
 		lang.add(langEN);
 		prefs.add(lang);
 		res = new Menu(Constants.getText("menu.prefs.res"));
-		res.setIcon(new ImageIcon(
-				ClassLoader
-						.getSystemResource("de/knowhow/resource/img/icon/prefs_resolution.png")));
+		res
+				.setIcon(new ImageIcon(
+						ClassLoader
+								.getSystemResource("de/knowhow/resource/img/icon/prefs_resolution.png")));
 		ButtonGroup resGroup = new ButtonGroup();
 		RadioButtonMenuItem res600 = new RadioButtonMenuItem("600x480");
 		resGroup.add(res600);
@@ -379,12 +385,13 @@ public class MenuView extends JMenuBar implements Runnable {
 		}
 		prefs.add(res);
 		this.database = new Menu(Constants.getText("keyword.database"));
-		database.setIcon(new ImageIcon(
-				ClassLoader
-						.getSystemResource("de/knowhow/resource/img/icon/prefs_database.png")));
+		database
+				.setIcon(new ImageIcon(
+						ClassLoader
+								.getSystemResource("de/knowhow/resource/img/icon/prefs_database.png")));
 		ButtonGroup databaseGroup = new ButtonGroup();
-		this.sqlite = new RadioButtonMenuItem(
-				Constants.getText("menu.prefs.database.sqlite"));
+		this.sqlite = new RadioButtonMenuItem(Constants
+				.getText("menu.prefs.database.sqlite"));
 		this.sqlite.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("change database to sqlite clicked");
@@ -395,8 +402,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		});
 		databaseGroup.add(this.sqlite);
 		this.database.add(this.sqlite);
-		this.mysql = new RadioButtonMenuItem(
-				Constants.getText("menu.prefs.database.mysql"));
+		this.mysql = new RadioButtonMenuItem(Constants
+				.getText("menu.prefs.database.mysql"));
 		this.mysql.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("change database to mysql clicked");
@@ -407,8 +414,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		});
 		databaseGroup.add(this.mysql);
 		this.database.add(this.mysql);
-		this.mysql_change = new MenuItem(
-				Constants.getText("menu.prefs.database.mysql_change"));
+		this.mysql_change = new MenuItem(Constants
+				.getText("menu.prefs.database.mysql_change"));
 		this.mysql_change
 				.addActionListener(new java.awt.event.ActionListener() {
 					public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -418,15 +425,6 @@ public class MenuView extends JMenuBar implements Runnable {
 				});
 		databaseGroup.add(this.mysql_change);
 		this.database.add(this.mysql_change);
-		if (Constants.getHost() != null) {
-			this.mysql.setSelected(true);
-			this.mysql.setEnabled(false);
-			this.mysql_change.setEnabled(true);
-		} else {
-			this.sqlite.setSelected(true);
-			this.sqlite.setEnabled(false);
-			this.mysql_change.setEnabled(false);
-		}
 		this.prefs.add(this.database);
 		this.help = new Menu(Constants.getText("menu.help"));
 		this.about = new MenuItem(Constants.getText("menu.help.about"));
@@ -439,9 +437,8 @@ public class MenuView extends JMenuBar implements Runnable {
 			}
 		});
 		this.help.add(about);
-		this.bt_plain = new JButton(
-				new ImageIcon(ClassLoader
-						.getSystemResource("de/knowhow/resource/img/plain.PNG")));
+		this.bt_plain = new JButton(new ImageIcon(ClassLoader
+				.getSystemResource("de/knowhow/resource/img/plain.PNG")));
 		this.bt_plain.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("plain article view clicked");
@@ -452,10 +449,8 @@ public class MenuView extends JMenuBar implements Runnable {
 				bt_plain.setEnabled(false);
 			}
 		});
-		this.bt_render = new JButton(
-				new ImageIcon(
-						ClassLoader
-								.getSystemResource("de/knowhow/resource/img/render.PNG")));
+		this.bt_render = new JButton(new ImageIcon(ClassLoader
+				.getSystemResource("de/knowhow/resource/img/render.PNG")));
 		this.bt_render.setEnabled(false);
 		this.bt_render.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -474,6 +469,20 @@ public class MenuView extends JMenuBar implements Runnable {
 				mc.search(tfSearch.getText());
 			}
 		});
+		// Enable or disable some features regarding databsetype
+		Class<? extends DAO> dbClass = Config.getInstance().getDBHandle()
+				.getClass();
+		if (dbClass == DAO_MYSQL.class) {
+			this.mysql.setSelected(true);
+			this.mysql.setEnabled(false);
+			this.mysql_change.setEnabled(true);
+			newDatabase.setEnabled(false);
+			openDatabase.setEnabled(false);
+		} else if (dbClass == DAO_SQLite.class) {
+			this.sqlite.setSelected(true);
+			this.sqlite.setEnabled(false);
+			this.mysql_change.setEnabled(false);
+		}
 		this.add(file);
 		this.add(edit);
 		this.add(prefs);

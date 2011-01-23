@@ -1,5 +1,9 @@
 package de.knowhow.controller;
 
+/*
+ * Main class everything starts here
+ */
+
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -20,8 +24,6 @@ import de.knowhow.exception.DatabaseException;
 import de.knowhow.extra.Export;
 import de.knowhow.model.Search;
 import de.knowhow.model.db.DAO;
-import de.knowhow.model.db.DAO_MYSQL;
-import de.knowhow.model.db.DAO_SQLite;
 import de.knowhow.view.AboutView;
 import de.knowhow.view.MainView;
 import de.knowhow.view.MenuView;
@@ -31,7 +33,6 @@ import de.knowhow.view.SubtopicView;
 
 public class MainController {
 
-	private DAO db;
 	private ArticleListController acl;
 	private TopicListController tcl;
 	private TreeController treeC;
@@ -40,8 +41,10 @@ public class MainController {
 	private MainView mv;
 	private MenuView menuV;
 	private Config config;
+	private DAO db;
 	public static Splash splash;
-	private static Logger logger = Logger.getLogger(MainController.class.getName());
+	private static Logger logger = Logger.getLogger(MainController.class
+			.getName());
 
 	public MainController() {
 		DOMConfigurator.configure("logger.xml");
@@ -56,7 +59,7 @@ public class MainController {
 			// If Nimbus is not available, you can set the GUI to another look
 			// and feel.
 		}
-		config = new Config();
+		config = Config.getInstance();
 		Constants.setLanguage(new Locale(config.getProperty("lang")));
 		ViewConstants.reload(config);
 		URL url = ClassLoader
@@ -70,14 +73,7 @@ public class MainController {
 		splash = new Splash(image, Constants.getText("splash.init"));
 		splash.setVisible(true);
 		Constants.setDBName(config.getProperty("defaultdb"));
-		if (config.getProperty("databasetyp").equals("1")) {
-			db = new DAO_SQLite();
-		} else if (config.getProperty("databasetyp").equals("2")) {
-			db = new DAO_MYSQL();
-			Constants.setHost(config.getProperty("host"));
-			Constants.setUser(config.getProperty("user"));
-			Constants.setPassword(config.getProperty("pass"));
-		}
+		db = config.getDBHandle();
 		try {
 			db.openDB();
 		} catch (DatabaseException e) {
@@ -85,10 +81,10 @@ public class MainController {
 			logger.error("Database Exception " + e.getMessage());
 		}
 		db.checkDB();
-		this.csc = new CSSController(this.db, this);
-		this.attL = new AttachmentListController(this.db, this);
-		this.acl = new ArticleListController(this.db, this, attL, csc);
-		this.tcl = new TopicListController(this.db, this);
+		this.csc = new CSSController(this);
+		this.attL = new AttachmentListController(this);
+		this.acl = new ArticleListController(this, attL, csc);
+		this.tcl = new TopicListController(this);
 		this.treeC = new TreeController(acl, tcl);
 		splash.showStatus(Constants.getText("splash.loadCSS"), 15);
 		this.csc.loadData();
@@ -175,8 +171,8 @@ public class MainController {
 	}
 
 	private void prefChange() {
-		JOptionPane.showMessageDialog(mv,
-				Constants.getText("message.warning.restart"), "Information",
+		JOptionPane.showMessageDialog(mv, Constants
+				.getText("message.warning.restart"), "Information",
 				JOptionPane.INFORMATION_MESSAGE);
 		config.saveChanges();
 	}
@@ -204,7 +200,8 @@ public class MainController {
 
 	public void newDatabase() {
 		String name = JOptionPane.showInputDialog(Constants
-				.getText("newDatabase") + ":");
+				.getText("newDatabase")
+				+ ":");
 		if (name != null) {
 			config.setProperty("defaultdb", name);
 		}
@@ -228,8 +225,8 @@ public class MainController {
 	}
 
 	public void deleteArticle() {
-		int ret = JOptionPane.showConfirmDialog(mv,
-				Constants.getText("message.warning.deleteArticle"), "Warning",
+		int ret = JOptionPane.showConfirmDialog(mv, Constants
+				.getText("message.warning.deleteArticle"), "Warning",
 				JOptionPane.OK_CANCEL_OPTION);
 		if (ret == JOptionPane.OK_OPTION) {
 			try {
@@ -241,8 +238,8 @@ public class MainController {
 	}
 
 	public void deleteTopic() {
-		int ret = JOptionPane.showConfirmDialog(mv,
-				Constants.getText("message.warning.deleteTopic"), "Warning",
+		int ret = JOptionPane.showConfirmDialog(mv, Constants
+				.getText("message.warning.deleteTopic"), "Warning",
 				JOptionPane.OK_CANCEL_OPTION);
 		if (ret == JOptionPane.OK_OPTION) {
 			try {
@@ -313,7 +310,8 @@ public class MainController {
 	public void changeDatabase(String string) {
 		if (string.equals("1")) {
 			String database = JOptionPane.showInputDialog(Constants
-					.getText("keyword.database") + ":");
+					.getText("keyword.database")
+					+ ":");
 			if (database != null) {
 				config.setProperty("databasetyp", string);
 				config.setProperty("defaultdb", database);
@@ -324,13 +322,17 @@ public class MainController {
 			}
 		} else if (string.equals("2")) {
 			String host = JOptionPane.showInputDialog(Constants
-					.getText("database.host") + ":");
+					.getText("database.host")
+					+ ":");
 			String database = JOptionPane.showInputDialog(Constants
-					.getText("keyword.database") + ":");
+					.getText("keyword.database")
+					+ ":");
 			String user = JOptionPane.showInputDialog(Constants
-					.getText("database.user") + ":");
+					.getText("database.user")
+					+ ":");
 			String pass = JOptionPane.showInputDialog(Constants
-					.getText("database.password") + ":");
+					.getText("database.password")
+					+ ":");
 			if (host != null && database != null && user != null
 					&& pass != null) {
 				config.setProperty("databasetyp", string);
@@ -344,8 +346,8 @@ public class MainController {
 	}
 
 	public void search(String text) {
-		SearchView sV = new SearchView(Search.getArticles(text,
-				acl.getArticles()), this);
+		SearchView sV = new SearchView(Search.getArticles(text, acl
+				.getArticles()), this);
 		sV.setVisible(true);
 		SwingUtilities.invokeLater(sV);
 	}

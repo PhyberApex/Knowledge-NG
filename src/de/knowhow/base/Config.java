@@ -11,11 +11,22 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
+import de.knowhow.model.db.DAO;
+import de.knowhow.model.db.DAO_MYSQL;
+import de.knowhow.model.db.DAO_SQLite;
+
 public class Config {
 
+	private static Config instance;
 	private Properties prop;
+	private static int SQLITE = 1;
+	private static int MYSQL = 2;
+	private static DAO dbHandle;
+	private static Logger logger = Logger.getLogger(Config.class.getName());
 
-	public Config() {
+	private Config() {
 		FileReader reader = null;
 		this.prop = new Properties();
 		// Read file if exist, if not create it
@@ -33,12 +44,13 @@ public class Config {
 				this.prop.setProperty("defaultdb", "knowledge.db");
 				saveChanges();
 			} catch (IOException e1) {
+				logger.error(e1.getMessage());
 			}
 		}
 		try {
 			this.prop.load(reader);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -50,15 +62,38 @@ public class Config {
 		return this.prop.getProperty(key);
 	}
 
-	//This method writes all changes to the file
+	// This method writes all changes to the file
 	public void saveChanges() {
 		FileWriter writer = null;
 		try {
 			writer = new FileWriter("knowledge.cfg");
 			this.prop.store(writer, null);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
+	public static synchronized Config getInstance() {
+		if (instance == null) {
+			instance = new Config();
+		}
+		return instance;
+	}
+
+	public synchronized DAO getDBHandle() {
+		if (dbHandle == null) {
+			String dbtype = prop.getProperty("databasetyp");
+			if (dbtype.equals(SQLITE)) {
+				dbHandle = new DAO_SQLite();
+			} else if (dbtype.equals(MYSQL)) {
+				dbHandle = new DAO_MYSQL();
+				
+			} else {
+				// unknown databasetype switching to SQlite
+				logger.info("unknown databasetype switching to SQLite");
+				dbHandle = new DAO_SQLite();
+			}
+		}
+		return dbHandle;
+	}
 }

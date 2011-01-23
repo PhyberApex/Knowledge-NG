@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import javax.swing.SwingUtilities;
 
+import de.knowhow.base.Config;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.CSSList;
 import de.knowhow.model.db.DAO;
@@ -17,9 +18,9 @@ public class CSSController {
 	private CSSPlainEditView plainView;
 	private DAO db;
 
-	public CSSController(DAO db, MainController mainController) {
+	public CSSController(MainController mainController) {
 		this.mc = mainController;
-		this.db = db;
+		this.db = Config.getInstance().getDBHandle();
 		this.cssl = new CSSList(this.db);
 	}
 

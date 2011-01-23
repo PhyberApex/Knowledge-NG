@@ -1,5 +1,9 @@
 package de.knowhow.model.db;
 
+/*
+ * Superclass for databasehandling
+ */
+
 import java.sql.*;
 import de.knowhow.base.Constants;
 import de.knowhow.exception.DatabaseException;
@@ -9,7 +13,7 @@ public abstract class DAO {
 	private PreparedStatement statement;
 	private Connection connection;
 	private String databaseName = Constants.getDBName();
-
+	
 	public PreparedStatement getStatement() {
 		return statement;
 	}
@@ -88,8 +92,7 @@ public abstract class DAO {
 						.executeQuery("SELECT name, topic_ID, topic_id_fk FROM topic;");
 				state
 						.executeQuery("SELECT attachment_ID, name, article_ID_FK, bin, image FROM attachment;");
-				state
-						.executeQuery("SELECT css_ID, tag, rule FROM css;");
+				state.executeQuery("SELECT css_ID, tag, rule FROM css;");
 			} catch (SQLException e) {
 				return false;
 			}
@@ -100,8 +103,12 @@ public abstract class DAO {
 	}
 
 	public void checkDB() {
+		if (!isValidDB()) {
+			createDB();
+		}
 	}
 
-	public void openDB() throws DatabaseException {
-	}
+	protected abstract void createDB();
+
+	public abstract void openDB() throws DatabaseException;
 }

@@ -3,6 +3,8 @@ package de.knowhow.controller;
 import java.util.ArrayList;
 import java.util.Observer;
 import javax.swing.SwingUtilities;
+
+import de.knowhow.base.Config;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.Article;
 import de.knowhow.model.ArticleList;
@@ -24,9 +26,9 @@ public class ArticleListController {
 	private ArticleLinkView artLink;
 	private CSSController csc;
 
-	public ArticleListController(DAO db, MainController mc,
+	public ArticleListController(MainController mc,
 			AttachmentListController attachcl, CSSController csc) {
-		this.db = db;
+		this.db = Config.getInstance().getDBHandle();
 		this.mc = mc;
 		this.attachcl = attachcl;
 		this.csc = csc;

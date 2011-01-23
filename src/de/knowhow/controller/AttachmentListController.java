@@ -10,6 +10,7 @@ import java.util.Observer;
 
 import javax.swing.SwingUtilities;
 
+import de.knowhow.base.Config;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.extra.Upload;
 import de.knowhow.model.ArticleList;
@@ -28,8 +29,8 @@ public class AttachmentListController implements Observer {
 	private AttachmentForArticleView attachArtView;
 	public static Splash splash;
 
-	public AttachmentListController(DAO db, MainController mc) {
-		this.db = db;
+	public AttachmentListController(MainController mc) {
+		this.db = Config.getInstance().getDBHandle();
 		this.mc = mc;
 		al = new AttachmentList(db);
 	}

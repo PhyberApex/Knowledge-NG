@@ -1,13 +1,19 @@
 package de.knowhow.model.db;
 
+/*
+ * Class especially for working with SQLite database
+ */
+
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.apache.log4j.Logger;
 import de.knowhow.exception.DatabaseException;
 
 public class DAO_SQLite extends DAO {
 
-
+	private static Logger logger = Logger.getLogger(DAO_SQLite.class.getName());
+	
 	public void openDB() throws DatabaseException {
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -18,25 +24,29 @@ public class DAO_SQLite extends DAO {
 		}
 	}
 
-	private void createDB() {
+	protected void createDB() {
 		Statement state;
 		try {
 			state = this.getConnection().createStatement();
 			try {
 				state.executeUpdate("DROP TABLE article");
 			} catch (SQLException e) {
+				logger.error(e.getMessage());
 			}
 			try {
 				state.executeUpdate("DROP TABLE topic");
 			} catch (SQLException e) {
+				logger.error(e.getMessage());
 			}
 			try {
 				state.executeUpdate("DROP TABLE attachment");
 			} catch (SQLException e) {
+				logger.error(e.getMessage());
 			}
 			try {
 				state.executeUpdate("DROP TABLE css");
 			} catch (SQLException e) {
+				logger.error(e.getMessage());
 			}
 			try {
 				state
@@ -48,15 +58,10 @@ public class DAO_SQLite extends DAO {
 				state
 						.executeUpdate("CREATE TABLE css (css_ID INTEGER PRIMARY KEY, rule TEXT, tag TEXT);");
 			} catch (SQLException e) {
+				logger.error(e.getMessage());
 			}
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-	}
-
-	public void checkDB() {
-		if (!isValidDB()) {
-			createDB();
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
 		}
 	}
 }

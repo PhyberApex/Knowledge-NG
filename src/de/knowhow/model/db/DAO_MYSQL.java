@@ -1,9 +1,14 @@
 package de.knowhow.model.db;
 
+/*
+ * Class especially for working with MYSQL database
+ */
+
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import de.knowhow.base.Constants;
+import org.apache.log4j.Logger;
+import de.knowhow.base.Config;
 import de.knowhow.exception.DatabaseException;
 
 public class DAO_MYSQL extends DAO {
@@ -11,11 +16,13 @@ public class DAO_MYSQL extends DAO {
 	private String host;
 	private String user;
 	private String password;
+	private static Logger logger = Logger.getLogger(DAO_MYSQL.class.getName());
 
 	public void openDB() throws DatabaseException {
-		this.host = Constants.getHost();
-		this.user = Constants.getUser();
-		this.password = Constants.getPassword();
+		Config config = Config.getInstance();
+		this.host = config.getProperty("host");
+		this.user = config.getProperty("user");
+		this.password = config.getProperty("password");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			this.setConnection(DriverManager.getConnection("jdbc:mysql://"
@@ -26,25 +33,29 @@ public class DAO_MYSQL extends DAO {
 		}
 	}
 
-	private void createDB() {
+	protected void createDB() {
 		Statement state;
 		try {
 			state = this.getConnection().createStatement();
 			try {
 				state.executeUpdate("DROP TABLE article");
 			} catch (SQLException e) {
+				logger.error(e.getMessage());
 			}
 			try {
 				state.executeUpdate("DROP TABLE topic");
 			} catch (SQLException e) {
+				logger.error(e.getMessage());
 			}
 			try {
 				state.executeUpdate("DROP TABLE attachment");
 			} catch (SQLException e) {
+				logger.error(e.getMessage());
 			}
 			try {
 				state.executeUpdate("DROP TABLE css");
 			} catch (SQLException e) {
+				logger.error(e.getMessage());
 			}
 			try {
 				state
@@ -56,14 +67,10 @@ public class DAO_MYSQL extends DAO {
 				state
 						.executeUpdate("CREATE TABLE css (css_ID ID INTEGER AUTO_INCREMENT PRIMARY KEY, rule LONGTEXT, tag VARCHAR(255));");
 			} catch (SQLException e) {
+				logger.error(e.getMessage());
 			}
-		} catch (SQLException e1) {
-		}
-	}
-
-	public void checkDB() {
-		if (!isValidDB()) {
-			createDB();
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
 		}
 	}
 }
