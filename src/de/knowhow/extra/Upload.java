@@ -40,8 +40,8 @@ public class Upload implements Runnable {
 			FileInputStream is = new FileInputStream(file);
 			long length = file.length();
 			if (length > Integer.MAX_VALUE) {
-				throw new DatabaseException(Constants
-						.getText("message.error.sizeError"));
+				throw new DatabaseException(
+						Constants.getText("message.error.sizeError"));
 			}
 			URL url = ClassLoader
 					.getSystemResource("de/knowhow/resource/img/loading.png");
@@ -62,13 +62,14 @@ public class Upload implements Runnable {
 				offset += numRead;
 			}
 			if (offset < bytes.length) {
-				throw new DatabaseException(Constants
-						.getText("message.error.readError")
-						+ " " + file.getName());
+				throw new DatabaseException(
+						Constants.getText("message.error.readError") + " "
+								+ file.getName());
 			}
 			Attachment attach = new Attachment(this.db, file.getName(), currID,
 					bytes, isImage);
 			al.addAttachment(attach);
+			al.reload();
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {

@@ -2,11 +2,19 @@ package de.knowhow.view;
 
 public abstract class ArticleView extends View {
 
-	public abstract void insertHTML(String tag);
+	public void insertHTML(String tag) {
+		throw new UnsupportedOperationException();
+	}
 
-	public abstract void insertFileLink(int iD);
+	public void insertFileLink(int iD) {
+		throw new UnsupportedOperationException();
+	}
 
-	public abstract void insertImageLink(int iD);
+	public void insertImageLink(int iD) {
+		throw new UnsupportedOperationException();
+	}
 
-	public abstract void insertArticleLink(int iD);
+	public void insertArticleLink(int iD) {
+		throw new UnsupportedOperationException();
+	}
 }

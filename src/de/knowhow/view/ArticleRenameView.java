@@ -3,7 +3,6 @@ package de.knowhow.view;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.Observable;
-import java.util.Observer;
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.ArticleListController;
@@ -14,36 +13,37 @@ import de.knowhow.model.gui.Dialog;
 import de.knowhow.model.gui.Label;
 import de.knowhow.model.gui.Textfield;
 
-public class ArticleRenameView extends Dialog implements Observer, Runnable {
+public class ArticleRenameView extends ArticleView {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private ArticleListController acl;
+	private Dialog dialog;
 	private Label lbname;
 	private Textfield tfname;
 	private Button confirm;
 	private Button cancel;
 
 	public ArticleRenameView(ArticleListController acl) {
-		super();
+		dialog = new Dialog();
 		this.acl = acl;
 	}
 
-	private void init() {
-		this.setSize(ViewConstants.RENAME_WIDTH, ViewConstants.RENAME_HEIGTH);
+	protected void init() {
+		dialog.setSize(ViewConstants.RENAME_WIDTH, ViewConstants.RENAME_HEIGTH);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		this.setLocation((d.width - this.getSize().width) / 2,
-				(d.height - this.getSize().height) / 2);
-		this.initPane();
+		dialog.setLocation((d.width - dialog.getSize().width) / 2,
+				(d.height - dialog.getSize().height) / 2);
+		dialog.initPane();
 		this.lbname = new Label(Constants.getText("keyword.article"));
 		this.lbname.setSize(50, 25);
 		this.lbname.setLocation(10,
-				((this.getHeight() - 30) / 2) - (lbname.getHeight() / 2));
+				((dialog.getHeight() - 30) / 2) - (lbname.getHeight() / 2));
 		this.tfname = new Textfield(Constants.getText("renameArticle.tfname"));
 		this.tfname.setSize(ViewConstants.RENAME_WIDTH - lbname.getWidth()
 				- lbname.getX() - 10, 25);
 		this.tfname.setLocation(lbname.getX() + lbname.getWidth() + 5,
-				((this.getHeight() - 30) / 2) - (lbname.getHeight() / 2));
+				((dialog.getHeight() - 30) / 2) - (lbname.getHeight() / 2));
 		this.confirm = new Button(Constants.getText("button.confirm"));
 		this.confirm.setSize(ViewConstants.RENAME_WIDTH / 2 - 20, 20);
 		this.confirm.setLocation(10, ViewConstants.RENAME_HEIGTH - 30);
@@ -67,10 +67,11 @@ public class ArticleRenameView extends Dialog implements Observer, Runnable {
 				setVisible(false);
 			}
 		});
-		this.getPane().add(lbname);
-		this.getPane().add(tfname);
-		this.getPane().add(confirm);
-		this.getPane().add(cancel);
+		dialog.getPane().add(lbname);
+		dialog.getPane().add(tfname);
+		dialog.getPane().add(confirm);
+		dialog.getPane().add(cancel);
+		window = dialog;
 	}
 
 	@Override
@@ -84,9 +85,9 @@ public class ArticleRenameView extends Dialog implements Observer, Runnable {
 	public String getArtName() {
 		return tfname.getText();
 	}
-
+	
 	@Override
-	public void run() {
-		init();
+	public boolean isComponent() {
+		return false;
 	}
 }

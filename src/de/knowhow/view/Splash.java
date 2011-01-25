@@ -58,13 +58,13 @@ public class Splash extends JWindow {
 		Dimension preferredSize = progress.getPreferredSize();
 		double height = preferredSize.getHeight();
 		double width = preferredSize.getWidth();
-		height = height +5;/// 2.0;
+		height = height + 5;// / 2.0;
 		preferredSize.setSize(width, height);
 		progress.setString(initialMessage);
 		myPanel.add(progress, BorderLayout.SOUTH);
 		progress.setStringPainted(true); // progressbar mit Beschriftung
-		progress.setPreferredSize(preferredSize); //schmalere progressbar
-		progress.setBorderPainted(false) ; //progressbar ohne Rand
+		progress.setPreferredSize(preferredSize); // schmalere progressbar
+		progress.setBorderPainted(false); // progressbar ohne Rand
 		myPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
 		// myPanel.setBorder(new LineBorder(fgX, 2));
 		progress.setBackground(new Color(254, 243, 224));
@@ -94,6 +94,7 @@ public class Splash extends JWindow {
 	 */
 	public void setVisible(boolean show) {
 		if (show) {
+			setAlwaysOnTop(show);
 			pack();
 			setLocationRelativeTo(null);
 		}
@@ -101,8 +102,8 @@ public class Splash extends JWindow {
 	}
 
 	/**
-	 * Status der progressbar �ndern. Diese Methode ist thread safe und kann von
-	 * jedem Thread aufgerufen werden.
+	 * Status der progressbar �ndern. Diese Methode ist thread safe und kann
+	 * von jedem Thread aufgerufen werden.
 	 */
 	public void showStatus(String message, int percent) {
 		if (isVisible()) {

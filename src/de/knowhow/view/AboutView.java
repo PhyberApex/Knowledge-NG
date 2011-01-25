@@ -40,8 +40,9 @@ public class AboutView extends View {
 		dialog.setLocation((d.width - dialog.getSize().width) / 2,
 				(d.height - dialog.getSize().height) / 2);
 		dialog.initPane();
-		this.lbLogo = new JLabel(new ImageIcon(ClassLoader
-				.getSystemResource("de/knowhow/resource/img/logo.png")));
+		this.lbLogo = new JLabel(new ImageIcon(
+				ClassLoader
+						.getSystemResource("de/knowhow/resource/img/logo.png")));
 		this.lbLogo.setSize(this.lbLogo.getPreferredSize());
 		this.lbLogo.setLocation(
 				dialog.getWidth() - this.lbLogo.getWidth() - 10, 20);
@@ -53,19 +54,19 @@ public class AboutView extends View {
 		dialog.getPane().add(lbAppName);
 		this.lbAppVersion = new Label("Version: " + Constants.getAppVersion());
 		this.lbAppVersion.setSize(this.lbAppVersion.getPreferredSize());
-		this.lbAppVersion.setLocation(10, lbAppName.getY()
-				+ lbAppName.getHeight() + 15);
+		this.lbAppVersion.setLocation(10,
+				lbAppName.getY() + lbAppName.getHeight() + 15);
 		dialog.getPane().add(lbAppVersion);
 		this.lbAppAuthor = new Label("Author: " + Constants.getAppAuthor());
 		this.lbAppAuthor.setSize(this.lbAppAuthor.getPreferredSize());
-		this.lbAppAuthor.setLocation(10, lbAppVersion.getY()
-				+ lbAppName.getHeight() + 15);
+		this.lbAppAuthor.setLocation(10,
+				lbAppVersion.getY() + lbAppName.getHeight() + 15);
 		dialog.getPane().add(lbAppAuthor);
 		this.lbInfo = new Label(
 				"<html>Further information: <a href=\"ignore\">Project home</a></html>");
 		this.lbInfo.setSize(this.lbInfo.getPreferredSize());
-		this.lbInfo.setLocation(10, lbAppAuthor.getY()
-				+ lbAppAuthor.getHeight() + 15);
+		this.lbInfo.setLocation(10,
+				lbAppAuthor.getY() + lbAppAuthor.getHeight() + 15);
 		this.lbInfo.addMouseListener(new java.awt.event.MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -108,9 +109,8 @@ public class AboutView extends View {
 				try {
 					java.awt.Desktop
 							.getDesktop()
-							.browse(
-									new URI(
-											"http://www.gnu.org/licenses/old-licenses/gpl-2.0.html"));
+							.browse(new URI(
+									"http://www.gnu.org/licenses/old-licenses/gpl-2.0.html"));
 					dialog.dispose();
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -148,15 +148,20 @@ public class AboutView extends View {
 		dialog.getPane().add(lbCredits);
 		this.btClose = new Button(Constants.getText("about.btClose"));
 		this.btClose.setSize(this.btClose.getPreferredSize());
-		this.btClose.setLocation((dialog.getWidth() / 2)
-				- (this.btClose.getWidth() / 2), dialog.getHeight()
-				- this.btClose.getHeight() - 10);
+		this.btClose.setLocation(
+				(dialog.getWidth() / 2) - (this.btClose.getWidth() / 2),
+				dialog.getHeight() - this.btClose.getHeight() - 10);
 		this.btClose.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				dialog.dispose();
+				setVisible(false);
 			}
 		});
 		dialog.getPane().add(btClose);
+	}
+
+	@Override
+	public boolean isComponent() {
+		return false;
 	}
 
 	@Override

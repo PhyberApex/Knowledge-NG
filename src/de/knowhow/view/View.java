@@ -22,4 +22,6 @@ public abstract class View implements Runnable, Observer {
 	public Component getComponent() {
 		return window;
 	}
+
+	public abstract boolean isComponent();
 }

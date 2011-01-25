@@ -42,6 +42,7 @@ public class MainController {
 	private CSSController csc;
 	private MainView mv;
 	private MenuView menuV;
+	private AboutView aboutView;
 	private Config config;
 	private DAO db;
 	public static Splash splash;
@@ -84,8 +85,8 @@ public class MainController {
 		}
 		db.checkDB();
 		this.csc = new CSSController(this);
-		this.attL = new AttachmentListController(this);
-		this.acl = new ArticleListController(this, attL, csc);
+		this.acl = new ArticleListController(this, csc);
+		this.attL = new AttachmentListController(acl);
 		this.tcl = new TopicListController(this);
 		this.treeC = new TreeController(acl, tcl);
 		splash.showStatus(Constants.getText("splash.loadCSS"), 15);
@@ -112,19 +113,24 @@ public class MainController {
 		this.treeC.loadGUI();
 		mv = new MainView(this);
 		menuV = new MenuView(this);
+		aboutView = new AboutView();
 		mv.add(menuV);
 		addViews(acl);
 		mv.add(tcl.getTopicChooseView());
 		mv.add(treeC.getTreeView());
 		SwingUtilities.invokeLater(mv);
 		SwingUtilities.invokeLater(menuV);
+		SwingUtilities.invokeLater(aboutView);
 		splash.close();
 	}
 
 	public void addViews(Controller controller) {
-		Iterator<?> iterator = controller.getViews().iterator();
+		Iterator<View> iterator = controller.getViewIterator();
 		while (iterator.hasNext()) {
-			mv.add(((View) iterator.next()).getComponent());
+			View aktView = iterator.next();
+			if (aktView.isComponent()) {
+				mv.add(aktView.getComponent());
+			}
 		}
 	}
 
@@ -178,8 +184,8 @@ public class MainController {
 	}
 
 	private void prefChange() {
-		JOptionPane.showMessageDialog(mv, Constants
-				.getText("message.warning.restart"), "Information",
+		JOptionPane.showMessageDialog(mv,
+				Constants.getText("message.warning.restart"), "Information",
 				JOptionPane.INFORMATION_MESSAGE);
 		config.saveChanges();
 	}
@@ -207,8 +213,7 @@ public class MainController {
 
 	public void newDatabase() {
 		String name = JOptionPane.showInputDialog(Constants
-				.getText("newDatabase")
-				+ ":");
+				.getText("newDatabase") + ":");
 		if (name != null) {
 			config.setProperty("defaultdb", name);
 		}
@@ -227,13 +232,9 @@ public class MainController {
 		mv.error(e);
 	}
 
-	public void currArtChanged(int ID) {
-		attL.reload(ID);
-	}
-
 	public void deleteArticle() {
-		int ret = JOptionPane.showConfirmDialog(mv, Constants
-				.getText("message.warning.deleteArticle"), "Warning",
+		int ret = JOptionPane.showConfirmDialog(mv,
+				Constants.getText("message.warning.deleteArticle"), "Warning",
 				JOptionPane.OK_CANCEL_OPTION);
 		if (ret == JOptionPane.OK_OPTION) {
 			try {
@@ -245,8 +246,8 @@ public class MainController {
 	}
 
 	public void deleteTopic() {
-		int ret = JOptionPane.showConfirmDialog(mv, Constants
-				.getText("message.warning.deleteTopic"), "Warning",
+		int ret = JOptionPane.showConfirmDialog(mv,
+				Constants.getText("message.warning.deleteTopic"), "Warning",
 				JOptionPane.OK_CANCEL_OPTION);
 		if (ret == JOptionPane.OK_OPTION) {
 			try {
@@ -293,6 +294,7 @@ public class MainController {
 				attL.newAttachment(file, image);
 			} catch (DatabaseException e1) {
 				error(e1);
+				logger.error(e1.getMessage());
 			} catch (IOException e) {
 			}
 		}
@@ -300,8 +302,8 @@ public class MainController {
 
 	public void insertLink(String string) {
 		if (string.equals("Image") || string.equals("File")) {
-			attL.getAttachArtView().setVisible(true);
 			attL.getAttachArtView().setImage(false);
+			attL.getAttachArtView().setVisible(true);
 			if (string.equals("Image")) {
 				attL.getAttachArtView().setImage(true);
 			}
@@ -317,8 +319,7 @@ public class MainController {
 	public void changeDatabase(String string) {
 		if (string.equals("1")) {
 			String database = JOptionPane.showInputDialog(Constants
-					.getText("keyword.database")
-					+ ":");
+					.getText("keyword.database") + ":");
 			if (database != null) {
 				config.setProperty("databasetyp", string);
 				config.setProperty("defaultdb", database);
@@ -329,17 +330,13 @@ public class MainController {
 			}
 		} else if (string.equals("2")) {
 			String host = JOptionPane.showInputDialog(Constants
-					.getText("database.host")
-					+ ":");
+					.getText("database.host") + ":");
 			String database = JOptionPane.showInputDialog(Constants
-					.getText("keyword.database")
-					+ ":");
+					.getText("keyword.database") + ":");
 			String user = JOptionPane.showInputDialog(Constants
-					.getText("database.user")
-					+ ":");
+					.getText("database.user") + ":");
 			String pass = JOptionPane.showInputDialog(Constants
-					.getText("database.password")
-					+ ":");
+					.getText("database.password") + ":");
 			if (host != null && database != null && user != null
 					&& pass != null) {
 				config.setProperty("databasetyp", string);
@@ -353,14 +350,14 @@ public class MainController {
 	}
 
 	public void search(String text) {
-		SearchView sV = new SearchView(Search.getArticles(text, acl
-				.getArticles()), this);
+		SearchView sV = new SearchView(Search.getArticles(text,
+				acl.getArticles()), this);
 		sV.setVisible(true);
 		SwingUtilities.invokeLater(sV);
 	}
 
 	public void about() {
-		SwingUtilities.invokeLater(new AboutView().setVisible(true));
+		aboutView.setVisible(true);
 	}
 
 	public void setCurrArtByID(int iD) {
@@ -408,6 +405,15 @@ public class MainController {
 
 	public TopicListController getTcl() {
 		return this.tcl;
+	}
+
+	public void writeAttToFS(int att_ID, String path) {
+		try {
+			attL.writeAttToFS(att_ID, path);
+		} catch (DatabaseException e) {
+			error(e);
+			logger.error(e.getMessage());
+		}
 	}
 
 }

@@ -9,7 +9,6 @@ import de.knowhow.base.Constants;
 import de.knowhow.base.ReleaseNote;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.ArticleListController;
-import de.knowhow.controller.AttachmentListController;
 import de.knowhow.controller.CSSController;
 import de.knowhow.model.ArticleList;
 import de.knowhow.model.gui.HTMLEditor;
@@ -24,14 +23,11 @@ public class ArticleRenderView extends ArticleView {
 	private Label lastEdit;
 	private HTMLEditor htmlEdit_content;
 	private ArticleListController acl;
-	private AttachmentListController attachcl;
 	private CSSController csc;
 
-	public ArticleRenderView(ArticleListController acl,
-			AttachmentListController attachcl, CSSController csc) {
+	public ArticleRenderView(ArticleListController acl, CSSController csc) {
 		this.panel = new JPanel();
 		window = this.panel;
-		this.attachcl = attachcl;
 		this.acl = acl;
 		this.csc = csc;
 	}
@@ -39,7 +35,7 @@ public class ArticleRenderView extends ArticleView {
 	protected void init() {
 		panel.setLayout(null);
 		this.contentScrollPane = new JScrollPane();
-		this.htmlEdit_content = new HTMLEditor(attachcl, acl);
+		this.htmlEdit_content = new HTMLEditor(acl);
 		this.htmlEdit_content.setLocation(0, 0);
 		HTMLEditorKit kit = new HTMLEditorKit();
 		this.htmlEdit_content.setEditorKit(kit);
@@ -108,5 +104,10 @@ public class ArticleRenderView extends ArticleView {
 	public void insertImageLink(int iD) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public boolean isComponent() {
+		return true;
 	}
 }

@@ -1,6 +1,7 @@
 package de.knowhow.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import de.knowhow.model.Model;
 import de.knowhow.view.View;
@@ -17,7 +18,7 @@ public abstract class Controller {
 	// In this method your model shoul be loaded
 	public abstract void loadData();
 
-	public ArrayList<View> getViews() {
+	protected ArrayList<View> getViews() {
 		return views;
 	}
 
@@ -32,5 +33,9 @@ public abstract class Controller {
 				models.get(j).addObserver(views.get(i));
 			}
 		}
+	}
+
+	public Iterator<View> getViewIterator() {
+		return views.iterator();
 	}
 }

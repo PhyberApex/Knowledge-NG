@@ -4,11 +4,11 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.Observer;
 import javax.swing.JScrollPane;
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.AttachmentListController;
+import de.knowhow.model.ArticleList;
 import de.knowhow.model.Attachment;
 import de.knowhow.model.AttachmentList;
 import de.knowhow.model.gui.Button;
@@ -16,9 +16,10 @@ import de.knowhow.model.gui.Dialog;
 import de.knowhow.model.gui.Table;
 import de.knowhow.model.gui.TableModel;
 
-public class AttachmentForArticleView extends Dialog implements Observer, Runnable {
+public class AttachmentForArticleView extends View {
 
 	private static final long serialVersionUID = 1L;
+	private Dialog dialog;
 	private AttachmentListController attL;
 	private Table tbAttachmentsFile;
 	private Table tbAttachmentsImage;
@@ -28,16 +29,16 @@ public class AttachmentForArticleView extends Dialog implements Observer, Runnab
 	private boolean image;
 
 	public AttachmentForArticleView(AttachmentListController attL) {
-		super();
+		dialog = new Dialog();
 		this.attL = attL;
 	}
 
-	private void init() {
-		this.setSize(ViewConstants.ATTACH_WIDTH, ViewConstants.ATTACH_HEIGTH);
+	protected void init() {
+		dialog.setSize(ViewConstants.ATTACH_WIDTH, ViewConstants.ATTACH_HEIGTH);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		this.setLocation((d.width - this.getSize().width) / 2, (d.height - this
-				.getSize().height) / 2);
-		this.initPane();
+		dialog.setLocation((d.width - dialog.getSize().width) / 2,
+				(d.height - dialog.getSize().height) / 2);
+		dialog.initPane();
 		this.spAttachments = new JScrollPane();
 		this.spAttachments.setSize(ViewConstants.ATTACH_WIDTH,
 				ViewConstants.ATTACH_HEIGTH - 40);
@@ -46,8 +47,8 @@ public class AttachmentForArticleView extends Dialog implements Observer, Runnab
 		this.tbAttachmentsImage = new Table();
 		this.btCancel = new Button(Constants.getText("button.cancel"));
 		this.btCancel.setSize(130, 20);
-		this.btCancel.setLocation(this.getWidth() - btCancel.getWidth() - 10,
-				this.getHeight() - 35);
+		this.btCancel.setLocation(dialog.getWidth() - btCancel.getWidth() - 10,
+				dialog.getHeight() - 35);
 		this.btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				setVisible(false);
@@ -55,7 +56,7 @@ public class AttachmentForArticleView extends Dialog implements Observer, Runnab
 		});
 		this.btConfirm = new Button(Constants.getText("button.confirm"));
 		this.btConfirm.setSize(130, 20);
-		this.btConfirm.setLocation(10, this.getHeight() - 35);
+		this.btConfirm.setLocation(10, dialog.getHeight() - 35);
 		this.btConfirm.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				Table currTable;
@@ -74,39 +75,44 @@ public class AttachmentForArticleView extends Dialog implements Observer, Runnab
 				setVisible(false);
 			}
 		});
-		this.getPane().add(spAttachments);
-		this.getPane().add(btConfirm);
-		this.getPane().add(btCancel);
+		dialog.getPane().add(spAttachments);
+		dialog.getPane().add(btConfirm);
+		dialog.getPane().add(btCancel);
+		window = dialog;
 	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		AttachmentList attL = (AttachmentList) arg0;
-		ArrayList<Attachment> atts = attL.getCurrAttachments();
-		ArrayList<Attachment> attsImage = new ArrayList<Attachment>();
-		ArrayList<Attachment> attsFile = new ArrayList<Attachment>();
-		for (int i = 0; i < atts.size(); i++) {
-			if (atts.get(i).isImage()) {
-				attsImage.add(atts.get(i));
-			} else {
-				attsFile.add(atts.get(i));
+		if (arg0 instanceof ArticleList) {
+			attL.setCurrID(((ArticleList)arg0).getCurrArticle().getArticle_ID());
+		} else {
+			AttachmentList attL = (AttachmentList) arg0;
+			ArrayList<Attachment> atts = attL.getCurrAttachments();
+			ArrayList<Attachment> attsImage = new ArrayList<Attachment>();
+			ArrayList<Attachment> attsFile = new ArrayList<Attachment>();
+			for (int i = 0; i < atts.size(); i++) {
+				if (atts.get(i).isImage()) {
+					attsImage.add(atts.get(i));
+				} else {
+					attsFile.add(atts.get(i));
+				}
 			}
+			String[] names = { "ID", "Name" };
+			Object[][] rowData = new Object[attsFile.size()][2];
+			for (int i = 0; i < attsFile.size(); i++) {
+				rowData[i][0] = attsFile.get(i).getAttachment_ID();
+				rowData[i][1] = attsFile.get(i).getName();
+			}
+			TableModel model = new TableModel(rowData, names);
+			this.tbAttachmentsFile.setModel(model);
+			rowData = new Object[attsImage.size()][2];
+			for (int i = 0; i < attsImage.size(); i++) {
+				rowData[i][0] = attsImage.get(i).getAttachment_ID();
+				rowData[i][1] = attsImage.get(i).getName();
+			}
+			model = new TableModel(rowData, names);
+			this.tbAttachmentsImage.setModel(model);
 		}
-		String[] names = { "ID", "Name" };
-		Object[][] rowData = new Object[attsFile.size()][2];
-		for (int i = 0; i < attsFile.size(); i++) {
-			rowData[i][0] = attsFile.get(i).getAttachment_ID();
-			rowData[i][1] = attsFile.get(i).getName();
-		}
-		TableModel model = new TableModel(rowData, names);
-		this.tbAttachmentsFile.setModel(model);
-		rowData = new Object[attsImage.size()][2];
-		for (int i = 0; i < attsImage.size(); i++) {
-			rowData[i][0] = attsImage.get(i).getAttachment_ID();
-			rowData[i][1] = attsImage.get(i).getName();
-		}
-		model = new TableModel(rowData, names);
-		this.tbAttachmentsImage.setModel(model);
 	}
 
 	public boolean isImage() {
@@ -123,7 +129,7 @@ public class AttachmentForArticleView extends Dialog implements Observer, Runnab
 	}
 
 	@Override
-	public void run() {
-		init();
+	public boolean isComponent() {
+		return false;
 	}
 }

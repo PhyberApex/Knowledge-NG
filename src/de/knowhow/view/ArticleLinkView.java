@@ -15,7 +15,7 @@ import de.knowhow.model.gui.Dialog;
 import de.knowhow.model.gui.Table;
 import de.knowhow.model.gui.TableModel;
 
-public class ArticleLinkView extends View {
+public class ArticleLinkView extends ArticleView {
 
 	private static final long serialVersionUID = 1L;
 	private Dialog dialog;
@@ -68,6 +68,11 @@ public class ArticleLinkView extends View {
 		dialog.getPane().add(spArticles);
 		dialog.getPane().add(btConfirm);
 		dialog.getPane().add(btCancel);
+	}
+
+	@Override
+	public boolean isComponent() {
+		return false;
 	}
 
 	@Override

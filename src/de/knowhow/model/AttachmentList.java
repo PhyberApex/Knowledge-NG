@@ -3,14 +3,14 @@ package de.knowhow.model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Observable;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.db.DAO;
 
-public class AttachmentList extends Observable {
+public class AttachmentList extends Model {
 
 	private ArrayList<Attachment> attachments;
 	private ArrayList<Attachment> currAttachments;
+	private int currArticleID;
 	private DAO db;
 
 	public AttachmentList(DAO db) {
@@ -48,6 +48,7 @@ public class AttachmentList extends Observable {
 	public void reload() throws DatabaseException {
 		attachments.clear();
 		this.load();
+		setCurrAttachments(getAttachmentsByArticleID(currArticleID));
 	}
 
 	public ArrayList<Attachment> getAttachmentsByArticleID(int ID) {
@@ -87,5 +88,19 @@ public class AttachmentList extends Observable {
 		attachments.add(attach);
 		notifyObservers();
 		setChanged();
+	}
+
+	public void setCurrArticleID(int currArticleID) {
+		this.currArticleID = currArticleID;
+		notifyObservers();
+		setChanged();
+	}
+
+	public int getCurrArticleID() {
+		return currArticleID;
+	}
+
+	public void setCurrAttachmentsByArticleID(int iD) {
+		setCurrAttachments(getAttachmentsByArticleID(iD));
 	}
 }

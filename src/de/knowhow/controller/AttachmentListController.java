@@ -5,55 +5,47 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
-
 import javax.swing.SwingUtilities;
-
 import de.knowhow.base.Config;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.extra.Upload;
-import de.knowhow.model.ArticleList;
 import de.knowhow.model.Attachment;
 import de.knowhow.model.AttachmentList;
 import de.knowhow.model.db.DAO;
 import de.knowhow.view.AttachmentForArticleView;
 import de.knowhow.view.Splash;
 
-public class AttachmentListController implements Observer {
+public class AttachmentListController extends Controller {
 
 	private AttachmentList al;
 	private DAO db;
-	private MainController mc;
+	private ArticleListController acl;
 	private int currID;
 	private AttachmentForArticleView attachArtView;
 	public static Splash splash;
 
-	public AttachmentListController(MainController mc) {
+	public AttachmentListController(ArticleListController acl) {
 		this.db = Config.getInstance().getDBHandle();
-		this.mc = mc;
+		this.acl = acl;
 		al = new AttachmentList(db);
 	}
 
 	public void loadData() {
 		try {
 			al.load();
+			models.add(al);
 		} catch (DatabaseException e) {
-			mc.error(e);
+			acl.error(e);
 		}
+		
 	}
 
 	public void loadGUI() {
 		attachArtView = new AttachmentForArticleView(this);
-		attachArtView.setVisible(false);
 		SwingUtilities.invokeLater(attachArtView);
-		al.addObserver(attachArtView);
-		mc.getAcl().addObserver(this);
-	}
-
-	public void reload(int iD) {
-		this.currID = iD;
-		this.al.setCurrAttachments(this.al.getAttachmentsByArticleID(iD));
+		views.add(attachArtView);
+		acl.addObserver(this.attachArtView);
+		addObservers();
 	}
 
 	public void writeAttToFS(int attID, String path) throws DatabaseException {
@@ -103,20 +95,20 @@ public class AttachmentListController implements Observer {
 		return this.attachArtView;
 	}
 
-	@Override
-	public void update(Observable o, Object arg) {
-		reload(((ArticleList) o).getCurrArticle().getArticle_ID());
-	}
-
 	public void insertImageLink(int iD) {
-		mc.insertHTMLLink("IMAGE", iD);
+		acl.insertHTMLLink("IMAGE", iD);
 	}
 
 	public void insertFileLink(int iD) {
-		mc.insertHTMLLink("FILE", iD);
+		acl.insertHTMLLink("FILE", iD);
 	}
 
 	public ArrayList<Attachment> getAttachments() {
 		return this.al.getAttachments();
+	}
+
+	public void setCurrID(int iD) {
+		this.currID = iD;
+		al.setCurrAttachmentsByArticleID(iD);
 	}
 }

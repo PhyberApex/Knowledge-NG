@@ -23,17 +23,14 @@ public class ArticleListController extends Controller {
 	private ArticleRenderView renderView;
 	private ArticlePlainView plainView;
 	private ArticleRenameView artRename;
-	private AttachmentListController attachcl;
 	private ArticleLinkView artLink;
 	private CSSController csc;
 	private ArrayList<ArticleView> articleViews = new ArrayList<ArticleView>();
 	private ArticleView currArticleView;
 
-	public ArticleListController(MainController mc,
-			AttachmentListController attachcl, CSSController csc) {
+	public ArticleListController(MainController mc, CSSController csc) {
 		this.db = Config.getInstance().getDBHandle();
 		this.mc = mc;
-		this.attachcl = attachcl;
 		this.csc = csc;
 	}
 
@@ -48,7 +45,7 @@ public class ArticleListController extends Controller {
 	}
 
 	public void loadGUI() {
-		renderView = new ArticleRenderView(this, this.attachcl, this.csc);
+		renderView = new ArticleRenderView(this, this.csc);
 		renderView.setVisible(true);
 		SwingUtilities.invokeLater(renderView);
 		plainView = new ArticlePlainView(this);
@@ -60,8 +57,8 @@ public class ArticleListController extends Controller {
 		SwingUtilities.invokeLater(artLink);
 		articleViews.add(plainView);
 		articleViews.add(renderView);
-		al.addObserver(artRename);
-		al.addObserver(artLink);
+		articleViews.add(artRename);
+		articleViews.add(artLink);
 		views = new ArrayList<View>(articleViews);
 		addObservers();
 	}
@@ -107,7 +104,6 @@ public class ArticleListController extends Controller {
 
 	public void setCurrArticle(Article art) {
 		al.setCurrArticle(art);
-		mc.currArtChanged(art.getArticle_ID());
 	}
 
 	public void setRenderVisible(boolean b) {
@@ -160,5 +156,9 @@ public class ArticleListController extends Controller {
 
 	public void insertArticleLink(int iD) {
 		plainView.insertArticleLink(iD);
+	}
+
+	public void writeAttToFS(int att_ID, String path) {
+		mc.writeAttToFS(att_ID, path);
 	}
 }

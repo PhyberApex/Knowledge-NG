@@ -58,6 +58,7 @@ public class ArticlePlainView extends ArticleView {
 		this.ta_content.setText(ReleaseNote.getReleaseNote());
 	}
 
+	@Override
 	public void insertHTML(String tag) {
 		int pos = ta_content.getCaretPosition();
 		String newContent = ta_content.getText().substring(0, pos);
@@ -74,6 +75,7 @@ public class ArticlePlainView extends ArticleView {
 		ta_content.setCaretPosition(0);
 	}
 
+	@Override
 	public void insertFileLink(int iD) {
 		int pos = ta_content.getCaretPosition();
 		String newContent = ta_content.getText().substring(0, pos);
@@ -85,6 +87,7 @@ public class ArticlePlainView extends ArticleView {
 		ta_content.setCaretPosition(0);
 	}
 
+	@Override
 	public void insertImageLink(int iD) {
 		int pos = ta_content.getCaretPosition();
 		String newContent = ta_content.getText().substring(0, pos);
@@ -95,6 +98,7 @@ public class ArticlePlainView extends ArticleView {
 		ta_content.setCaretPosition(0);
 	}
 
+	@Override
 	public void insertArticleLink(int iD) {
 		int pos = ta_content.getCaretPosition();
 		String newContent = ta_content.getText().substring(0, pos);
@@ -104,5 +108,10 @@ public class ArticlePlainView extends ArticleView {
 				ta_content.getText().length());
 		ta_content.setText(newContent);
 		ta_content.setCaretPosition(0);
+	}
+
+	@Override
+	public boolean isComponent() {
+		return true;
 	}
 }
