@@ -59,7 +59,8 @@ public class TreeController {
 		while (topicIterator.hasNext()) {
 			Topic currTopic = topicIterator.next();
 			TreeNode addNode = null;
-			if (currTopic.getTopic_ID_FK() == ID) {
+			if (currTopic.getTopic_ID_FK() == ID
+					&& currTopic.getTopic_ID_FK() != currTopic.getTopic_ID()) {
 				addNode = new TreeNode(currTopic);
 				createNode(addNode, currTopic.getTopic_ID());
 				Iterator<Article> articleIterator = acl.getArticles()

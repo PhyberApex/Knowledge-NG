@@ -23,7 +23,6 @@ import de.knowhow.view.AboutView;
 import de.knowhow.view.MainView;
 import de.knowhow.view.MenuView;
 import de.knowhow.view.SearchView;
-import de.knowhow.view.SubtopicView;
 import de.knowhow.view.View;
 
 public class MainController extends Controller {
@@ -329,15 +328,7 @@ public class MainController extends Controller {
 	}
 
 	public void subTopic() {
-		SwingUtilities.invokeLater(new SubtopicView(this, this.tcl));
-	}
-
-	public void setSubtopicByID(int topicID) {
-		try {
-			tcl.setCurrTopic_ID_FK(topicID);
-		} catch (DatabaseException e) {
-			error(e);
-		}
+		tcl.subTopic();
 	}
 
 	public void editCSS(String string) {

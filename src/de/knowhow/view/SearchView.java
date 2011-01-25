@@ -96,6 +96,7 @@ public class SearchView extends View {
 	}
 
 	private void reload() {
+		this.tbSearch = new Table();
 		String[] names = { "ID", "Name", "LastEdit" };
 		Object[][] rowData = new Object[result.size()][3];
 		for (int i = 0; i < result.size(); i++) {
@@ -105,5 +106,6 @@ public class SearchView extends View {
 		}
 		TableModel model = new TableModel(rowData, names);
 		this.tbSearch.setModel(model);
+		this.spSearch.setViewportView(tbSearch);
 	}
 }

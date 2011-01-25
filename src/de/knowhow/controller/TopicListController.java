@@ -10,16 +10,18 @@ import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.Topic;
 import de.knowhow.model.TopicList;
 import de.knowhow.model.db.DAO;
+import de.knowhow.view.SubtopicView;
 import de.knowhow.view.TopicChooseView;
 import de.knowhow.view.TopicRenameView;
 
-public class TopicListController {
+public class TopicListController extends Controller {
 
 	private TopicList tl;
 	private DAO db;
 	private MainController mc;
 	private TopicChooseView tcv;
 	private TopicRenameView topicRename;
+	private SubtopicView subView;
 
 	public TopicListController(MainController mc) {
 		this.db = Config.getInstance().getDBHandle();
@@ -30,6 +32,7 @@ public class TopicListController {
 	public void loadData() {
 		try {
 			tl.load();
+			models.add(tl);
 		} catch (DatabaseException e) {
 			mc.error(e);
 		}
@@ -41,8 +44,9 @@ public class TopicListController {
 		SwingUtilities.invokeLater(tcv);
 		this.topicRename = new TopicRenameView(this);
 		SwingUtilities.invokeLater(topicRename);
-		tl.addObserver(tcv);
-		tl.addObserver(topicRename);
+		this.subView = new SubtopicView(this);
+		SwingUtilities.invokeLater(subView);
+		addObservers();
 		mc.getAcl().addObserver(tcv);
 	}
 
@@ -101,5 +105,9 @@ public class TopicListController {
 
 	public void setCurrTopic_ID_FK(int topicID) throws DatabaseException {
 		tl.setCurrTopic_ID_FK(topicID);
+	}
+
+	public void subTopic() {
+		subView.setVisible(true);
 	}
 }

@@ -3,11 +3,10 @@ package de.knowhow.model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Observable;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.db.DAO;
 
-public class TopicList extends Observable {
+public class TopicList extends Model {
 
 	private ArrayList<Topic> topics;
 	private Topic currTopic;
