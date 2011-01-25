@@ -107,5 +107,6 @@ public class SearchView extends View {
 		TableModel model = new TableModel(rowData, names);
 		this.tbSearch.setModel(model);
 		this.spSearch.setViewportView(tbSearch);
+		this.btClose.setText("22");
 	}
 }

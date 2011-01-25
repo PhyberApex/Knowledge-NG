@@ -74,6 +74,7 @@ public class MainController extends Controller {
 		SwingUtilities.invokeLater(mv);
 		SwingUtilities.invokeLater(menuV);
 		SwingUtilities.invokeLater(aboutView);
+		SwingUtilities.invokeLater(searchView);
 		splash.close();
 	}
 
@@ -85,7 +86,7 @@ public class MainController extends Controller {
 		this.attL = new AttachmentListController(acl);
 		controller.add(attL);
 		this.tcl = new TopicListController(this);
-		// controller.add(tcl);
+		controller.add(tcl);
 		this.treeC = new TreeController(acl, tcl);
 		// controller.add(treeC);
 	}
@@ -384,7 +385,7 @@ public class MainController extends Controller {
 		aboutView = new AboutView();
 		views.add(aboutView);
 		searchView = new SearchView(this);
-		SwingUtilities.invokeLater(searchView);
+		views.add(searchView);
 		addViews(this);
 		addViews(acl);
 		addViews(attL);
