@@ -17,6 +17,7 @@ import de.knowhow.model.gui.Textfield;
 public class ArticleRenameView extends Dialog implements Observer, Runnable {
 
 	private static final long serialVersionUID = 1L;
+	
 	private ArticleListController acl;
 	private Label lbname;
 	private Textfield tfname;

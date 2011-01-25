@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.Locale;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
@@ -30,6 +31,7 @@ import de.knowhow.view.MenuView;
 import de.knowhow.view.SearchView;
 import de.knowhow.view.Splash;
 import de.knowhow.view.SubtopicView;
+import de.knowhow.view.View;
 
 public class MainController {
 
@@ -111,13 +113,19 @@ public class MainController {
 		mv = new MainView(this);
 		menuV = new MenuView(this);
 		mv.add(menuV);
-		mv.add(acl.getPlainView());
-		mv.add(acl.getRenderView());
+		addViews(acl);
 		mv.add(tcl.getTopicChooseView());
 		mv.add(treeC.getTreeView());
 		SwingUtilities.invokeLater(mv);
 		SwingUtilities.invokeLater(menuV);
 		splash.close();
+	}
+
+	public void addViews(Controller controller) {
+		Iterator<?> iterator = controller.getViews().iterator();
+		while (iterator.hasNext()) {
+			mv.add(((View) iterator.next()).getComponent());
+		}
 	}
 
 	public static void main(String[] args) {
@@ -158,7 +166,6 @@ public class MainController {
 
 	public void setPlainVisible(boolean b) {
 		acl.setPlainVisible(b);
-		menuV.setEditable(b);
 	}
 
 	public void insertHTML(String tag) {
@@ -353,7 +360,7 @@ public class MainController {
 	}
 
 	public void about() {
-		SwingUtilities.invokeLater(new AboutView());
+		SwingUtilities.invokeLater(new AboutView().setVisible(true));
 	}
 
 	public void setCurrArtByID(int iD) {

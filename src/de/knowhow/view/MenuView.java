@@ -489,15 +489,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		this.add(btSearch);
 		this.add(bt_plain);
 		this.add(bt_render);
-		this.setEditable(false);
 		this.setSize(ViewConstants.MENU_WIDTH, ViewConstants.MENU_HEIGTH);
 		this.setLocation(ViewConstants.MENU_POS_X, ViewConstants.MENU_POS_Y);
-	}
-
-	public void setEditable(boolean b) {
-		this.insertCode.setEnabled(b);
-		this.insertList.setEnabled(b);
-		this.insertLink.setEnabled(b);
 	}
 
 	@Override

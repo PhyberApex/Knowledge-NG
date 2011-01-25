@@ -3,7 +3,6 @@ package de.knowhow.controller;
 import java.util.ArrayList;
 import java.util.Observer;
 import javax.swing.SwingUtilities;
-
 import de.knowhow.base.Config;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.Article;
@@ -13,8 +12,10 @@ import de.knowhow.view.ArticleLinkView;
 import de.knowhow.view.ArticlePlainView;
 import de.knowhow.view.ArticleRenameView;
 import de.knowhow.view.ArticleRenderView;
+import de.knowhow.view.ArticleView;
+import de.knowhow.view.View;
 
-public class ArticleListController {
+public class ArticleListController extends Controller {
 
 	private ArticleList al;
 	private DAO db;
@@ -25,6 +26,8 @@ public class ArticleListController {
 	private AttachmentListController attachcl;
 	private ArticleLinkView artLink;
 	private CSSController csc;
+	private ArrayList<ArticleView> articleViews = new ArrayList<ArticleView>();
+	private ArticleView currArticleView;
 
 	public ArticleListController(MainController mc,
 			AttachmentListController attachcl, CSSController csc) {
@@ -36,6 +39,7 @@ public class ArticleListController {
 
 	public void loadData() {
 		al = new ArticleList(this.db);
+		models.add(al);
 		try {
 			al.load();
 		} catch (DatabaseException e) {
@@ -54,10 +58,12 @@ public class ArticleListController {
 		SwingUtilities.invokeLater(artRename);
 		artLink = new ArticleLinkView(this);
 		SwingUtilities.invokeLater(artLink);
-		al.addObserver(plainView);
-		al.addObserver(renderView);
+		articleViews.add(plainView);
+		articleViews.add(renderView);
 		al.addObserver(artRename);
 		al.addObserver(artLink);
+		views = new ArrayList<View>(articleViews);
+		addObservers();
 	}
 
 	public ArticlePlainView getPlainView() {
@@ -113,9 +119,11 @@ public class ArticleListController {
 	}
 
 	public void insertHTML(String tag) {
-		if (plainView.isEnabled()) {
-			plainView.insertHTML(tag);
-		}
+		getCurrView().insertHTML(tag);
+	}
+
+	public ArticleView getCurrView() {
+		return this.currArticleView;
 	}
 
 	public void error(DatabaseException e) {

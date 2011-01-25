@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.Observer;
 import javax.swing.JScrollPane;
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
@@ -16,9 +15,10 @@ import de.knowhow.model.gui.Dialog;
 import de.knowhow.model.gui.Table;
 import de.knowhow.model.gui.TableModel;
 
-public class ArticleLinkView extends Dialog implements Observer, Runnable {
+public class ArticleLinkView extends View {
 
 	private static final long serialVersionUID = 1L;
+	private Dialog dialog;
 	private ArticleListController acl;
 	private JScrollPane spArticles;
 	private Table tbArticles;
@@ -26,16 +26,18 @@ public class ArticleLinkView extends Dialog implements Observer, Runnable {
 	private Button btCancel;
 
 	public ArticleLinkView(ArticleListController acl) {
-		super();
+		this.dialog = new Dialog();
+		window = dialog;
 		this.acl = acl;
 	}
 
-	private void init() {
-		this.setSize(ViewConstants.ARTLINK_WIDTH, ViewConstants.ARTLINK_HEIGTH);
+	protected void init() {
+		dialog.setSize(ViewConstants.ARTLINK_WIDTH,
+				ViewConstants.ARTLINK_HEIGTH);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		this.setLocation((d.width - this.getSize().width) / 2, (d.height - this
-				.getSize().height) / 2);
-		this.initPane();
+		dialog.setLocation((d.width - dialog.getSize().width) / 2,
+				(d.height - dialog.getSize().height) / 2);
+		dialog.initPane();
 		this.spArticles = new JScrollPane();
 		this.spArticles.setSize(ViewConstants.ARTLINK_WIDTH,
 				ViewConstants.ARTLINK_HEIGTH - 40);
@@ -44,8 +46,8 @@ public class ArticleLinkView extends Dialog implements Observer, Runnable {
 		this.spArticles.setViewportView(tbArticles);
 		this.btCancel = new Button(Constants.getText("button.cancel"));
 		this.btCancel.setSize(130, 20);
-		this.btCancel.setLocation(this.getWidth() - btCancel.getWidth() - 10,
-				this.getHeight() - 35);
+		this.btCancel.setLocation(dialog.getWidth() - btCancel.getWidth() - 10,
+				dialog.getHeight() - 35);
 		this.btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				setVisible(false);
@@ -53,7 +55,7 @@ public class ArticleLinkView extends Dialog implements Observer, Runnable {
 		});
 		this.btConfirm = new Button(Constants.getText("button.confirm"));
 		this.btConfirm.setSize(130, 20);
-		this.btConfirm.setLocation(10, this.getHeight() - 35);
+		this.btConfirm.setLocation(10, dialog.getHeight() - 35);
 		this.btConfirm.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				int row;
@@ -63,9 +65,9 @@ public class ArticleLinkView extends Dialog implements Observer, Runnable {
 				setVisible(false);
 			}
 		});
-		this.getPane().add(spArticles);
-		this.getPane().add(btConfirm);
-		this.getPane().add(btCancel);
+		dialog.getPane().add(spArticles);
+		dialog.getPane().add(btConfirm);
+		dialog.getPane().add(btCancel);
 	}
 
 	@Override
@@ -81,10 +83,5 @@ public class ArticleLinkView extends Dialog implements Observer, Runnable {
 		}
 		TableModel model = new TableModel(rowData, names);
 		this.tbArticles.setModel(model);
-	}
-
-	@Override
-	public void run() {
-		init();
 	}
 }

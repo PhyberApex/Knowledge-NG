@@ -1,7 +1,6 @@
 package de.knowhow.view;
 
 import java.util.Observable;
-import java.util.Observer;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.text.Document;
@@ -17,9 +16,10 @@ import de.knowhow.model.gui.HTMLEditor;
 import de.knowhow.model.gui.HTMLEditorKit;
 import de.knowhow.model.gui.Label;
 
-public class ArticleRenderView extends JPanel implements Observer, Runnable {
+public class ArticleRenderView extends ArticleView {
 
 	private static final long serialVersionUID = 1L;
+	private JPanel panel;
 	private JScrollPane contentScrollPane;
 	private Label lastEdit;
 	private HTMLEditor htmlEdit_content;
@@ -29,18 +29,18 @@ public class ArticleRenderView extends JPanel implements Observer, Runnable {
 
 	public ArticleRenderView(ArticleListController acl,
 			AttachmentListController attachcl, CSSController csc) {
-		super();
+		this.panel = new JPanel();
+		window = this.panel;
 		this.attachcl = attachcl;
 		this.acl = acl;
 		this.csc = csc;
 	}
 
-	private void init() {
-		this.setLayout(null);
+	protected void init() {
+		panel.setLayout(null);
 		this.contentScrollPane = new JScrollPane();
 		this.htmlEdit_content = new HTMLEditor(attachcl, acl);
 		this.htmlEdit_content.setLocation(0, 0);
-		this.htmlEdit_content.setEditable(false);
 		HTMLEditorKit kit = new HTMLEditorKit();
 		this.htmlEdit_content.setEditorKit(kit);
 		StyleSheet styleSheet = kit.getStyleSheet();
@@ -60,12 +60,12 @@ public class ArticleRenderView extends JPanel implements Observer, Runnable {
 		this.lastEdit.setSize(ViewConstants.ARTRENDER_WIDTH - 20, 20);
 		this.lastEdit.setLocation(10, ViewConstants.ARTRENDER_HEIGTH - 30);
 		this.lastEdit.setHorizontalTextPosition(Label.CENTER);
-		this.setSize(ViewConstants.ARTRENDER_WIDTH,
+		panel.setSize(ViewConstants.ARTRENDER_WIDTH,
 				ViewConstants.ARTRENDER_HEIGTH);
-		this.setLocation(ViewConstants.ARTPLAIN_POS_X,
+		panel.setLocation(ViewConstants.ARTPLAIN_POS_X,
 				ViewConstants.ARTRENDER_POS_Y);
-		this.add(lastEdit);
-		this.add(contentScrollPane);
+		panel.add(lastEdit);
+		panel.add(contentScrollPane);
 	}
 
 	@Override
@@ -87,7 +87,26 @@ public class ArticleRenderView extends JPanel implements Observer, Runnable {
 	}
 
 	@Override
-	public void run() {
-		init();
+	public void insertArticleLink(int iD) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void insertFileLink(int iD) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void insertHTML(String tag) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void insertImageLink(int iD) {
+		// TODO Auto-generated method stub
+
 	}
 }

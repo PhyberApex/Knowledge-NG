@@ -1,7 +1,6 @@
 package de.knowhow.view;
 
 import java.util.Observable;
-import java.util.Observer;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -10,21 +9,23 @@ import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.ArticleListController;
 import de.knowhow.model.ArticleList;
 
-public class ArticlePlainView extends JPanel implements Observer, Runnable {
+public class ArticlePlainView extends ArticleView {
 
 	private static final long serialVersionUID = 1L;
+	private JPanel panel;
 	private JScrollPane contentScrollPane;
 	private JTextArea ta_content;
 	@SuppressWarnings("unused")
 	private ArticleListController acl;
 
 	public ArticlePlainView(ArticleListController acl) {
-		super();
+		this.panel = new JPanel();
+		window = this.panel;
 		this.acl = acl;
 	}
 
-	private void init() {
-		this.setLayout(null);
+	protected void init() {
+		panel.setLayout(null);
 		this.contentScrollPane = new JScrollPane();
 		this.ta_content = new JTextArea();
 		this.ta_content.setLocation(0, 0);
@@ -34,11 +35,11 @@ public class ArticlePlainView extends JPanel implements Observer, Runnable {
 				ViewConstants.ARTPLAIN_HEIGTH);
 		this.contentScrollPane.setViewportView(ta_content);
 
-		this.setSize(ViewConstants.ARTPLAIN_WIDTH,
+		panel.setSize(ViewConstants.ARTPLAIN_WIDTH,
 				ViewConstants.ARTPLAIN_HEIGTH);
-		this.setLocation(ViewConstants.ARTPLAIN_POS_X,
+		panel.setLocation(ViewConstants.ARTPLAIN_POS_X,
 				ViewConstants.ARTPLAIN_POS_Y);
-		this.add(contentScrollPane);
+		panel.add(contentScrollPane);
 
 	}
 
@@ -103,10 +104,5 @@ public class ArticlePlainView extends JPanel implements Observer, Runnable {
 				ta_content.getText().length());
 		ta_content.setText(newContent);
 		ta_content.setCaretPosition(0);
-	}
-
-	@Override
-	public void run() {
-		init();
 	}
 }

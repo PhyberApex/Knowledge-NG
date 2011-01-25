@@ -72,6 +72,10 @@ public class ViewConstants {
 	// CSSPlainView
 	public static int CSSPLAIN_WIDTH;
 	public static int CSSPLAIN_HEIGTH;
+	
+	//AboutView
+	public static int ABOUT_WIDTH = 400;
+	public static int ABOUT_HEIGTH = 350;
 
 	public static void reload(Config conf) {
 		int res = Integer.parseInt(conf.getProperty("resolution"));
