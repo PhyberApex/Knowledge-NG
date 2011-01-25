@@ -11,7 +11,7 @@ import de.knowhow.model.CSSList;
 import de.knowhow.model.db.DAO;
 import de.knowhow.view.CSSPlainEditView;
 
-public class CSSController {
+public class CSSController extends Controller {
 
 	private MainController mc;
 	private CSSList cssl;
@@ -36,7 +36,8 @@ public class CSSController {
 		this.plainView = new CSSPlainEditView(this);
 		this.plainView.setVisible(false);
 		SwingUtilities.invokeLater(plainView);
-		this.cssl.addObserver(plainView);
+		views.add(plainView);
+		addObservers();
 	}
 
 	public ArrayList<String> getStyleSheetInLines() {
@@ -75,18 +76,20 @@ public class CSSController {
 		return output;
 	}
 
-	public void confirm(String text) {
-		saveRules(convertFromPlain(text));
+	public boolean confirm(String text) {
+		return saveRules(convertFromPlain(text));
 	}
 
-	private void saveRules(HashMap<String, String> rules) {
+	private boolean saveRules(HashMap<String, String> rules) {
 		if (rules == null) {
-			return;
+			return false;
 		}
 		try {
 			cssl.setAll(rules);
+			return true;
 		} catch (DatabaseException e) {
 			mc.error(e);
+			return false;
 		}
 	}
 

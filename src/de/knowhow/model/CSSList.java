@@ -5,11 +5,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Observable;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.db.DAO;
 
-public class CSSList extends Observable {
+public class CSSList extends Model {
 	private ArrayList<CSS> rules;
 	private CSS currRules;
 	private DAO db;

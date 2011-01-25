@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import javax.swing.SwingUtilities;
 import de.knowhow.base.Config;
 import de.knowhow.exception.DatabaseException;
+import de.knowhow.extra.Splash;
 import de.knowhow.extra.Upload;
 import de.knowhow.model.Attachment;
 import de.knowhow.model.AttachmentList;
 import de.knowhow.model.db.DAO;
 import de.knowhow.view.AttachmentForArticleView;
-import de.knowhow.view.Splash;
 
 public class AttachmentListController extends Controller {
 

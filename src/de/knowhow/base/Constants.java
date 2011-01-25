@@ -8,6 +8,8 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.swing.ImageIcon;
+
 public class Constants {
 
 	private static final String APP_NAME = "KnowledgeNG";
@@ -62,5 +64,15 @@ public class Constants {
 
 	public static ResourceBundle getBundle() {
 		return lang;
+	}
+
+	public static ImageIcon createImageIcon(String path) {
+		java.net.URL imgURL = Constants.class.getResource(path);
+		if (imgURL != null) {
+			return new ImageIcon(imgURL);
+		} else {
+			System.err.println("Couldn't find file: " + path);
+			return null;
+		}
 	}
 }

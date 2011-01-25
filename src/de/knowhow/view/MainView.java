@@ -4,32 +4,34 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Observable;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.MainController;
 
-public class MainView extends JFrame implements Runnable {
+public class MainView extends View {
 
 	private static final long serialVersionUID = 1L;
+	private JFrame frame;
 	private MainController mc;
 
 	public MainView(MainController mc) {
-		super(Constants.getAppName() + " v." + Constants.getAppVersion());
-		this.setIconImage(new ImageIcon(ClassLoader
-				.getSystemResource("de/knowhow/resource/img/logo.png"))
-				.getImage());
+		frame = new JFrame(Constants.getAppName() + " v."
+				+ Constants.getAppVersion());
+		frame.setIconImage(Constants.createImageIcon(
+				"/de/knowhow/resource/img/logo.png").getImage());
+		window = frame;
 		this.mc = mc;
 	}
 
-	private void init() {
-		this.setSize(ViewConstants.MAIN_WIDTH, ViewConstants.MAIN_HEIGTH);
+	protected void init() {
+		frame.setSize(ViewConstants.MAIN_WIDTH, ViewConstants.MAIN_HEIGTH);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		this.setLocation((d.width - this.getSize().width) / 2,
-				(d.height - this.getSize().height) / 2);
+		frame.setLocation((d.width - frame.getSize().width) / 2,
+				(d.height - frame.getSize().height) / 2);
 	}
 
 	public void exit() {
@@ -37,23 +39,38 @@ public class MainView extends JFrame implements Runnable {
 	}
 
 	public void error(Exception e) {
-		JOptionPane.showMessageDialog(this,
+		JOptionPane.showMessageDialog(frame,
 				Constants.getText("message.error." + e.getMessage()), "Error",
 				JOptionPane.ERROR_MESSAGE);
 	}
 
 	@Override
 	public void run() {
-		this.setLayout(null);
+		frame.setLayout(null);
 		this.setVisible(false);
-		this.setResizable(false);
+		frame.setResizable(false);
 		init();
-		this.addWindowListener(new WindowAdapter() {
+		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				exit();
 			}
 		});
 		this.setVisible(true);
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		// Nothing to do here
+	}
+
+	@Override
+	public boolean isComponent() {
+		return false;
+	}
+
+	@Override
+	public JFrame getComponent() {
+		return this.frame;
 	}
 }

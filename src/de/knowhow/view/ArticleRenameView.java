@@ -26,6 +26,7 @@ public class ArticleRenameView extends ArticleView {
 
 	public ArticleRenameView(ArticleListController acl) {
 		dialog = new Dialog();
+		window = dialog;
 		this.acl = acl;
 	}
 
@@ -71,7 +72,6 @@ public class ArticleRenameView extends ArticleView {
 		dialog.getPane().add(tfname);
 		dialog.getPane().add(confirm);
 		dialog.getPane().add(cancel);
-		window = dialog;
 	}
 
 	@Override

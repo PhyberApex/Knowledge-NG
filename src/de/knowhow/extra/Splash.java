@@ -1,4 +1,4 @@
-package de.knowhow.view;
+package de.knowhow.extra;
 
 import java.awt.*;
 

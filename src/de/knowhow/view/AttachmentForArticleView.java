@@ -30,6 +30,7 @@ public class AttachmentForArticleView extends View {
 
 	public AttachmentForArticleView(AttachmentListController attL) {
 		dialog = new Dialog();
+		window = dialog;
 		this.attL = attL;
 	}
 
@@ -78,7 +79,6 @@ public class AttachmentForArticleView extends View {
 		dialog.getPane().add(spAttachments);
 		dialog.getPane().add(btConfirm);
 		dialog.getPane().add(btCancel);
-		window = dialog;
 	}
 
 	@Override

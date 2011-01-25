@@ -23,6 +23,8 @@
 			<fileset dir="">
 				<include name="logger.xml" />
 				<include name="gpl-2.0.txt" />
+				<include name="KnowledgeNG.exe" />
+				<include name="KnowledgeNG.sh" />
 			</fileset>
 		</copy>
 		<delete file="build/1.2/${project-name}.zip" />

@@ -16,7 +16,6 @@ import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.Article;
 import de.knowhow.model.Attachment;
 import de.knowhow.model.Topic;
-import de.knowhow.view.Splash;
 
 public class Export implements Runnable {
 

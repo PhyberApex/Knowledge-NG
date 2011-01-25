@@ -4,37 +4,31 @@ package de.knowhow.controller;
  * Main class everything starts here
  */
 
-import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Locale;
-import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
 import de.knowhow.base.Config;
 import de.knowhow.base.Constants;
-import de.knowhow.base.ViewConstants;
+import de.knowhow.base.Initializer;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.extra.Export;
-import de.knowhow.model.Search;
+import de.knowhow.extra.Splash;
 import de.knowhow.model.db.DAO;
 import de.knowhow.view.AboutView;
 import de.knowhow.view.MainView;
 import de.knowhow.view.MenuView;
 import de.knowhow.view.SearchView;
-import de.knowhow.view.Splash;
 import de.knowhow.view.SubtopicView;
 import de.knowhow.view.View;
 
-public class MainController {
+public class MainController extends Controller {
 
+	private ArrayList<Controller> controller = new ArrayList<Controller>();
 	private ArticleListController acl;
 	private TopicListController tcl;
 	private TreeController treeC;
@@ -43,6 +37,7 @@ public class MainController {
 	private MainView mv;
 	private MenuView menuV;
 	private AboutView aboutView;
+	private SearchView searchView;
 	private Config config;
 	private DAO db;
 	public static Splash splash;
@@ -50,31 +45,17 @@ public class MainController {
 			.getName());
 
 	public MainController() {
-		DOMConfigurator.configure("logger.xml");
-		try {
-			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (Exception e) {
-			// If Nimbus is not available, you can set the GUI to another look
-			// and feel.
+		if (!Initializer.getInstance().initializeApp()) {
+			JOptionPane.showMessageDialog(null, "This should never happen!",
+					"Fatal Error", JOptionPane.ERROR_MESSAGE, null);
+			logger.fatal("error in intialize process");
+			System.exit(0);
 		}
-		config = Config.getInstance();
-		Constants.setLanguage(new Locale(config.getProperty("lang")));
-		ViewConstants.reload(config);
-		URL url = ClassLoader
-				.getSystemResource("de/knowhow/resource/img/splash.png");
-		Image image = null;
-		if (url != null)
-			try {
-				image = ImageIO.read(url);
-			} catch (IOException ex) {
-			}
-		splash = new Splash(image, Constants.getText("splash.init"));
+		splash = new Splash(Constants.createImageIcon(
+				"/de/knowhow/resource/img/splash.png").getImage(),
+				Constants.getText("splash.init"));
 		splash.setVisible(true);
+		config = Config.getInstance();
 		Constants.setDBName(config.getProperty("defaultdb"));
 		db = config.getDBHandle();
 		try {
@@ -84,44 +65,30 @@ public class MainController {
 			logger.error("Database Exception " + e.getMessage());
 		}
 		db.checkDB();
-		this.csc = new CSSController(this);
-		this.acl = new ArticleListController(this, csc);
-		this.attL = new AttachmentListController(acl);
-		this.tcl = new TopicListController(this);
-		this.treeC = new TreeController(acl, tcl);
-		splash.showStatus(Constants.getText("splash.loadCSS"), 15);
-		this.csc.loadData();
-		splash.showStatus(Constants.getText("splash.loadAttachment"), 28);
-		this.attL.loadData();
-		splash.showStatus(Constants.getText("splash.loadArt"), 42);
-		this.acl.loadData();
-		splash.showStatus(Constants.getText("splash.loadTopic"), 57);
-		this.tcl.loadData();
-		this.treeC.loadData();
-		splash.showStatus(Constants.getText("splash.caching"), 71);
-		try {
-			attL.cacheImages();
-		} catch (DatabaseException e) {
-			error(e);
-			logger.error("Database Exception " + e.getMessage());
-		}
+		init();
+		loadData();
 		splash.showStatus(Constants.getText("splash.paint"), 85);
-		this.csc.loadGUI();
-		this.attL.loadGUI();
-		this.acl.loadGUI();
-		this.tcl.loadGUI();
-		this.treeC.loadGUI();
-		mv = new MainView(this);
-		menuV = new MenuView(this);
-		aboutView = new AboutView();
-		mv.add(menuV);
-		addViews(acl);
-		mv.add(tcl.getTopicChooseView());
-		mv.add(treeC.getTreeView());
+		loadGUI();
+
+		mv.getComponent().add(tcl.getTopicChooseView());
+		mv.getComponent().add(treeC.getTreeView());
 		SwingUtilities.invokeLater(mv);
 		SwingUtilities.invokeLater(menuV);
 		SwingUtilities.invokeLater(aboutView);
 		splash.close();
+	}
+
+	private void init() {
+		this.csc = new CSSController(this);
+		controller.add(csc);
+		this.acl = new ArticleListController(this, csc);
+		controller.add(acl);
+		this.attL = new AttachmentListController(acl);
+		controller.add(attL);
+		this.tcl = new TopicListController(this);
+		// controller.add(tcl);
+		this.treeC = new TreeController(acl, tcl);
+		// controller.add(treeC);
 	}
 
 	public void addViews(Controller controller) {
@@ -129,7 +96,7 @@ public class MainController {
 		while (iterator.hasNext()) {
 			View aktView = iterator.next();
 			if (aktView.isComponent()) {
-				mv.add(aktView.getComponent());
+				mv.getComponent().add(aktView.getComponent());
 			}
 		}
 	}
@@ -161,7 +128,7 @@ public class MainController {
 			db.closeDB();
 		} catch (DatabaseException e) {
 		}
-		mv.dispose();
+		mv.getComponent().dispose();
 		deleteDir(new File("tmp/"));
 		System.exit(0);
 	}
@@ -184,7 +151,7 @@ public class MainController {
 	}
 
 	private void prefChange() {
-		JOptionPane.showMessageDialog(mv,
+		JOptionPane.showMessageDialog(mv.getComponent(),
 				Constants.getText("message.warning.restart"), "Information",
 				JOptionPane.INFORMATION_MESSAGE);
 		config.saveChanges();
@@ -228,12 +195,12 @@ public class MainController {
 		tcl.getTopicRenameView().setVisible(true);
 	}
 
-	public void error(DatabaseException e) {
+	public void error(Exception e) {
 		mv.error(e);
 	}
 
 	public void deleteArticle() {
-		int ret = JOptionPane.showConfirmDialog(mv,
+		int ret = JOptionPane.showConfirmDialog(mv.getComponent(),
 				Constants.getText("message.warning.deleteArticle"), "Warning",
 				JOptionPane.OK_CANCEL_OPTION);
 		if (ret == JOptionPane.OK_OPTION) {
@@ -246,7 +213,7 @@ public class MainController {
 	}
 
 	public void deleteTopic() {
-		int ret = JOptionPane.showConfirmDialog(mv,
+		int ret = JOptionPane.showConfirmDialog(mv.getComponent(),
 				Constants.getText("message.warning.deleteTopic"), "Warning",
 				JOptionPane.OK_CANCEL_OPTION);
 		if (ret == JOptionPane.OK_OPTION) {
@@ -287,7 +254,7 @@ public class MainController {
 	public void upload(boolean image) {
 		JFileChooser fcUpload = new JFileChooser();
 		fcUpload.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		int returnVal = fcUpload.showSaveDialog(mv);
+		int returnVal = fcUpload.showSaveDialog(mv.getComponent());
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fcUpload.getSelectedFile();
 			try {
@@ -350,10 +317,7 @@ public class MainController {
 	}
 
 	public void search(String text) {
-		SearchView sV = new SearchView(Search.getArticles(text,
-				acl.getArticles()), this);
-		sV.setVisible(true);
-		SwingUtilities.invokeLater(sV);
+		searchView.searchFor(text, acl.getArticles().iterator());
 	}
 
 	public void about() {
@@ -413,6 +377,47 @@ public class MainController {
 		} catch (DatabaseException e) {
 			error(e);
 			logger.error(e.getMessage());
+		}
+	}
+
+	@Override
+	public void loadGUI() {
+		this.csc.loadGUI();
+		this.attL.loadGUI();
+		this.acl.loadGUI();
+		this.tcl.loadGUI();
+		this.treeC.loadGUI();
+		mv = new MainView(this);
+		menuV = new MenuView(this);
+		views.add(menuV);
+		aboutView = new AboutView();
+		views.add(aboutView);
+		searchView = new SearchView(this);
+		SwingUtilities.invokeLater(searchView);
+		addViews(this);
+		addViews(acl);
+		addViews(attL);
+		views.add(menuV);
+		views.add(aboutView);
+	}
+
+	@Override
+	public void loadData() {
+		splash.showStatus(Constants.getText("splash.loadCSS"), 15);
+		this.csc.loadData();
+		splash.showStatus(Constants.getText("splash.loadAttachment"), 28);
+		this.attL.loadData();
+		splash.showStatus(Constants.getText("splash.loadArt"), 42);
+		this.acl.loadData();
+		splash.showStatus(Constants.getText("splash.loadTopic"), 57);
+		this.tcl.loadData();
+		this.treeC.loadData();
+		splash.showStatus(Constants.getText("splash.caching"), 71);
+		try {
+			attL.cacheImages();
+		} catch (DatabaseException e) {
+			error(e);
+			logger.error("Database Exception " + e.getMessage());
 		}
 	}
 

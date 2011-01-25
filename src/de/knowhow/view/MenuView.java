@@ -1,5 +1,7 @@
 package de.knowhow.view;
 
+import java.util.Observable;
+
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,9 +21,10 @@ import de.knowhow.model.gui.MenuItem;
 import de.knowhow.model.gui.RadioButtonMenuItem;
 import de.knowhow.model.gui.Textfield;
 
-public class MenuView extends JMenuBar implements Runnable {
+public class MenuView extends View {
 
 	private static final long serialVersionUID = 1L;
+	private JMenuBar menu;
 	private JMenu file;
 	private MenuItem newArticle;
 	private MenuItem newTopic;
@@ -71,17 +74,16 @@ public class MenuView extends JMenuBar implements Runnable {
 	private static Logger logger = Logger.getLogger(MenuView.class.getName());
 
 	public MenuView(MainController mc) {
-		super();
+		this.menu = new JMenuBar();
+		window = menu;
 		this.mc = mc;
 	}
 
 	public void init() {
 		file = new Menu(Constants.getText("menu.file"));
 		newArticle = new MenuItem(Constants.getText("menu.file.newArticle"));
-		newArticle
-				.setIcon(new ImageIcon(
-						ClassLoader
-								.getSystemResource("de/knowhow/resource/img/icon/add_file.png")));
+		newArticle.setIcon(Constants
+				.createImageIcon("/de/knowhow/resource/img/icon/add_file.png"));
 		newArticle.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("new article clicked");
@@ -89,12 +91,11 @@ public class MenuView extends JMenuBar implements Runnable {
 			}
 		});
 		file.add(newArticle);
-		deleteArticle = new MenuItem(Constants
-				.getText("menu.file.deleteArticle"));
+		deleteArticle = new MenuItem(
+				Constants.getText("menu.file.deleteArticle"));
 		deleteArticle
-				.setIcon(new ImageIcon(
-						ClassLoader
-								.getSystemResource("de/knowhow/resource/img/icon/delete_file.png")));
+				.setIcon(Constants
+						.createImageIcon("/de/knowhow/resource/img/icon/delete_file.png"));
 		deleteArticle.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("delete article clicked");
@@ -103,10 +104,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		});
 		file.add(deleteArticle);
 		newTopic = new MenuItem(Constants.getText("menu.file.newTopic"));
-		newTopic
-				.setIcon(new ImageIcon(
-						ClassLoader
-								.getSystemResource("de/knowhow/resource/img/icon/add_folder.png")));
+		newTopic.setIcon(Constants
+				.createImageIcon("/de/knowhow/resource/img/icon/add_folder.png"));
 		newTopic.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("new topic clicked");
@@ -117,9 +116,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		file.add(newTopic);
 		deleteTopic = new MenuItem(Constants.getText("menu.file.deleteTopic"));
 		deleteTopic
-				.setIcon(new ImageIcon(
-						ClassLoader
-								.getSystemResource("de/knowhow/resource/img/icon/delete_folder.png")));
+				.setIcon(Constants
+						.createImageIcon("/de/knowhow/resource/img/icon/delete_folder.png"));
 		deleteTopic.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("delete topic clicked");
@@ -132,9 +130,8 @@ public class MenuView extends JMenuBar implements Runnable {
 				.getSystemResource("de/knowhow/resource/img/icon/upload.png")));
 		uploadImage = new MenuItem(Constants.getText("menu.file.upload.image"));
 		uploadImage
-				.setIcon(new ImageIcon(
-						ClassLoader
-								.getSystemResource("de/knowhow/resource/img/icon/upload_image.png")));
+				.setIcon(Constants
+						.createImageIcon("/de/knowhow/resource/img/icon/upload_image.png"));
 		uploadImage.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("upload image clicked");
@@ -144,9 +141,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		upload.add(uploadImage);
 		uploadFile = new MenuItem(Constants.getText("menu.file.upload.file"));
 		uploadFile
-				.setIcon(new ImageIcon(
-						ClassLoader
-								.getSystemResource("de/knowhow/resource/img/icon/upload_file.png")));
+				.setIcon(Constants
+						.createImageIcon("/de/knowhow/resource/img/icon/upload_file.png"));
 		uploadFile.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("upload file clicked");
@@ -158,8 +154,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		file.add(upload);
 		file.addSeparator();
 		export = new Menu(Constants.getText("menu.file.export"));
-		export.setIcon(new ImageIcon(ClassLoader
-				.getSystemResource("de/knowhow/resource/img/icon/export.png")));
+		export.setIcon(Constants
+				.createImageIcon("/de/knowhow/resource/img/icon/export.png"));
 		exportHTML = new MenuItem(Constants.getText("menu.file.export.HTML"));
 		exportHTML.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -171,8 +167,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		file.add(export);
 		file.addSeparator();
 		newDatabase = new MenuItem(Constants.getText("menu.file.newDatabase"));
-		newDatabase.setIcon(new ImageIcon(ClassLoader
-				.getSystemResource("de/knowhow/resource/img/icon/new_db.png")));
+		newDatabase.setIcon(Constants
+				.createImageIcon("/de/knowhow/resource/img/icon/new_db.png"));
 		newDatabase.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("new database clicked");
@@ -181,10 +177,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		});
 		file.add(newDatabase);
 		openDatabase = new MenuItem(Constants.getText("menu.file.openDatabase"));
-		openDatabase
-				.setIcon(new ImageIcon(
-						ClassLoader
-								.getSystemResource("de/knowhow/resource/img/icon/open_db.png")));
+		openDatabase.setIcon(Constants
+				.createImageIcon("/de/knowhow/resource/img/icon/open_db.png"));
 		openDatabase.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("open database clicked");
@@ -194,8 +188,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		file.add(openDatabase);
 		file.addSeparator();
 		close = new MenuItem(Constants.getText("menu.file.close"));
-		close.setIcon(new ImageIcon(ClassLoader
-				.getSystemResource("de/knowhow/resource/img/icon/close.png")));
+		close.setIcon(Constants
+				.createImageIcon("/de/knowhow/resource/img/icon/close.png"));
 		close.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("exit clicked");
@@ -204,8 +198,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		});
 		file.add(close);
 		edit = new Menu(Constants.getText("menu.edit"));
-		renameArticle = new MenuItem(Constants
-				.getText("menu.edit.renameArticle"));
+		renameArticle = new MenuItem(
+				Constants.getText("menu.edit.renameArticle"));
 		renameArticle.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("rename article clicked");
@@ -231,8 +225,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		edit.add(subtopic);
 		edit.addSeparator();
 		css = new Menu(Constants.getText("menu.edit.css"));
-		css.setIcon(new ImageIcon(ClassLoader
-				.getSystemResource("de/knowhow/resource/img/icon/css.png")));
+		css.setIcon(Constants
+				.createImageIcon("/de/knowhow/resource/img/icon/css.png"));
 		plainCSS = new MenuItem(Constants.getText("menu.edit.css.plain"));
 		plainCSS.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -263,19 +257,18 @@ public class MenuView extends JMenuBar implements Runnable {
 		});
 		edit.add(insertList);
 		insertLink = new Menu(Constants.getText("menu.edit.insertLink"));
-		insertLinkArticle = new MenuItem(Constants
-				.getText("menu.edit.insertLink.article"));
+		insertLinkArticle = new MenuItem(
+				Constants.getText("menu.edit.insertLink.article"));
 		insertLinkArticle
 				.addActionListener(new java.awt.event.ActionListener() {
 					public void actionPerformed(java.awt.event.ActionEvent e) {
-						logger
-								.debug("insert HTML tag \"<a>\" with article clicked");
+						logger.debug("insert HTML tag \"<a>\" with article clicked");
 						mc.insertLink("Article");
 					}
 				});
 		insertLink.add(insertLinkArticle);
-		insertLinkImage = new MenuItem(Constants
-				.getText("menu.edit.insertLink.image"));
+		insertLinkImage = new MenuItem(
+				Constants.getText("menu.edit.insertLink.image"));
 		insertLinkImage.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("insert HTML tag \"<a>\" with image clicked");
@@ -283,8 +276,8 @@ public class MenuView extends JMenuBar implements Runnable {
 			}
 		});
 		insertLink.add(insertLinkImage);
-		insertLinkFile = new MenuItem(Constants
-				.getText("menu.edit.insertLink.file"));
+		insertLinkFile = new MenuItem(
+				Constants.getText("menu.edit.insertLink.file"));
 		insertLinkFile.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("insert HTML tag \"<a>\" with file clicked");
@@ -295,16 +288,12 @@ public class MenuView extends JMenuBar implements Runnable {
 		edit.add(insertLink);
 		prefs = new Menu(Constants.getText("menu.prefs"));
 		lang = new Menu(Constants.getText("menu.prefs.lang"));
-		lang
-				.setIcon(new ImageIcon(
-						ClassLoader
-								.getSystemResource("de/knowhow/resource/img/icon/prefs_language.png")));
+		lang.setIcon(Constants
+				.createImageIcon("/de/knowhow/resource/img/icon/prefs_language.png"));
 		ButtonGroup langGroup = new ButtonGroup();
 		RadioButtonMenuItem langDE = new RadioButtonMenuItem("Deutsch");
-		langDE
-				.setIcon(new ImageIcon(
-						ClassLoader
-								.getSystemResource("de/knowhow/resource/img/icon/de_DE_Icon.png")));
+		langDE.setIcon(Constants
+				.createImageIcon("/de/knowhow/resource/img/icon/de_DE_Icon.png"));
 		if (Constants.getBundle().getLocale().getLanguage().equals("de")) {
 			langDE.setSelected(true);
 		}
@@ -317,10 +306,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		langGroup.add(langDE);
 		lang.add(langDE);
 		RadioButtonMenuItem langEN = new RadioButtonMenuItem("English");
-		langEN
-				.setIcon(new ImageIcon(
-						ClassLoader
-								.getSystemResource("de/knowhow/resource/img/icon/en_EN_Icon.png")));
+		langEN.setIcon(Constants
+				.createImageIcon("/de/knowhow/resource/img/icon/en_EN_Icon.png"));
 		if (Constants.getBundle().getLocale().getLanguage().equals("en")) {
 			langEN.setSelected(true);
 		}
@@ -334,10 +321,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		lang.add(langEN);
 		prefs.add(lang);
 		res = new Menu(Constants.getText("menu.prefs.res"));
-		res
-				.setIcon(new ImageIcon(
-						ClassLoader
-								.getSystemResource("de/knowhow/resource/img/icon/prefs_resolution.png")));
+		res.setIcon(Constants
+				.createImageIcon("/de/knowhow/resource/img/icon/prefs_resolution.png"));
 		ButtonGroup resGroup = new ButtonGroup();
 		RadioButtonMenuItem res600 = new RadioButtonMenuItem("600x480");
 		resGroup.add(res600);
@@ -383,13 +368,11 @@ public class MenuView extends JMenuBar implements Runnable {
 		}
 		prefs.add(res);
 		this.database = new Menu(Constants.getText("keyword.database"));
-		database
-				.setIcon(new ImageIcon(
-						ClassLoader
-								.getSystemResource("de/knowhow/resource/img/icon/prefs_database.png")));
+		database.setIcon(Constants
+				.createImageIcon("/de/knowhow/resource/img/icon/prefs_database.png"));
 		ButtonGroup databaseGroup = new ButtonGroup();
-		this.sqlite = new RadioButtonMenuItem(Constants
-				.getText("menu.prefs.database.sqlite"));
+		this.sqlite = new RadioButtonMenuItem(
+				Constants.getText("menu.prefs.database.sqlite"));
 		this.sqlite.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("change database to sqlite clicked");
@@ -400,8 +383,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		});
 		databaseGroup.add(this.sqlite);
 		this.database.add(this.sqlite);
-		this.mysql = new RadioButtonMenuItem(Constants
-				.getText("menu.prefs.database.mysql"));
+		this.mysql = new RadioButtonMenuItem(
+				Constants.getText("menu.prefs.database.mysql"));
 		this.mysql.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("change database to mysql clicked");
@@ -412,8 +395,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		});
 		databaseGroup.add(this.mysql);
 		this.database.add(this.mysql);
-		this.mysql_change = new MenuItem(Constants
-				.getText("menu.prefs.database.mysql_change"));
+		this.mysql_change = new MenuItem(
+				Constants.getText("menu.prefs.database.mysql_change"));
 		this.mysql_change
 				.addActionListener(new java.awt.event.ActionListener() {
 					public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -426,8 +409,8 @@ public class MenuView extends JMenuBar implements Runnable {
 		this.prefs.add(this.database);
 		this.help = new Menu(Constants.getText("menu.help"));
 		this.about = new MenuItem(Constants.getText("menu.help.about"));
-		this.about.setIcon(new ImageIcon(ClassLoader
-				.getSystemResource("de/knowhow/resource/img/icon/about.png")));
+		this.about.setIcon(Constants
+				.createImageIcon("/de/knowhow/resource/img/icon/about.png"));
 		this.about.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("about clicked");
@@ -435,8 +418,8 @@ public class MenuView extends JMenuBar implements Runnable {
 			}
 		});
 		this.help.add(about);
-		this.bt_plain = new JButton(new ImageIcon(ClassLoader
-				.getSystemResource("de/knowhow/resource/img/plain.PNG")));
+		this.bt_plain = new JButton(
+				Constants.createImageIcon("/de/knowhow/resource/img/plain.PNG"));
 		this.bt_plain.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("plain article view clicked");
@@ -447,8 +430,9 @@ public class MenuView extends JMenuBar implements Runnable {
 				bt_plain.setEnabled(false);
 			}
 		});
-		this.bt_render = new JButton(new ImageIcon(ClassLoader
-				.getSystemResource("de/knowhow/resource/img/render.PNG")));
+		this.bt_render = new JButton(
+				Constants
+						.createImageIcon("/de/knowhow/resource/img/render.PNG"));
 		this.bt_render.setEnabled(false);
 		this.bt_render.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -481,20 +465,25 @@ public class MenuView extends JMenuBar implements Runnable {
 			this.sqlite.setEnabled(false);
 			this.mysql_change.setEnabled(false);
 		}
-		this.add(file);
-		this.add(edit);
-		this.add(prefs);
-		this.add(help);
-		this.add(tfSearch);
-		this.add(btSearch);
-		this.add(bt_plain);
-		this.add(bt_render);
-		this.setSize(ViewConstants.MENU_WIDTH, ViewConstants.MENU_HEIGTH);
-		this.setLocation(ViewConstants.MENU_POS_X, ViewConstants.MENU_POS_Y);
+		menu.add(file);
+		menu.add(edit);
+		menu.add(prefs);
+		menu.add(help);
+		menu.add(tfSearch);
+		menu.add(btSearch);
+		menu.add(bt_plain);
+		menu.add(bt_render);
+		menu.setSize(ViewConstants.MENU_WIDTH, ViewConstants.MENU_HEIGTH);
+		menu.setLocation(ViewConstants.MENU_POS_X, ViewConstants.MENU_POS_Y);
 	}
 
 	@Override
-	public void run() {
-		init();
+	public void update(Observable arg0, Object arg1) {
+		// Nothing to do here
+	}
+
+	@Override
+	public boolean isComponent() {
+		return true;
 	}
 }

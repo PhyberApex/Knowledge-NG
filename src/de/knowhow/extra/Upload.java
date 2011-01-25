@@ -1,20 +1,14 @@
 package de.knowhow.extra;
 
-import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
-
-import javax.imageio.ImageIO;
-
 import de.knowhow.base.Constants;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.Attachment;
 import de.knowhow.model.AttachmentList;
 import de.knowhow.model.db.DAO;
-import de.knowhow.view.Splash;
 
 public class Upload implements Runnable {
 
@@ -43,15 +37,8 @@ public class Upload implements Runnable {
 				throw new DatabaseException(
 						Constants.getText("message.error.sizeError"));
 			}
-			URL url = ClassLoader
-					.getSystemResource("de/knowhow/resource/img/loading.png");
-			Image image = null;
-			if (url != null)
-				try {
-					image = ImageIO.read(url);
-				} catch (IOException ex) {
-				}
-			splash = new Splash(image, "");
+			splash = new Splash(Constants.createImageIcon(
+					"/de/knowhow/resource/img/loading.png").getImage(), "");
 			splash.setVisible(true);
 			splash.showStatus("Uploading...", 101);
 			byte[] bytes = new byte[(int) length];
