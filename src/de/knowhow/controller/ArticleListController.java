@@ -51,8 +51,7 @@ public class ArticleListController extends Controller {
 		SwingUtilities.invokeLater(renderView);
 		plainView = new ArticlePlainView(this);
 		SwingUtilities.invokeLater(plainView);
-		currArticleView = plainView;
-		setCurrArticleView(ArticleView.RENDEREDVIEW);
+		currArticleView = renderView;
 		artRename = new ArticleRenameView(this);
 		SwingUtilities.invokeLater(artRename);
 		artLink = new ArticleLinkView(this);
