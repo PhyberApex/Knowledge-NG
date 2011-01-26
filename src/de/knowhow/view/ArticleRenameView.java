@@ -38,20 +38,21 @@ public class ArticleRenameView extends ArticleView {
 		dialog.initPane();
 		this.lbname = new Label(Constants.getText("keyword.article"));
 		this.lbname.setSize(50, 25);
-		this.lbname.setLocation(10,
-				((dialog.getHeight() - 30) / 2) - (lbname.getHeight() / 2));
+		this.lbname.setLocation(10, ((dialog.getHeight() - 30) / 2)
+				- (lbname.getHeight() / 2));
 		this.tfname = new Textfield(Constants.getText("renameArticle.tfname"));
 		this.tfname.setSize(ViewConstants.RENAME_WIDTH - lbname.getWidth()
 				- lbname.getX() - 10, 25);
-		this.tfname.setLocation(lbname.getX() + lbname.getWidth() + 5,
-				((dialog.getHeight() - 30) / 2) - (lbname.getHeight() / 2));
+		this.tfname.setLocation(lbname.getX() + lbname.getWidth() + 5, ((dialog
+				.getHeight() - 30) / 2)
+				- (lbname.getHeight() / 2));
 		this.confirm = new Button(Constants.getText("button.confirm"));
 		this.confirm.setSize(ViewConstants.RENAME_WIDTH / 2 - 20, 20);
 		this.confirm.setLocation(10, ViewConstants.RENAME_HEIGTH - 30);
 		this.confirm.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				try {
-					acl.confirm("renameArticle");
+					acl.confirmRename();
 				} catch (DatabaseException ex) {
 					acl.error(ex);
 				}
@@ -60,9 +61,8 @@ public class ArticleRenameView extends ArticleView {
 		});
 		this.cancel = new Button(Constants.getText("button.cancel"));
 		this.cancel.setSize(ViewConstants.RENAME_WIDTH / 2 - 20, 20);
-		this.cancel.setLocation(
-				ViewConstants.RENAME_WIDTH - 10 - this.cancel.getWidth(),
-				ViewConstants.RENAME_HEIGTH - 30);
+		this.cancel.setLocation(ViewConstants.RENAME_WIDTH - 10
+				- this.cancel.getWidth(), ViewConstants.RENAME_HEIGTH - 30);
 		this.cancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				setVisible(false);
@@ -85,7 +85,7 @@ public class ArticleRenameView extends ArticleView {
 	public String getArtName() {
 		return tfname.getText();
 	}
-	
+
 	@Override
 	public boolean isComponent() {
 		return false;

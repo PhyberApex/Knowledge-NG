@@ -20,4 +20,8 @@ public abstract class ArticleView extends View {
 	public void insertArticleLink(int iD) {
 		throw new UnsupportedOperationException();
 	}
+
+	public String getContent() {
+		throw new UnsupportedOperationException();
+	}
 }

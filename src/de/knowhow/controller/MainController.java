@@ -51,8 +51,8 @@ public class MainController extends Controller {
 			System.exit(0);
 		}
 		splash = new Splash(Constants.createImageIcon(
-				"/de/knowhow/resource/img/splash.png").getImage(),
-				Constants.getText("splash.init"));
+				"/de/knowhow/resource/img/splash.png").getImage(), Constants
+				.getText("splash.init"));
 		splash.setVisible(true);
 		config = Config.getInstance();
 		Constants.setDBName(config.getProperty("defaultdb"));
@@ -113,11 +113,7 @@ public class MainController extends Controller {
 
 	public void confirm(String action) {
 		try {
-			if (action.contains("Article")) {
-				acl.confirm(action);
-			} else {
-				tcl.confirm(action);
-			}
+			tcl.confirm(action);
 		} catch (DatabaseException e) {
 			error(e);
 			logger.error("Database Exception " + e.getMessage());
@@ -144,8 +140,8 @@ public class MainController extends Controller {
 	}
 
 	private void prefChange() {
-		JOptionPane.showMessageDialog(mv.getComponent(),
-				Constants.getText("message.warning.restart"), "Information",
+		JOptionPane.showMessageDialog(mv.getComponent(), Constants
+				.getText("message.warning.restart"), "Information",
 				JOptionPane.INFORMATION_MESSAGE);
 		config.saveChanges();
 	}
@@ -173,7 +169,8 @@ public class MainController extends Controller {
 
 	public void newDatabase() {
 		String name = JOptionPane.showInputDialog(Constants
-				.getText("newDatabase") + ":");
+				.getText("newDatabase")
+				+ ":");
 		if (name != null) {
 			config.setProperty("defaultdb", name);
 		}
@@ -193,8 +190,8 @@ public class MainController extends Controller {
 	}
 
 	public void deleteArticle() {
-		int ret = JOptionPane.showConfirmDialog(mv.getComponent(),
-				Constants.getText("message.warning.deleteArticle"), "Warning",
+		int ret = JOptionPane.showConfirmDialog(mv.getComponent(), Constants
+				.getText("message.warning.deleteArticle"), "Warning",
 				JOptionPane.OK_CANCEL_OPTION);
 		if (ret == JOptionPane.OK_OPTION) {
 			try {
@@ -206,8 +203,8 @@ public class MainController extends Controller {
 	}
 
 	public void deleteTopic() {
-		int ret = JOptionPane.showConfirmDialog(mv.getComponent(),
-				Constants.getText("message.warning.deleteTopic"), "Warning",
+		int ret = JOptionPane.showConfirmDialog(mv.getComponent(), Constants
+				.getText("message.warning.deleteTopic"), "Warning",
 				JOptionPane.OK_CANCEL_OPTION);
 		if (ret == JOptionPane.OK_OPTION) {
 			try {
@@ -275,7 +272,8 @@ public class MainController extends Controller {
 	public void changeDatabase(String string) {
 		if (string.equals("1")) {
 			String database = JOptionPane.showInputDialog(Constants
-					.getText("keyword.database") + ":");
+					.getText("keyword.database")
+					+ ":");
 			if (database != null) {
 				config.setProperty("databasetyp", string);
 				config.setProperty("defaultdb", database);
@@ -286,13 +284,17 @@ public class MainController extends Controller {
 			}
 		} else if (string.equals("2")) {
 			String host = JOptionPane.showInputDialog(Constants
-					.getText("database.host") + ":");
+					.getText("database.host")
+					+ ":");
 			String database = JOptionPane.showInputDialog(Constants
-					.getText("keyword.database") + ":");
+					.getText("keyword.database")
+					+ ":");
 			String user = JOptionPane.showInputDialog(Constants
-					.getText("database.user") + ":");
+					.getText("database.user")
+					+ ":");
 			String pass = JOptionPane.showInputDialog(Constants
-					.getText("database.password") + ":");
+					.getText("database.password")
+					+ ":");
 			if (host != null && database != null && user != null
 					&& pass != null) {
 				config.setProperty("databasetyp", string);

@@ -109,14 +109,12 @@ public class ArticleListController extends Controller {
 		renderView.cancel();
 	}
 
-	public void confirm(String action) throws DatabaseException {
-		if (action.equals("renameArticle")) {
-			al.setCurrName(artRename.getArtName());
-		} else if (action.equals("ArticleContent")) {
-			al.setCurrContent(plainView.getArticleContent());
-		} else if (action.equals("newArticle")) {
-			al.newArticle();
-		}
+	public void confirmContent() throws DatabaseException {
+		al.getCurrArticle().setContent(currArticleView.getContent());
+	}
+
+	public void confirmRename() throws DatabaseException {
+		al.getCurrArticle().setName(artRename.getArtName());
 	}
 
 	public void setCurrArticle(Article art) {

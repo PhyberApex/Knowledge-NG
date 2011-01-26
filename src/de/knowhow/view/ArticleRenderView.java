@@ -6,11 +6,15 @@ import javax.swing.JScrollPane;
 import javax.swing.text.Document;
 import javax.swing.text.html.HTML;
 import javax.swing.text.html.StyleSheet;
+
+import de.knowhow.base.Constants;
 import de.knowhow.base.ReleaseNote;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.ArticleListController;
 import de.knowhow.controller.CSSController;
+import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.ArticleList;
+import de.knowhow.model.gui.Button;
 import de.knowhow.model.gui.HTMLEditor;
 import de.knowhow.model.gui.HTMLEditorKit;
 
@@ -18,6 +22,8 @@ public class ArticleRenderView extends ArticleView {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel panel;
+	private Button confirmButton;
+	private Button cancelButton;
 	private JScrollPane contentScrollPane;
 	private HTMLEditor htmlEdit_content;
 	private ArticleListController acl;
@@ -54,6 +60,33 @@ public class ArticleRenderView extends ArticleView {
 		panel.setLocation(ViewConstants.ARTPLAIN_POS_X,
 				ViewConstants.ARTRENDER_POS_Y);
 		panel.add(contentScrollPane);
+		this.confirmButton = new Button(Constants.getText("button.confirm"));
+		this.confirmButton.setSize(confirmButton.getPreferredSize());
+		this.confirmButton.setLocation(5, contentScrollPane.getY()
+				+ contentScrollPane.getHeight());
+		this.confirmButton
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent e) {
+						try {
+							acl.confirmContent();
+						} catch (DatabaseException e1) {
+							acl.error(e1);
+						}
+					}
+				});
+		panel.add(confirmButton);
+		this.cancelButton = new Button(Constants.getText("button.cancel"));
+		this.cancelButton.setSize(cancelButton.getPreferredSize());
+		this.cancelButton.setLocation(panel.getWidth() - 5
+				- cancelButton.getWidth(), contentScrollPane.getY()
+				+ contentScrollPane.getHeight());
+		this.cancelButton
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent e) {
+						acl.cancel();
+					}
+				});
+		panel.add(cancelButton);
 	}
 
 	@Override
@@ -112,5 +145,10 @@ public class ArticleRenderView extends ArticleView {
 	@Override
 	public boolean isComponent() {
 		return true;
+	}
+
+	@Override
+	public String getContent() {
+		return htmlEdit_content.getText();
 	}
 }

@@ -76,8 +76,7 @@ public class TopicListController extends Controller {
 	public void confirm(String action) throws DatabaseException {
 		if (action.equals("rename")) {
 			tl.setCurrName(topicRename.getTopicName());
-		} else if (action.equals("ArticleContent")) {
-			mc.confirm(action);
+
 		}
 	}
 

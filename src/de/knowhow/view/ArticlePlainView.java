@@ -46,13 +46,14 @@ public class ArticlePlainView extends ArticleView {
 		this.contentScrollPane.setViewportView(ta_content);
 		panel.add(contentScrollPane);
 		this.confirmButton = new Button(Constants.getText("button.confirm"));
-		this.confirmButton.setSize(130, 25);
-		this.confirmButton.setLocation(5, 0);
+		this.confirmButton.setSize(confirmButton.getPreferredSize());
+		this.confirmButton.setLocation(5, contentScrollPane.getY()
+				+ contentScrollPane.getHeight());
 		this.confirmButton
 				.addActionListener(new java.awt.event.ActionListener() {
 					public void actionPerformed(java.awt.event.ActionEvent e) {
 						try {
-							acl.confirm("ArticleContent");
+							acl.confirmContent();
 						} catch (DatabaseException e1) {
 							acl.error(e1);
 						}
@@ -60,9 +61,10 @@ public class ArticlePlainView extends ArticleView {
 				});
 		panel.add(confirmButton);
 		this.cancelButton = new Button(Constants.getText("button.cancel"));
-		this.cancelButton.setSize(130, 25);
-		this.cancelButton.setLocation(ViewConstants.ARTPLAIN_WIDTH
-				- this.cancelButton.getWidth() - 5, 0);
+		this.cancelButton.setSize(cancelButton.getPreferredSize());
+		this.cancelButton.setLocation(panel.getWidth() - 5
+				- cancelButton.getWidth(), contentScrollPane.getY()
+				+ contentScrollPane.getHeight());
 		this.cancelButton
 				.addActionListener(new java.awt.event.ActionListener() {
 					public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -70,6 +72,7 @@ public class ArticlePlainView extends ArticleView {
 					}
 				});
 		panel.add(cancelButton);
+		setVisible(false);
 	}
 
 	public String getArticleContent() {
@@ -142,5 +145,10 @@ public class ArticlePlainView extends ArticleView {
 	@Override
 	public boolean isComponent() {
 		return true;
+	}
+
+	@Override
+	public String getContent() {
+		return ta_content.getText();
 	}
 }

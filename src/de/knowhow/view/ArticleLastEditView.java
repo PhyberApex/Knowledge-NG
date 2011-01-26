@@ -20,10 +20,9 @@ public class ArticleLastEditView extends ArticleView {
 	@Override
 	public void update(Observable o, Object arg) {
 		if (o instanceof ArticleList) {
-			this.lastEdit.setText("<html>"
-					+ Constants.getText("articleLastEditView.lastEdit")
-					+ "<br />"
-					+ ((ArticleList) o).getCurrArticle().getLastEdit());
+			this.lastEdit.setText(Constants
+					.getText("articleLastEditView.lastEdit")
+					+ " " + ((ArticleList) o).getCurrArticle().getLastEdit());
 		}
 	}
 
@@ -34,10 +33,11 @@ public class ArticleLastEditView extends ArticleView {
 				ViewConstants.LASTEDIT_HEIGTH);
 		panel.setLocation(ViewConstants.LASTEDIT_POS_X,
 				ViewConstants.LASTEDIT_POS_Y);
-		this.lastEdit = new Label("<html>"
-				+ Constants.getText("articleLastEditView.lastEdit") + "<br />");
-		this.lastEdit.setSize(panel.getWidth(), 35);
-		this.lastEdit.setLocation(5, 5);
+		this.lastEdit = new Label(Constants
+				.getText("articleLastEditView.lastEdit")
+				+ " DD.MM.YYYY");
+		this.lastEdit.setSize(panel.getWidth(), 25);
+		this.lastEdit.setLocation(5, 0);
 		panel.add(lastEdit);
 	}
 
