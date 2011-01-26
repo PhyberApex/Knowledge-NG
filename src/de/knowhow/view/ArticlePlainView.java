@@ -4,43 +4,72 @@ import java.util.Observable;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import de.knowhow.base.Constants;
 import de.knowhow.base.ReleaseNote;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.ArticleListController;
+import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.ArticleList;
+import de.knowhow.model.gui.Button;
 
 public class ArticlePlainView extends ArticleView {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel panel;
+	private Button confirmButton;
+	private Button cancelButton;
 	private JScrollPane contentScrollPane;
 	private JTextArea ta_content;
-	@SuppressWarnings("unused")
 	private ArticleListController acl;
 
 	public ArticlePlainView(ArticleListController acl) {
 		this.panel = new JPanel();
-		window = this.panel;
 		this.acl = acl;
+		window = this.panel;
 	}
 
 	protected void init() {
 		panel.setLayout(null);
+		panel.setSize(ViewConstants.ARTPLAIN_WIDTH,
+				ViewConstants.ARTPLAIN_HEIGTH);
+		panel.setLocation(ViewConstants.ARTPLAIN_POS_X,
+				ViewConstants.ARTPLAIN_POS_Y);
+
 		this.contentScrollPane = new JScrollPane();
 		this.ta_content = new JTextArea();
 		this.ta_content.setLocation(0, 0);
 		this.ta_content.setText(ReleaseNote.getReleaseNote());
 		this.contentScrollPane.setLocation(5, 0);
 		this.contentScrollPane.setSize(ViewConstants.ARTPLAIN_WIDTH - 10,
-				ViewConstants.ARTPLAIN_HEIGTH);
+				ViewConstants.ARTPLAIN_HEIGTH - 40);
 		this.contentScrollPane.setViewportView(ta_content);
-
-		panel.setSize(ViewConstants.ARTPLAIN_WIDTH,
-				ViewConstants.ARTPLAIN_HEIGTH);
-		panel.setLocation(ViewConstants.ARTPLAIN_POS_X,
-				ViewConstants.ARTPLAIN_POS_Y);
 		panel.add(contentScrollPane);
-
+		this.confirmButton = new Button(Constants.getText("button.confirm"));
+		this.confirmButton.setSize(130, 25);
+		this.confirmButton.setLocation(5, 0);
+		this.confirmButton
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent e) {
+						try {
+							acl.confirm("ArticleContent");
+						} catch (DatabaseException e1) {
+							acl.error(e1);
+						}
+					}
+				});
+		panel.add(confirmButton);
+		this.cancelButton = new Button(Constants.getText("button.cancel"));
+		this.cancelButton.setSize(130, 25);
+		this.cancelButton.setLocation(ViewConstants.ARTPLAIN_WIDTH
+				- this.cancelButton.getWidth() - 5, 0);
+		this.cancelButton
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent e) {
+						acl.cancel();
+					}
+				});
+		panel.add(cancelButton);
 	}
 
 	public String getArticleContent() {

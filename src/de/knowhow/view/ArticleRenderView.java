@@ -5,9 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.text.Document;
 import javax.swing.text.html.HTML;
-import javax.swing.text.html.HTMLEditorKit.InsertHTMLTextAction;
 import javax.swing.text.html.StyleSheet;
-import de.knowhow.base.Constants;
 import de.knowhow.base.ReleaseNote;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.ArticleListController;
@@ -15,18 +13,15 @@ import de.knowhow.controller.CSSController;
 import de.knowhow.model.ArticleList;
 import de.knowhow.model.gui.HTMLEditor;
 import de.knowhow.model.gui.HTMLEditorKit;
-import de.knowhow.model.gui.Label;
 
 public class ArticleRenderView extends ArticleView {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel panel;
 	private JScrollPane contentScrollPane;
-	private Label lastEdit;
 	private HTMLEditor htmlEdit_content;
 	private ArticleListController acl;
 	private CSSController csc;
-	private InsertHTMLTextAction addArticleLink;
 
 	public ArticleRenderView(ArticleListController acl, CSSController csc) {
 		this.panel = new JPanel();
@@ -54,16 +49,10 @@ public class ArticleRenderView extends ArticleView {
 		this.contentScrollPane.setSize(ViewConstants.ARTRENDER_WIDTH - 10,
 				ViewConstants.ARTRENDER_HEIGTH - 40);
 		this.contentScrollPane.setViewportView(htmlEdit_content);
-		this.lastEdit = new Label(Constants.getText("renderView.lastEdit")
-				+ " -");
-		this.lastEdit.setSize(ViewConstants.ARTRENDER_WIDTH - 20, 20);
-		this.lastEdit.setLocation(10, ViewConstants.ARTRENDER_HEIGTH - 30);
-		this.lastEdit.setHorizontalTextPosition(Label.CENTER);
 		panel.setSize(ViewConstants.ARTRENDER_WIDTH,
 				ViewConstants.ARTRENDER_HEIGTH);
 		panel.setLocation(ViewConstants.ARTPLAIN_POS_X,
 				ViewConstants.ARTRENDER_POS_Y);
-		panel.add(lastEdit);
 		panel.add(contentScrollPane);
 	}
 
@@ -71,14 +60,11 @@ public class ArticleRenderView extends ArticleView {
 	public void update(Observable arg0, Object arg1) {
 		this.htmlEdit_content.setText(((ArticleList) arg0).getCurrArticle()
 				.getContent());
-		this.lastEdit.setText(Constants.getText("renderView.lastEdit") + " "
-				+ ((ArticleList) arg0).getCurrArticle().getLastEdit());
 		this.htmlEdit_content.setCaretPosition(0);
 	}
 
 	public void cancel() {
 		this.htmlEdit_content.setText(ReleaseNote.getReleaseNote());
-		this.lastEdit.setText(Constants.getText("renderView.lastEdit") + " -");
 	}
 
 	public String getArticleContent() {
@@ -87,27 +73,40 @@ public class ArticleRenderView extends ArticleView {
 
 	@Override
 	public void insertArticleLink(int iD) {
-		addArticleLink = new HTMLEditorKit.InsertHTMLTextAction("NAME",
-				"<b>CHECK</b>", HTML.Tag.BODY, HTML.Tag.B);
-		addArticleLink.actionPerformed(null);
+		new HTMLEditorKit.InsertHTMLTextAction(null, "\n<a href=\"article://"
+				+ iD + "\">PLACE YOUR DESCRIPTIV TEXT HERE</a>", HTML.Tag.BODY,
+				HTML.Tag.A).actionPerformed(null);
 	}
 
 	@Override
 	public void insertFileLink(int iD) {
-		// TODO Auto-generated method stub
-
+		new HTMLEditorKit.InsertHTMLTextAction(null,
+				"\n<a href=\"attachment://" + iD
+						+ "\">PLACE YOUR DESCRIPTIV TEXT HERE</a>",
+				HTML.Tag.BODY, HTML.Tag.A).actionPerformed(null);
 	}
 
 	@Override
 	public void insertHTML(String tag) {
-		// TODO Auto-generated method stub
-
+		if (tag.equals("CODE")) {
+			new HTMLEditorKit.InsertHTMLTextAction(null,
+					"\n<code>PASTE YOUR CODE HERE</code>\n", HTML.Tag.BODY,
+					HTML.Tag.CODE).actionPerformed(null);
+		} else if (tag.equals("LIST")) {
+			new HTMLEditorKit.InsertHTMLTextAction(null,
+					"\n<ul>\n<li>Listelement</li>\n</ul>\n", HTML.Tag.BODY,
+					HTML.Tag.UL).actionPerformed(null);
+		} else if (tag.equals("LISTELEMENT")) {
+			new HTMLEditorKit.InsertHTMLTextAction(null,
+					"\n<li>Listelement</li>\n", HTML.Tag.UL, HTML.Tag.LI)
+					.actionPerformed(null);
+		}
 	}
 
 	@Override
 	public void insertImageLink(int iD) {
-		// TODO Auto-generated method stub
-
+		new HTMLEditorKit.InsertHTMLTextAction(null, "\n<img src=\"tmp/" + iD
+				+ "\" />", HTML.Tag.BODY, HTML.Tag.IMG).actionPerformed(null);
 	}
 
 	@Override

@@ -19,16 +19,6 @@ public class ViewConstants {
 	public static int MENU_POS_X = 0;
 	public static int MENU_POS_Y = 0;
 
-	// Render
-	public static int RENDER_WIDTH = 25;
-	public static int RENDER_HEIGTH = 25;
-	public static int RENDER_POS_Y = 0;
-
-	// Plain
-	public static int PLAIN_WIDTH = 25;
-	public static int PLAIN_HEIGTH = 25;
-	public static int PLAIN_POS_Y = 0;
-
 	// Tree
 	public static int TREE_WIDTH = 200;
 	public static int TREE_HEIGTH;
@@ -51,7 +41,13 @@ public class ViewConstants {
 	public static int TOPICCHOOSE_WIDTH;
 	public static int TOPICCHOOSE_HEIGTH;
 	public static int TOPICCHOOSE_POS_X;
-	public static int TOPICCHOOSE_POS_Y;
+	public static int TOPICCHOOSE_POS_Y = MENU_HEIGTH;
+
+	// ArticleLastEdit
+	public static int LASTEDIT_WIDTH = 150;
+	public static int LASTEDIT_HEIGTH = 50;
+	public static int LASTEDIT_POS_X;
+	public static int LASTEDIT_POS_Y;
 
 	// Rename
 	public static int RENAME_WIDTH = 300;
@@ -72,8 +68,8 @@ public class ViewConstants {
 	// CSSPlainView
 	public static int CSSPLAIN_WIDTH;
 	public static int CSSPLAIN_HEIGTH;
-	
-	//AboutView
+
+	// AboutView
 	public static int ABOUT_WIDTH = 400;
 	public static int ABOUT_HEIGTH = 350;
 
@@ -97,7 +93,8 @@ public class ViewConstants {
 			MAIN_HEIGTH = 480;
 		}
 		// Menu
-		MENU_WIDTH = MAIN_WIDTH ;//- 10/* FrameBuffer */- 50/* ButtonBuffer */- 250 /* SearchBuffer */;
+		MENU_WIDTH = MAIN_WIDTH;// - 10/* FrameBuffer */- 50/* ButtonBuffer */-
+								// 250 /* SearchBuffer */;
 
 		// Tree
 		TREE_HEIGTH = MAIN_HEIGTH - MENU_HEIGTH;
@@ -105,21 +102,26 @@ public class ViewConstants {
 
 		// ArticleRender
 		ARTRENDER_WIDTH = MAIN_WIDTH - TREE_WIDTH - 5;
-		ARTRENDER_HEIGTH = MAIN_HEIGTH - MENU_HEIGTH/* MenueBuffer */- 40/* TopicchooserBuffer */;
+		ARTRENDER_HEIGTH = MAIN_HEIGTH - MENU_HEIGTH/* MenueBuffer */- 40/* TopicchooserBuffer */
+				- 40/* StrangeBuffer */;
 		ARTRENDER_POS_X = TREE_POS_X + TREE_WIDTH;
-		ARTRENDER_POS_Y = MENU_HEIGTH;
+		ARTRENDER_POS_Y = MENU_HEIGTH + 40/* LastEdit Label */;
 
 		// ArticlePlain
 		ARTPLAIN_WIDTH = MAIN_WIDTH - TREE_WIDTH - 5;
-		ARTPLAIN_HEIGTH = MAIN_HEIGTH - MENU_HEIGTH/* MenuBuffer */- 65/* TopicChooserBuffer */;
+		ARTPLAIN_HEIGTH = MAIN_HEIGTH - MENU_HEIGTH/* MenuBuffer */- 40/* TopicChooserBuffer */
+				- 40/* StrangeBuffer */;
 		ARTPLAIN_POS_X = TREE_POS_X + TREE_WIDTH - 5;
-		ARTPLAIN_POS_Y = MENU_HEIGTH/* MenuBuffer */;
+		ARTPLAIN_POS_Y = MENU_HEIGTH + 40/* LastEdit Label */;
 
 		// TopicChooser
-		TOPICCHOOSE_WIDTH = MAIN_WIDTH - TREE_WIDTH - 5;
-		TOPICCHOOSE_HEIGTH = MAIN_HEIGTH - ARTPLAIN_POS_Y - ARTPLAIN_HEIGTH;
-		TOPICCHOOSE_POS_X = TREE_POS_X + TREE_WIDTH - 5;
-		TOPICCHOOSE_POS_Y = ARTPLAIN_POS_Y + ARTPLAIN_HEIGTH + 5;
+		TOPICCHOOSE_WIDTH = MAIN_WIDTH - TREE_WIDTH;
+		TOPICCHOOSE_HEIGTH = 30;
+		TOPICCHOOSE_POS_X = TREE_POS_X + TREE_WIDTH;
+
+		// ArticleLastEdit
+		LASTEDIT_POS_X = TREE_POS_X + TREE_WIDTH;
+		LASTEDIT_POS_Y = TOPICCHOOSE_POS_Y + TOPICCHOOSE_HEIGTH;
 
 		// AttachmentsForArticleView
 		ATTACH_HEIGTH = MAIN_HEIGTH / 2;

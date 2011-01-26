@@ -69,13 +69,13 @@ public class MainController extends Controller {
 		splash.showStatus(Constants.getText("splash.paint"), 85);
 		loadGUI();
 
-		mv.getComponent().add(tcl.getTopicChooseView());
 		mv.getComponent().add(treeC.getTreeView());
 		SwingUtilities.invokeLater(mv);
 		SwingUtilities.invokeLater(menuV);
 		SwingUtilities.invokeLater(aboutView);
 		SwingUtilities.invokeLater(searchView);
 		splash.close();
+		mv.setVisible(true);
 	}
 
 	private void init() {
@@ -97,6 +97,7 @@ public class MainController extends Controller {
 			View aktView = iterator.next();
 			if (aktView.isComponent()) {
 				mv.getComponent().add(aktView.getComponent());
+				aktView.setVisible(true);
 			}
 		}
 	}
@@ -377,8 +378,8 @@ public class MainController extends Controller {
 		addViews(this);
 		addViews(acl);
 		addViews(attL);
-		views.add(menuV);
-		views.add(aboutView);
+		addViews(tcl);
+		// addViews(treeC);
 	}
 
 	@Override

@@ -48,6 +48,7 @@ public class MenuView extends View {
 	private MenuItem deleteTopic;
 	private MenuItem insertCode;
 	private MenuItem insertList;
+	private MenuItem insertListElement;
 	private Menu insertLink;
 	private MenuItem insertLinkArticle;
 	private MenuItem insertLinkImage;
@@ -256,6 +257,16 @@ public class MenuView extends View {
 			}
 		});
 		edit.add(insertList);
+		insertListElement = new MenuItem(
+				Constants.getText("menu.edit.insertListElement"));
+		insertListElement
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent e) {
+						logger.debug("insert HTML tag \"<li>\" clicked");
+						mc.insertHTML("LISTELEMENT");
+					}
+				});
+		edit.add(insertListElement);
 		insertLink = new Menu(Constants.getText("menu.edit.insertLink"));
 		insertLinkArticle = new MenuItem(
 				Constants.getText("menu.edit.insertLink.article"));

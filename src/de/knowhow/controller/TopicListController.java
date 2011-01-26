@@ -42,10 +42,13 @@ public class TopicListController extends Controller {
 		this.tcv = new TopicChooseView(this);
 		this.tcv.setVisible(false);
 		SwingUtilities.invokeLater(tcv);
+		views.add(tcv);
 		this.topicRename = new TopicRenameView(this);
 		SwingUtilities.invokeLater(topicRename);
+		// views.add(topicRename);
 		this.subView = new SubtopicView(this);
 		SwingUtilities.invokeLater(subView);
+		views.add(subView);
 		addObservers();
 		mc.getAcl().addObserver(tcv);
 	}

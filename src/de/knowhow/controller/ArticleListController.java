@@ -8,6 +8,7 @@ import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.Article;
 import de.knowhow.model.ArticleList;
 import de.knowhow.model.db.DAO;
+import de.knowhow.view.ArticleLastEditView;
 import de.knowhow.view.ArticleLinkView;
 import de.knowhow.view.ArticlePlainView;
 import de.knowhow.view.ArticleRenameView;
@@ -24,6 +25,7 @@ public class ArticleListController extends Controller {
 	private ArticlePlainView plainView;
 	private ArticleRenameView artRename;
 	private ArticleLinkView artLink;
+	private ArticleLastEditView artLast;
 	private CSSController csc;
 	private ArrayList<ArticleView> articleViews = new ArrayList<ArticleView>();
 	private ArticleView currArticleView;
@@ -55,10 +57,13 @@ public class ArticleListController extends Controller {
 		SwingUtilities.invokeLater(artRename);
 		artLink = new ArticleLinkView(this);
 		SwingUtilities.invokeLater(artLink);
+		artLast = new ArticleLastEditView();
+		SwingUtilities.invokeLater(artLast);
 		articleViews.add(plainView);
 		articleViews.add(renderView);
 		articleViews.add(artRename);
 		articleViews.add(artLink);
+		articleViews.add(artLast);
 		views = new ArrayList<View>(articleViews);
 		addObservers();
 	}

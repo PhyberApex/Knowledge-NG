@@ -1,51 +1,47 @@
 package de.knowhow.view;
 
 import java.util.Observable;
-import java.util.Observer;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
+
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.TopicListController;
-import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.Article;
 import de.knowhow.model.ArticleList;
 import de.knowhow.model.Topic;
-import de.knowhow.model.gui.Button;
 import de.knowhow.model.gui.ComboBox;
+import de.knowhow.model.gui.Label;
 
-public class TopicChooseView extends JPanel implements Observer, Runnable {
+public class TopicChooseView extends View {
 
 	private static final long serialVersionUID = 1L;
-	private Button confirmButton;
+	private JPanel panel;
+	private Label topic;
 	private ComboBox topicBox;
-	private Button cancelButton;
 	private TopicListController tcl;
 
 	public TopicChooseView(TopicListController topicListController) {
-		super();
+		panel = new JPanel();
 		this.tcl = topicListController;
-		this.setLayout(null);
+		panel.setLayout(null);
+		window = panel;
 	}
 
-	private void init() {
-		this.confirmButton = new Button(Constants.getText("button.confirm"));
-		this.confirmButton.setSize(130, 20);
-		this.confirmButton.setLocation(5, 0);
-		this.confirmButton
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent e) {
-						try {
-							tcl.confirm("ArticleContent");
-						} catch (DatabaseException e1) {
-							tcl.error(e1);
-						}
-					}
-				});
+	protected void init() {
+		panel.setSize(ViewConstants.TOPICCHOOSE_WIDTH,
+				ViewConstants.TOPICCHOOSE_HEIGTH);
+		panel.setLocation(ViewConstants.TOPICCHOOSE_POS_X,
+				ViewConstants.TOPICCHOOSE_POS_Y);
+		this.topic = new Label(Constants.getText("keyword.topic") + ":");
+		this.topic.setSize(this.topic.getPreferredSize());
+		this.topic.setLocation(5, (panel.getHeight() / 2)
+				- (topic.getHeight() / 2));
 		this.topicBox = new ComboBox();
-		this.topicBox.setSize(100, 20);
-		this.topicBox.setLocation(ViewConstants.ARTPLAIN_WIDTH / 2
-				- this.topicBox.getWidth() / 2, 0);
+		this.topicBox.setSize(
+				panel.getWidth() - topic.getX() - topic.getWidth() - 20, 25);
+		this.topicBox.setLocation(topic.getX() + topic.getWidth() + 5,
+				(panel.getHeight() / 2) - (topicBox.getHeight() / 2));
 		DefaultComboBoxModel model = new DefaultComboBoxModel();
 		for (int i = 0; i < tcl.getTopics().size(); i++) {
 			model.addElement(tcl.getTopics().get(i));
@@ -57,23 +53,8 @@ public class TopicChooseView extends JPanel implements Observer, Runnable {
 						.getSelectedItem()).getTopic_ID());
 			}
 		});
-		this.cancelButton = new Button(Constants.getText("button.cancel"));
-		this.cancelButton.setSize(130, 20);
-		this.cancelButton.setLocation(ViewConstants.ARTPLAIN_WIDTH
-				- this.cancelButton.getWidth() - 5, 0);
-		this.cancelButton
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent e) {
-						tcl.cancel();
-					}
-				});
-		this.add(confirmButton);
-		this.add(topicBox);
-		this.add(cancelButton);
-		this.setSize(ViewConstants.TOPICCHOOSE_WIDTH,
-				ViewConstants.TOPICCHOOSE_HEIGTH);
-		this.setLocation(ViewConstants.TOPICCHOOSE_POS_X,
-				ViewConstants.TOPICCHOOSE_POS_Y);
+		panel.add(topic);
+		panel.add(topicBox);
 	}
 
 	@Override
@@ -98,7 +79,7 @@ public class TopicChooseView extends JPanel implements Observer, Runnable {
 	}
 
 	@Override
-	public void run() {
-		init();
+	public boolean isComponent() {
+		return true;
 	}
 }

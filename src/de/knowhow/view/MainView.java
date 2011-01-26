@@ -24,6 +24,14 @@ public class MainView extends View {
 		frame.setIconImage(Constants.createImageIcon(
 				"/de/knowhow/resource/img/logo.png").getImage());
 		window = frame;
+		frame.setLayout(null);
+		frame.setResizable(false);
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				exit();
+			}
+		});
 		this.mc = mc;
 	}
 
@@ -46,17 +54,7 @@ public class MainView extends View {
 
 	@Override
 	public void run() {
-		frame.setLayout(null);
-		this.setVisible(false);
-		frame.setResizable(false);
 		init();
-		frame.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				exit();
-			}
-		});
-		this.setVisible(true);
 	}
 
 	@Override
