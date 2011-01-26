@@ -419,7 +419,8 @@ public class MenuView extends View {
 		});
 		this.help.add(about);
 		this.bt_plain = new JButton(
-				Constants.createImageIcon("/de/knowhow/resource/img/plain.png"));
+				Constants
+						.createImageIcon("/de/knowhow/resource/img/plainButton.png"));
 		this.bt_plain.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("plain article view clicked");
@@ -430,7 +431,7 @@ public class MenuView extends View {
 		});
 		this.bt_render = new JButton(
 				Constants
-						.createImageIcon("/de/knowhow/resource/img/render.png"));
+						.createImageIcon("/de/knowhow/resource/img/renderButton.png"));
 		this.bt_render.setEnabled(false);
 		this.bt_render.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
