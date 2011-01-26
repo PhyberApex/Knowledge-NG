@@ -46,11 +46,11 @@ public class ArticleListController extends Controller {
 
 	public void loadGUI() {
 		renderView = new ArticleRenderView(this, this.csc);
-		renderView.setVisible(true);
 		SwingUtilities.invokeLater(renderView);
 		plainView = new ArticlePlainView(this);
-		plainView.setVisible(false);
 		SwingUtilities.invokeLater(plainView);
+		currArticleView = plainView;
+		setCurrArticleView(ArticleView.RENDEREDVIEW);
 		artRename = new ArticleRenameView(this);
 		SwingUtilities.invokeLater(artRename);
 		artLink = new ArticleLinkView(this);
@@ -61,6 +61,19 @@ public class ArticleListController extends Controller {
 		articleViews.add(artLink);
 		views = new ArrayList<View>(articleViews);
 		addObservers();
+	}
+
+	public void setCurrArticleView(int view) {
+		ArticleView artV = currArticleView;
+		if (view == ArticleView.RENDEREDVIEW) {
+			artV = renderView;
+		} else if (view == ArticleView.PLAINVIEW) {
+			artV = plainView;
+		}
+		currArticleView.setVisible(false);
+		artV.setVisible(true);
+		currArticleView = artV;
+
 	}
 
 	public ArticlePlainView getPlainView() {
@@ -106,14 +119,6 @@ public class ArticleListController extends Controller {
 		al.setCurrArticle(art);
 	}
 
-	public void setRenderVisible(boolean b) {
-		this.renderView.setVisible(b);
-	}
-
-	public void setPlainVisible(boolean b) {
-		this.plainView.setVisible(b);
-	}
-
 	public void insertHTML(String tag) {
 		getCurrView().insertHTML(tag);
 	}
@@ -148,14 +153,14 @@ public class ArticleListController extends Controller {
 
 	public void insertHTMLLink(String string, int iD) {
 		if (string.equals("IMAGE")) {
-			plainView.insertImageLink(iD);
+			currArticleView.insertImageLink(iD);
 		} else if (string.equals("FILE")) {
-			plainView.insertFileLink(iD);
+			currArticleView.insertFileLink(iD);
 		}
 	}
 
 	public void insertArticleLink(int iD) {
-		plainView.insertArticleLink(iD);
+		getCurrView().insertArticleLink(iD);
 	}
 
 	public void writeAttToFS(int att_ID, String path) {

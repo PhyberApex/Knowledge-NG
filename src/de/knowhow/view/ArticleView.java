@@ -2,6 +2,9 @@ package de.knowhow.view;
 
 public abstract class ArticleView extends View {
 
+	public static int RENDEREDVIEW = 1;
+	public static int PLAINVIEW = 2;
+
 	public void insertHTML(String tag) {
 		throw new UnsupportedOperationException();
 	}

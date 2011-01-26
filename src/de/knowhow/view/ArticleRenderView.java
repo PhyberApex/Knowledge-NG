@@ -4,6 +4,8 @@ import java.util.Observable;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.text.Document;
+import javax.swing.text.html.HTML;
+import javax.swing.text.html.HTMLEditorKit.InsertHTMLTextAction;
 import javax.swing.text.html.StyleSheet;
 import de.knowhow.base.Constants;
 import de.knowhow.base.ReleaseNote;
@@ -24,6 +26,7 @@ public class ArticleRenderView extends ArticleView {
 	private HTMLEditor htmlEdit_content;
 	private ArticleListController acl;
 	private CSSController csc;
+	private InsertHTMLTextAction addArticleLink;
 
 	public ArticleRenderView(ArticleListController acl, CSSController csc) {
 		this.panel = new JPanel();
@@ -84,8 +87,9 @@ public class ArticleRenderView extends ArticleView {
 
 	@Override
 	public void insertArticleLink(int iD) {
-		// TODO Auto-generated method stub
-
+		addArticleLink = new HTMLEditorKit.InsertHTMLTextAction("NAME",
+				"<b>CHECK</b>", HTML.Tag.BODY, HTML.Tag.B);
+		addArticleLink.actionPerformed(null);
 	}
 
 	@Override

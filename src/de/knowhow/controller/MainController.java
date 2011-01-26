@@ -133,14 +133,6 @@ public class MainController extends Controller {
 		System.exit(0);
 	}
 
-	public void setRenderVisible(boolean b) {
-		acl.setRenderVisible(b);
-	}
-
-	public void setPlainVisible(boolean b) {
-		acl.setPlainVisible(b);
-	}
-
 	public void insertHTML(String tag) {
 		acl.insertHTML(tag);
 	}
@@ -237,10 +229,6 @@ public class MainController extends Controller {
 			}
 		}
 		dir.delete();
-	}
-
-	public void setTopicChooserVisible(boolean b) {
-		tcl.getTopicChooseView().setVisible(b);
 	}
 
 	public void changeTopicOfCurrArticle(int i) {
@@ -413,4 +401,7 @@ public class MainController extends Controller {
 		}
 	}
 
+	public void changeArticleView(int view) {
+		acl.setCurrArticleView(view);
+	}
 }

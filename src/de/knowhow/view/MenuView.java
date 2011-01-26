@@ -419,28 +419,24 @@ public class MenuView extends View {
 		});
 		this.help.add(about);
 		this.bt_plain = new JButton(
-				Constants.createImageIcon("/de/knowhow/resource/img/plain.PNG"));
+				Constants.createImageIcon("/de/knowhow/resource/img/plain.png"));
 		this.bt_plain.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("plain article view clicked");
-				mc.setPlainVisible(true);
+				mc.changeArticleView(ArticleView.PLAINVIEW);
 				bt_render.setEnabled(true);
-				mc.setTopicChooserVisible(true);
-				mc.setRenderVisible(false);
 				bt_plain.setEnabled(false);
 			}
 		});
 		this.bt_render = new JButton(
 				Constants
-						.createImageIcon("/de/knowhow/resource/img/render.PNG"));
+						.createImageIcon("/de/knowhow/resource/img/render.png"));
 		this.bt_render.setEnabled(false);
 		this.bt_render.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("rendered article view clicked");
-				mc.setRenderVisible(true);
+				mc.changeArticleView(ArticleView.RENDEREDVIEW);
 				bt_plain.setEnabled(true);
-				mc.setTopicChooserVisible(false);
-				mc.setPlainVisible(false);
 				bt_render.setEnabled(false);
 			}
 		});
