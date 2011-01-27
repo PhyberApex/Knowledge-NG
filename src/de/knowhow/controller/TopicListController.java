@@ -45,7 +45,7 @@ public class TopicListController extends Controller {
 		views.add(tcv);
 		this.topicRename = new TopicRenameView(this);
 		SwingUtilities.invokeLater(topicRename);
-		// views.add(topicRename);
+		views.add(topicRename);
 		this.subView = new SubtopicView(this);
 		SwingUtilities.invokeLater(subView);
 		views.add(subView);

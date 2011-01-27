@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 public class Constants {
 
 	private static final String APP_NAME = "KnowledgeNG";
-	private static final String APP_VERSION = "1.3";
+	private static final String APP_VERSION = "1.3.1";
 	private static final String APP_AUTHOR = "Janis Walliser";
 	private static String db_name;
 	private static ResourceBundle lang = ResourceBundle
