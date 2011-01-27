@@ -77,9 +77,9 @@ public class ArticleRenderView extends ArticleView {
 		panel.add(confirmButton);
 		this.cancelButton = new Button(Constants.getText("button.cancel"));
 		this.cancelButton.setSize(cancelButton.getPreferredSize());
-		this.cancelButton.setLocation(panel.getWidth() - 5
-				- cancelButton.getWidth(), contentScrollPane.getY()
-				+ contentScrollPane.getHeight());
+		this.cancelButton.setLocation(
+				panel.getWidth() - 5 - cancelButton.getWidth(),
+				contentScrollPane.getY() + contentScrollPane.getHeight());
 		this.cancelButton
 				.addActionListener(new java.awt.event.ActionListener() {
 					public void actionPerformed(java.awt.event.ActionEvent e) {

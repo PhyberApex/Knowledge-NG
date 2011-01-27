@@ -46,23 +46,23 @@ public class TopicList extends Model {
 
 	public void setCurrTopic(Topic newTop) {
 		this.currTopic = newTop;
-		notifyObservers();
 		setChanged();
+		notifyObservers();
 	}
 
 	public void setCurrName(String pName) throws DatabaseException {
 		if (currTopic != null) {
 			currTopic.setName(pName);
-			notifyObservers();
 			setChanged();
+			notifyObservers();
 		}
 	}
 
 	public void setCurrTopic_ID_FK(int pID) throws DatabaseException {
 		if (currTopic != null) {
 			currTopic.setTopic_ID_FK(pID);
-			notifyObservers("sub");
 			setChanged();
+			notifyObservers("sub");
 		}
 	}
 
@@ -83,8 +83,8 @@ public class TopicList extends Model {
 		Topic topic = new Topic(db);
 		this.topics.add(topic);
 		setCurrTopic(topic);
-		this.notifyObservers();
-		this.setChanged();
+		setChanged();
+		notifyObservers();
 	}
 
 	public void deleteCurrTopic() throws DatabaseException {

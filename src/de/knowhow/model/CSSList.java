@@ -47,16 +47,16 @@ public class CSSList extends Model {
 	public void setCurrTag(String tag) throws DatabaseException {
 		if (currRules != null) {
 			currRules.setTag(tag);
-			notifyObservers();
 			setChanged();
+			notifyObservers();
 		}
 	}
 
 	public void setCurrContent(String rule) throws DatabaseException {
 		if (currRules != null) {
 			currRules.setRule(rule);
-			notifyObservers();
 			setChanged();
+			notifyObservers();
 		}
 	}
 
@@ -81,16 +81,16 @@ public class CSSList extends Model {
 		CSS ru = new CSS(db, 0, tag, rule, false);
 		this.rules.add(ru);
 		setCurrCSS(ru);
-		notifyObservers("new");
 		setChanged();
+		notifyObservers("new");
 	}
 
 	public void deleteCurrCSS() throws DatabaseException {
 		if (currRules != null) {
 			currRules.delete();
 			rules.remove(currRules);
-			notifyObservers("delete");
 			setChanged();
+			notifyObservers("delete");
 		}
 	}
 
@@ -102,7 +102,7 @@ public class CSSList extends Model {
 		for (Map.Entry<String, String> e : rules2.entrySet()) {
 			this.rules.add(new CSS(this.db, 0, e.getKey(), e.getValue(), true));
 		}
-		notifyObservers();
 		setChanged();
+		notifyObservers();
 	}
 }

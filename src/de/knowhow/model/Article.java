@@ -28,8 +28,7 @@ public class Article {
 	public Article(DAO db) throws DatabaseException {
 		this.db = db;
 		try {
-			this.db
-					.prepareStatement("INSERT INTO article (name, content, lastEdit, topic_ID_FK) values(?, ?, ?, ?);");
+			this.db.prepareStatement("INSERT INTO article (name, content, lastEdit, topic_ID_FK) values(?, ?, ?, ?);");
 			this.db.getStatement().setString(1, "new Article");
 			this.db.getStatement().setString(
 					2,
@@ -68,12 +67,11 @@ public class Article {
 	public void setName(String name) throws DatabaseException {
 		this.name = name;
 		try {
-			this.db
-					.prepareStatement("UPDATE article SET name = ?, lastEdit = ? WHERE article_ID = ?");
+			this.db.prepareStatement("UPDATE article SET name = ? WHERE article_ID = ?");
 			this.db.getStatement().setString(1, this.getName());
-			this.db.getStatement().setString(2, Constants.getDate());
-			this.db.getStatement().setInt(3, this.getArticle_ID());
+			this.db.getStatement().setInt(2, this.getArticle_ID());
 			this.db.executeBatch();
+			setLastEdit(Constants.getDate());
 		} catch (SQLException e) {
 		}
 	}
@@ -86,8 +84,7 @@ public class Article {
 		this.lastEdit = lastEdit;
 		try {
 
-			this.db
-					.prepareStatement("UPDATE Article SET lastEdit = ? WHERE article_ID = ?");
+			this.db.prepareStatement("UPDATE Article SET lastEdit = ? WHERE article_ID = ?");
 			this.db.getStatement().setString(1, this.getLastEdit());
 			this.db.getStatement().setInt(2, this.getArticle_ID());
 			this.db.executeBatch();
@@ -103,12 +100,11 @@ public class Article {
 		this.content = content;
 		try {
 
-			this.db
-					.prepareStatement("UPDATE article SET content = ?, lastEdit = ? WHERE article_ID = ?");
+			this.db.prepareStatement("UPDATE article SET content = ? WHERE article_ID = ?");
 			this.db.getStatement().setString(1, this.getContent());
-			this.db.getStatement().setString(2, Constants.getDate());
-			this.db.getStatement().setInt(3, this.getArticle_ID());
+			this.db.getStatement().setInt(2, this.getArticle_ID());
 			this.db.executeBatch();
+			setLastEdit(Constants.getDate());
 		} catch (SQLException e) {
 		}
 	}
@@ -120,12 +116,11 @@ public class Article {
 	public void setTopic_ID_FK(int topic_ID_FK) throws DatabaseException {
 		this.topic_ID_FK = topic_ID_FK;
 		try {
-			this.db
-					.prepareStatement("UPDATE article SET topic_ID_FK = ?, lastEdit = ? WHERE article_ID = ?");
+			this.db.prepareStatement("UPDATE article SET topic_ID_FK = ? WHERE article_ID = ?");
 			this.db.getStatement().setInt(1, this.getTopic_ID_FK());
-			this.db.getStatement().setString(2, Constants.getDate());
-			this.db.getStatement().setInt(3, this.getArticle_ID());
+			this.db.getStatement().setInt(2, this.getArticle_ID());
 			this.db.executeBatch();
+			setLastEdit(Constants.getDate());
 		} catch (DatabaseException e) {
 			throw e;
 		} catch (SQLException e) {
@@ -138,8 +133,7 @@ public class Article {
 
 	public void delete() throws DatabaseException {
 		try {
-			this.db
-					.prepareStatement("DELETE FROM article WHERE article_ID = ?");
+			this.db.prepareStatement("DELETE FROM article WHERE article_ID = ?");
 			this.db.getStatement().setInt(1, this.getArticle_ID());
 			this.db.executeBatch();
 		} catch (DatabaseException e) {
@@ -151,8 +145,7 @@ public class Article {
 	private int getNextID() throws DatabaseException {
 		int nextID = 0;
 		try {
-			this.db
-					.prepareStatement("SELECT article_ID AS next FROM article ORDER BY article_ID DESC LIMIT 1");
+			this.db.prepareStatement("SELECT article_ID AS next FROM article ORDER BY article_ID DESC LIMIT 1");
 			ResultSet rs = this.db.execute();
 			while (rs.next()) {
 				nextID = Integer.parseInt(rs.getString("next"));

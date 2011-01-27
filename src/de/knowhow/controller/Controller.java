@@ -38,4 +38,8 @@ public abstract class Controller {
 	public Iterator<View> getViewIterator() {
 		return views.iterator();
 	}
+
+	public Iterator<Model> getModels() {
+		return models.iterator();
+	}
 }

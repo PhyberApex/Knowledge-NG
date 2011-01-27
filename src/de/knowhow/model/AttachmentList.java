@@ -80,20 +80,20 @@ public class AttachmentList extends Model {
 
 	public void setCurrAttachments(ArrayList<Attachment> attachs) {
 		this.currAttachments = attachs;
-		notifyObservers();
 		setChanged();
+		notifyObservers();
 	}
 
 	public void addAttachment(Attachment attach) {
 		attachments.add(attach);
-		notifyObservers();
 		setChanged();
+		notifyObservers();
 	}
 
 	public void setCurrArticleID(int currArticleID) {
 		this.currArticleID = currArticleID;
-		notifyObservers();
 		setChanged();
+		notifyObservers();
 	}
 
 	public int getCurrArticleID() {

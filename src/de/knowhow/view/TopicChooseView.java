@@ -1,5 +1,6 @@
 package de.knowhow.view;
 
+import java.awt.event.MouseEvent;
 import java.util.Observable;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
@@ -47,10 +48,26 @@ public class TopicChooseView extends View {
 			model.addElement(tcl.getTopics().get(i));
 		}
 		this.topicBox.setModel(model);
-		this.topicBox.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
+		this.topicBox.addMouseListener(new java.awt.event.MouseListener() {
+			public void mouseClicked(MouseEvent e) {
 				tcl.changeTopicOfCurrArticle(((Topic) topicBox
 						.getSelectedItem()).getTopic_ID());
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {//Nothing to do here
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {//Nothing to do here
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {//Nothing to do here
+			}
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {//Nothing to do here
 			}
 		});
 		panel.add(topic);

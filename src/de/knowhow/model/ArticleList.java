@@ -49,31 +49,33 @@ public class ArticleList extends Model {
 	public void setCurrName(String pName) throws DatabaseException {
 		if (currArticle != null) {
 			currArticle.setName(pName);
-			notifyObservers();
 			setChanged();
+			notifyObservers();
 		}
 	}
 
 	public void setCurrContent(String pContent) throws DatabaseException {
 		if (currArticle != null) {
 			currArticle.setContent(pContent);
-			notifyObservers();
 			setChanged();
+			notifyObservers();
 		}
 	}
 
 	public void setCurrTopic_ID_FK(int pID) throws DatabaseException {
 		if (currArticle != null) {
 			currArticle.setTopic_ID_FK(pID);
-			notifyObservers("update");// dirty hack
 			setChanged();
+			notifyObservers("update");// dirty hack
+
 		}
 	}
 
 	public void setCurrArticle(Article art) {
 		this.currArticle = art;
-		notifyObservers();
 		setChanged();
+		notifyObservers();
+
 	}
 
 	public ArrayList<Article> getArticles() {
@@ -93,16 +95,16 @@ public class ArticleList extends Model {
 		Article art = new Article(db);
 		this.articles.add(art);
 		setCurrArticle(art);
-		notifyObservers("new");
 		setChanged();
+		notifyObservers("new");
 	}
 
 	public void deleteCurrArt() throws DatabaseException {
 		if (currArticle != null) {
 			currArticle.delete();
 			articles.remove(currArticle);
-			notifyObservers("delete");
 			setChanged();
+			notifyObservers("delete");
 		}
 	}
 

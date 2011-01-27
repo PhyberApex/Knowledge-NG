@@ -4,11 +4,12 @@ import java.util.Iterator;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import de.knowhow.model.Article;
+import de.knowhow.model.Model;
 import de.knowhow.model.Topic;
 import de.knowhow.model.gui.TreeNode;
 import de.knowhow.view.TreeView;
 
-public class TreeController {
+public class TreeController extends Controller {
 
 	private ArticleListController acl;
 	private TopicListController tcl;
@@ -20,11 +21,20 @@ public class TreeController {
 	}
 
 	public void loadData() {
+		Iterator<Model> iterator = acl.getModels();
+		while (iterator.hasNext()) {
+			models.add(iterator.next());
+		}
+		iterator = tcl.getModels();
+		while (iterator.hasNext()) {
+			models.add(iterator.next());
+		}
 	}
 
 	public void loadGUI() {
 		this.treeV = new TreeView(this);
 		SwingUtilities.invokeLater(treeV);
+		views.add(treeV);
 		this.tcl.addObserver(this.treeV);
 		this.acl.addObserver(this.treeV);
 	}

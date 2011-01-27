@@ -1,7 +1,6 @@
 package de.knowhow.view;
 
 import java.util.Observable;
-import java.util.Observer;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.event.TreeSelectionEvent;
@@ -15,21 +14,24 @@ import de.knowhow.model.Topic;
 import de.knowhow.model.TopicList;
 import de.knowhow.model.gui.Tree;
 
-public class TreeView extends JPanel implements Observer,
-		TreeSelectionListener, Runnable {
+public class TreeView extends View implements TreeSelectionListener {
 
 	private static final long serialVersionUID = 1L;
+	private JPanel panel;
 	private Tree tree;
 	private JScrollPane treeScrollPane;
 	private TreeController treeC;
 
 	public TreeView(TreeController treeC) {
-		super();
+		panel = new JPanel();
 		this.treeC = treeC;
-		this.setLayout(null);
+		window = panel;
 	}
 
-	private void init() {
+	protected void init() {
+		panel.setLayout(null);
+		panel.setSize(ViewConstants.TREE_WIDTH, ViewConstants.TREE_HEIGTH);
+		panel.setLocation(ViewConstants.TREE_POS_X, ViewConstants.TREE_POS_Y);
 		treeScrollPane = new JScrollPane();
 		tree = new Tree(treeC.getRootNode());
 		tree.setLocation(0, 0);
@@ -38,9 +40,7 @@ public class TreeView extends JPanel implements Observer,
 				ViewConstants.TREE_HEIGTH - 40);
 		treeScrollPane.setLocation(5, 0);
 		treeScrollPane.setViewportView(tree);
-		this.add(treeScrollPane);
-		this.setSize(ViewConstants.TREE_WIDTH, ViewConstants.TREE_HEIGTH);
-		this.setLocation(ViewConstants.TREE_POS_X, ViewConstants.TREE_POS_Y);
+		panel.add(treeScrollPane);
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class TreeView extends JPanel implements Observer,
 	}
 
 	@Override
-	public void run() {
-		init();
+	public boolean isComponent() {
+		return true;
 	}
 }
