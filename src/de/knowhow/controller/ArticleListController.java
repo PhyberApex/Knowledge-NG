@@ -110,7 +110,7 @@ public class ArticleListController extends Controller {
 	}
 
 	public void confirmContent() throws DatabaseException {
-		al.getCurrArticle().setContent(currArticleView.getContent());
+		al.setCurrContent(currArticleView.getContent());
 	}
 
 	public void confirmRename() throws DatabaseException {
