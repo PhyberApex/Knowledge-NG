@@ -44,7 +44,7 @@ public class ReleaseNote {
 			+ "<li>Rendered article view is now editable</li>"
 			+ "<li>Fixed bug in JTree which not changed article on first click</li>"
 			+ "</ul></li>\n" + "</ul>\n" + "<h3>Known Bugs:</h3>\n" + "<ul>\n"
-			+ "<li>None - untill now</li>\n" + "</ul>\n"
+			+ "<li>Tree closes down on change</li>\n" + "</ul>\n"
 			+ "<h3>Planned Features:</h3>\n" + "<ul>\n"
 			+ "<li>Assisted CSS Editor</li>\n" + "</ul>\n" + "</body>";
 
