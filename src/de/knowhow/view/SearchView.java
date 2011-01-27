@@ -31,11 +31,11 @@ public class SearchView extends View {
 		dialog = new Dialog();
 		window = dialog;
 		this.mc = mc;
-		init();
 	}
 
 	protected void init() {
-		dialog.setSize(ViewConstants.ARTPLAIN_WIDTH, ViewConstants.MAIN_HEIGTH);
+		dialog.setSize(ViewConstants.ARTPLAIN_WIDTH,
+				ViewConstants.MAIN_HEIGTH - 40);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		dialog.setLocation((d.width - dialog.getSize().width) / 2,
 				(d.height - dialog.getSize().height) / 2);
@@ -107,6 +107,5 @@ public class SearchView extends View {
 		TableModel model = new TableModel(rowData, names);
 		this.tbSearch.setModel(model);
 		this.spSearch.setViewportView(tbSearch);
-		this.btClose.setText("22");
 	}
 }

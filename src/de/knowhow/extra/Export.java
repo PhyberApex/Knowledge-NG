@@ -88,12 +88,21 @@ public class Export implements Runnable {
 			splash.showStatus(Constants.getText("export.article") + " "
 					+ +(i + 1) + "/" + al.size() + "...", 0);
 			String content = al.get(i).getContent();
+			// make image links
 			content = content.replaceAll("<img src=\"tmp/",
 					"<img src=\"../attachments/");
+			// make file link
 			content = content.replaceAll("<a href=\"attachment://",
 					"<a href=\"../attachments/");
+			// make article link
 			content = content.replaceAll("<a href=\"article://",
 					"<a href=\"../articles/");
+			// add back link at the end of article file
+			content = content.replaceAll(
+					"</body>",
+					"<a id =\"backLink\" href=\"../index.html \">"
+							+ Constants.getText("export.backToIndex")
+							+ "\n</body>");
 			FileOutputStream writeStream = new FileOutputStream(absolutePath
 					+ "/articles/" + al.get(i).getArticle_ID() + "");
 			for (int j = 0; j < content.length(); j++) {
@@ -116,8 +125,8 @@ public class Export implements Runnable {
 			FileOutputStream writeStream = new FileOutputStream(absolutePath
 					+ "/attachments/"
 					+ attl.get(i).getAttachment_ID()
-					+ attl.get(i).getName().substring(
-							attl.get(i).getName().length()));
+					+ attl.get(i).getName()
+							.substring(attl.get(i).getName().length()));
 			writeStream.write(attl.get(i).getBinary());
 			writeStream.close();
 			attl.get(i).clearBinary();

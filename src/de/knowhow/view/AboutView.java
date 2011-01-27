@@ -138,7 +138,7 @@ public class AboutView extends View {
 		dialog.getPane().add(lbLicense);
 		String credits = "<html>" + "Special thanks to:<br />"
 				+ "Theresa Carolus(splashscreen and logo)<br />"
-				+ "André Uhres @ JavaForum(plashscreen code)<br />"
+				+ "Andre Uhres @ JavaForum(splashscreen code)<br />"
 				+ "Rob Kenworthy @ Javaworld (relativ paths for images)"
 				+ "</html>";
 		this.lbCredits = new Label(credits);

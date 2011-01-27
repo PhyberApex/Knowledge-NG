@@ -1,10 +1,10 @@
 package de.knowhow.view;
 
 import java.util.Observable;
-
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import org.apache.log4j.Logger;
@@ -479,8 +479,10 @@ public class MenuView extends View {
 		menu.add(help);
 		menu.add(tfSearch);
 		menu.add(btSearch);
-		menu.add(bt_plain);
+		JLabel puffer = new JLabel("     ");
+		menu.add(puffer);
 		menu.add(bt_render);
+		menu.add(bt_plain);
 		menu.setSize(ViewConstants.MENU_WIDTH, ViewConstants.MENU_HEIGTH);
 		menu.setLocation(ViewConstants.MENU_POS_X, ViewConstants.MENU_POS_Y);
 	}
