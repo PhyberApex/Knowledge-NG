@@ -2,11 +2,10 @@ package de.knowhow.view;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
 import java.util.Observable;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
-
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.TopicListController;
@@ -22,6 +21,7 @@ public class TopicChooseView extends View {
 	private JPanel panel;
 	private Label topic;
 	private ComboBox topicBox;
+	private boolean hack = true;
 	private TopicListController tcl;
 
 	public TopicChooseView(TopicListController topicListController) {
@@ -49,26 +49,15 @@ public class TopicChooseView extends View {
 			model.addElement(tcl.getTopics().get(i));
 		}
 		this.topicBox.setModel(model);
-		this.topicBox.addMouseListener(new java.awt.event.MouseListener() {
-			public void mouseClicked(MouseEvent e) {
-				tcl.changeTopicOfCurrArticle(((Topic) topicBox
-						.getSelectedItem()).getTopic_ID());
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {// Nothing to do here
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {// Nothing to do here
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {// Nothing to do here
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {// Nothing to do here
+		this.topicBox.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (hack) {
+					hack = false;
+				} else {
+					tcl.changeTopicOfCurrArticle(((Topic) topicBox
+							.getSelectedItem()).getTopic_ID());
+					hack = true;
+				}
 			}
 		});
 		GridBagConstraints c = new GridBagConstraints();
@@ -82,11 +71,12 @@ public class TopicChooseView extends View {
 		c.weighty = 0;
 		c.gridx = 1;
 		c.gridy = 0;
-		panel.add(topicBox,c);
+		panel.add(topicBox, c);
 	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
+		hack = true;
 		if (arg0.getClass() == ArticleList.class) {
 			Article art = ((ArticleList) arg0).getCurrArticle();
 			for (int i = 0; i < this.topicBox.getItemCount(); i++) {

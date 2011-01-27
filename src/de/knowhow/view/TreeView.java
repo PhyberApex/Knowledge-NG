@@ -57,22 +57,26 @@ public class TreeView extends View implements TreeSelectionListener {
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		if (arg0.getClass() == ArticleList.class) {
-			if (arg1 != null
-					&& (arg1.equals("new") || arg1.equals("delete") || arg1
-							.equals("update"))) {
+			if (((ArticleList) arg0).getCurrArticle().getArticle_ID() == treeC
+					.getCurrArticleID()) {
 				this.tree.removeTreeSelectionListener(this);
 				this.tree = new Tree(treeC.getRootNode());
 				tree.addTreeSelectionListener(this);
 				treeScrollPane.setViewportView(tree);
+			} else {
+				treeC.setCurrArticleID(((ArticleList) arg0).getCurrArticle()
+						.getArticle_ID());
 			}
 		} else if (arg0.getClass() == TopicList.class) {
-			if (arg1 != null
-					&& (arg1.equals("new") || arg1.equals("delete") || arg1
-							.equals("sub"))) {
+			if (((TopicList) arg0).getCurrTopic().getTopic_ID() == treeC
+					.getCurrTopicID()) {
 				this.tree.removeTreeSelectionListener(this);
 				this.tree = new Tree(treeC.getRootNode());
 				tree.addTreeSelectionListener(this);
 				treeScrollPane.setViewportView(tree);
+			} else {
+				treeC.setCurrTopicID(((TopicList) arg0).getCurrTopic()
+						.getTopic_ID());
 			}
 		}
 	}

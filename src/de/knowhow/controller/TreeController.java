@@ -14,6 +14,8 @@ public class TreeController extends Controller {
 	private ArticleListController acl;
 	private TopicListController tcl;
 	private TreeView treeV;
+	private int currTopicID = -1;
+	private int currArticleID = -1;
 
 	public TreeController(ArticleListController acl, TopicListController tcl) {
 		this.acl = acl;
@@ -96,5 +98,21 @@ public class TreeController extends Controller {
 
 	public void setCurrTopic(Topic newTop) {
 		tcl.setCurrTopic(newTop);
+	}
+
+	public int getCurrTopicID() {
+		return currTopicID;
+	}
+
+	public void setCurrTopicID(int currTopicID) {
+		this.currTopicID = currTopicID;
+	}
+
+	public int getCurrArticleID() {
+		return currArticleID;
+	}
+
+	public void setCurrArticleID(int currArticleID) {
+		this.currArticleID = currArticleID;
 	}
 }
