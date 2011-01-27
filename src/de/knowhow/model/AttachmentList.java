@@ -49,6 +49,8 @@ public class AttachmentList extends Model {
 		attachments.clear();
 		this.load();
 		setCurrAttachments(getAttachmentsByArticleID(currArticleID));
+		setChanged();
+		notifyObservers();
 	}
 
 	public ArrayList<Attachment> getAttachmentsByArticleID(int ID) {
@@ -86,6 +88,7 @@ public class AttachmentList extends Model {
 
 	public void addAttachment(Attachment attach) {
 		attachments.add(attach);
+		currArticleID = attach.getArticle_ID_FK();
 		setChanged();
 		notifyObservers();
 	}

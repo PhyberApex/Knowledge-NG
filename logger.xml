@@ -10,7 +10,7 @@
   </appender>
   
   <appender name="Logfile" class="org.apache.log4j.FileAppender">
-  <param name="File" value="log.log" />
+  <param name="File" value="error.log" />
   <param name="Append" value="false" />
     <layout class="org.apache.log4j.PatternLayout">
       <param name="ConversionPattern"
@@ -20,8 +20,8 @@
  
   <!-- FATAL-Logger für die gesamte Applikation (inkl. Bibliotheken) -->
   <root>
-    <level value="debug" />
+    <level value="error" />
    <!-- <appender-ref ref="Logfile" /> -->
-    <appender-ref ref="Konsole" />
+    <appender-ref ref="Logfile" />
   </root>
 </log4j:configuration>

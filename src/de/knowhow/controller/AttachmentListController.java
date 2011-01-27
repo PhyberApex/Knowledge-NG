@@ -37,7 +37,7 @@ public class AttachmentListController extends Controller {
 		} catch (DatabaseException e) {
 			acl.error(e);
 		}
-		
+
 	}
 
 	public void loadGUI() {
