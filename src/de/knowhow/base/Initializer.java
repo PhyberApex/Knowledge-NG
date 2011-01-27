@@ -39,7 +39,6 @@ public class Initializer {
 			}
 			Config config = Config.getInstance();
 			Constants.setLanguage(new Locale(config.getProperty("lang")));
-			ViewConstants.reload(config);
 		} catch (Exception e) {
 			return false;
 		}

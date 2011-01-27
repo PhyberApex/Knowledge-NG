@@ -1,5 +1,7 @@
 package de.knowhow.view;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.MouseEvent;
 import java.util.Observable;
 import javax.swing.DefaultComboBoxModel;
@@ -25,24 +27,23 @@ public class TopicChooseView extends View {
 	public TopicChooseView(TopicListController topicListController) {
 		panel = new JPanel();
 		this.tcl = topicListController;
-		panel.setLayout(null);
 		window = panel;
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.weightx = 0;
+		constraints.weighty = 0;
+		constraints.gridx = 1;
+		constraints.gridy = 1;
 	}
 
 	protected void init() {
+		panel.setLayout(new GridBagLayout());
 		panel.setSize(ViewConstants.TOPICCHOOSE_WIDTH,
 				ViewConstants.TOPICCHOOSE_HEIGTH);
-		panel.setLocation(ViewConstants.TOPICCHOOSE_POS_X,
-				ViewConstants.TOPICCHOOSE_POS_Y);
 		this.topic = new Label(Constants.getText("keyword.topic") + ":");
 		this.topic.setSize(this.topic.getPreferredSize());
-		this.topic.setLocation(5, (panel.getHeight() / 2)
-				- (topic.getHeight() / 2));
 		this.topicBox = new ComboBox();
 		this.topicBox.setSize(
 				panel.getWidth() - topic.getX() - topic.getWidth() - 20, 25);
-		this.topicBox.setLocation(topic.getX() + topic.getWidth() + 5,
-				(panel.getHeight() / 2) - (topicBox.getHeight() / 2));
 		DefaultComboBoxModel model = new DefaultComboBoxModel();
 		for (int i = 0; i < tcl.getTopics().size(); i++) {
 			model.addElement(tcl.getTopics().get(i));
@@ -55,23 +56,33 @@ public class TopicChooseView extends View {
 			}
 
 			@Override
-			public void mouseEntered(MouseEvent e) {//Nothing to do here
+			public void mouseEntered(MouseEvent e) {// Nothing to do here
 			}
 
 			@Override
-			public void mouseExited(MouseEvent e) {//Nothing to do here
+			public void mouseExited(MouseEvent e) {// Nothing to do here
 			}
 
 			@Override
-			public void mousePressed(MouseEvent e) {//Nothing to do here
+			public void mousePressed(MouseEvent e) {// Nothing to do here
 			}
-			
+
 			@Override
-			public void mouseReleased(MouseEvent e) {//Nothing to do here
+			public void mouseReleased(MouseEvent e) {// Nothing to do here
 			}
 		});
-		panel.add(topic);
-		panel.add(topicBox);
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.NONE;
+		c.anchor = GridBagConstraints.LINE_START;
+		c.gridx = 0;
+		c.gridy = 0;
+		panel.add(topic, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1;
+		c.weighty = 0;
+		c.gridx = 1;
+		c.gridy = 0;
+		panel.add(topicBox,c);
 	}
 
 	@Override

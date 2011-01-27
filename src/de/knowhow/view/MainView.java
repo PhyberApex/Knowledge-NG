@@ -5,11 +5,9 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Observable;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import de.knowhow.base.Constants;
-import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.MainController;
 
 public class MainView extends View {
@@ -24,8 +22,7 @@ public class MainView extends View {
 		frame.setIconImage(Constants.createImageIcon(
 				"/de/knowhow/resource/img/logo.png").getImage());
 		window = frame;
-		frame.setLayout(null);
-		frame.setResizable(false);
+		frame.setResizable(true);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -36,7 +33,7 @@ public class MainView extends View {
 	}
 
 	protected void init() {
-		frame.setSize(ViewConstants.MAIN_WIDTH, ViewConstants.MAIN_HEIGTH);
+		frame.setMinimumSize(new Dimension(600, 480));
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation((d.width - frame.getSize().width) / 2,
 				(d.height - frame.getSize().height) / 2);
@@ -50,11 +47,6 @@ public class MainView extends View {
 		JOptionPane.showMessageDialog(frame,
 				Constants.getText("message.error." + e.getMessage()), "Error",
 				JOptionPane.ERROR_MESSAGE);
-	}
-
-	@Override
-	public void run() {
-		init();
 	}
 
 	@Override

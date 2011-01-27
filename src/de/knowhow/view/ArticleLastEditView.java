@@ -1,5 +1,7 @@
 package de.knowhow.view;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.Observable;
 import javax.swing.JPanel;
 import de.knowhow.base.Constants;
@@ -15,6 +17,12 @@ public class ArticleLastEditView extends ArticleView {
 	public ArticleLastEditView() {
 		panel = new JPanel();
 		window = panel;
+		constraints.fill = GridBagConstraints.NONE;
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.weightx = 0;
+		constraints.weighty = 0;
+		constraints.gridx = 1;
+		constraints.gridy = 2;
 	}
 
 	@Override
@@ -22,23 +30,27 @@ public class ArticleLastEditView extends ArticleView {
 		if (o instanceof ArticleList) {
 			this.lastEdit.setText(Constants
 					.getText("articleLastEditView.lastEdit")
-					+ " " + ((ArticleList) o).getCurrArticle().getLastEdit());
+					+ " "
+					+ ((ArticleList) o).getCurrArticle().getLastEdit());
 		}
 	}
 
 	@Override
 	protected void init() {
-		panel.setLayout(null);
+		panel.setLayout(new GridBagLayout());
 		panel.setSize(ViewConstants.LASTEDIT_WIDTH,
 				ViewConstants.LASTEDIT_HEIGTH);
-		panel.setLocation(ViewConstants.LASTEDIT_POS_X,
-				ViewConstants.LASTEDIT_POS_Y);
-		this.lastEdit = new Label(Constants
-				.getText("articleLastEditView.lastEdit")
-				+ " DD.MM.YYYY");
+		this.lastEdit = new Label(
+				Constants.getText("articleLastEditView.lastEdit")
+						+ " DD.MM.YYYY");
 		this.lastEdit.setSize(panel.getWidth(), 25);
-		this.lastEdit.setLocation(5, 0);
-		panel.add(lastEdit);
+		this.lastEdit.setPreferredSize(lastEdit.getSize());
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.anchor = GridBagConstraints.LINE_START;
+		c.gridx = 0;
+		c.gridy = 0;
+		panel.add(lastEdit, c);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package de.knowhow.view;
 
+import java.awt.GridBagConstraints;
 import java.util.Observable;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -56,7 +57,6 @@ public class MenuView extends View {
 
 	private Menu prefs;
 	private Menu lang;
-	private Menu res;
 	private Menu database;
 	private RadioButtonMenuItem sqlite;
 	private RadioButtonMenuItem mysql;
@@ -78,9 +78,17 @@ public class MenuView extends View {
 		this.menu = new JMenuBar();
 		window = menu;
 		this.mc = mc;
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+		constraints.weightx = 1;
+		constraints.gridwidth = 2;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
 	}
 
 	public void init() {
+		menu.setSize(ViewConstants.MENU_WIDTH, ViewConstants.MENU_HEIGTH);
+		menu.setPreferredSize(menu.getSize());
 		file = new Menu(Constants.getText("menu.file"));
 		newArticle = new MenuItem(Constants.getText("menu.file.newArticle"));
 		newArticle.setIcon(Constants
@@ -331,53 +339,6 @@ public class MenuView extends View {
 		langGroup.add(langEN);
 		lang.add(langEN);
 		prefs.add(lang);
-		res = new Menu(Constants.getText("menu.prefs.res"));
-		res.setIcon(Constants
-				.createImageIcon("/de/knowhow/resource/img/icon/prefs_resolution.png"));
-		ButtonGroup resGroup = new ButtonGroup();
-		RadioButtonMenuItem res600 = new RadioButtonMenuItem("600x480");
-		resGroup.add(res600);
-		res.add(res600);
-		res600.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				logger.debug("change resolution to 1 clicked");
-				mc.changeResolution("1");
-			}
-		});
-		res.add(res600);
-		RadioButtonMenuItem res800 = new RadioButtonMenuItem("800x600");
-		resGroup.add(res800);
-		res.add(res800);
-		res800.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				logger.debug("change resolution to 2 clicked");
-				mc.changeResolution("2");
-			}
-		});
-		res.add(res800);
-		RadioButtonMenuItem res1024 = new RadioButtonMenuItem("1024x768");
-		resGroup.add(res1024);
-		res1024.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				logger.debug("change resolution to 3 clicked");
-				mc.changeResolution("3");
-			}
-		});
-		res.add(res1024);
-		switch (ViewConstants.MAIN_WIDTH) {
-		case 600:
-			res600.setSelected(true);
-			break;
-		case 800:
-			res800.setSelected(true);
-			break;
-		case 1024:
-			res1024.setSelected(true);
-			break;
-		default:
-			res600.setSelected(true);
-		}
-		prefs.add(res);
 		this.database = new Menu(Constants.getText("keyword.database"));
 		database.setIcon(Constants
 				.createImageIcon("/de/knowhow/resource/img/icon/prefs_database.png"));
@@ -484,7 +445,6 @@ public class MenuView extends View {
 		menu.add(bt_render);
 		menu.add(bt_plain);
 		menu.setSize(ViewConstants.MENU_WIDTH, ViewConstants.MENU_HEIGTH);
-		menu.setLocation(ViewConstants.MENU_POS_X, ViewConstants.MENU_POS_Y);
 	}
 
 	@Override

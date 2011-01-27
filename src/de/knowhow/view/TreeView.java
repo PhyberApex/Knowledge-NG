@@ -1,5 +1,7 @@
 package de.knowhow.view;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.Observable;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -26,21 +28,30 @@ public class TreeView extends View implements TreeSelectionListener {
 		panel = new JPanel();
 		this.treeC = treeC;
 		window = panel;
+		constraints.fill = GridBagConstraints.BOTH;
+		constraints.weightx = 0.3;
+		constraints.weighty = 0;
+		constraints.gridheight = 3;
+		constraints.gridx = 0;
+		constraints.gridy = 1;
 	}
 
 	protected void init() {
-		panel.setLayout(null);
+		panel.setLayout(new GridBagLayout());
 		panel.setSize(ViewConstants.TREE_WIDTH, ViewConstants.TREE_HEIGTH);
-		panel.setLocation(ViewConstants.TREE_POS_X, ViewConstants.TREE_POS_Y);
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.BOTH;
+		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		c.weighty = 1;
+		c.weightx = 1;
 		treeScrollPane = new JScrollPane();
 		tree = new Tree(treeC.getRootNode());
-		tree.setLocation(0, 0);
 		tree.addTreeSelectionListener(this);
 		treeScrollPane.setSize(ViewConstants.TREE_WIDTH - 10,
 				ViewConstants.TREE_HEIGTH - 40);
-		treeScrollPane.setLocation(5, 0);
+		treeScrollPane.setPreferredSize(treeScrollPane.getSize());
 		treeScrollPane.setViewportView(tree);
-		panel.add(treeScrollPane);
+		panel.add(treeScrollPane, c);
 	}
 
 	@Override

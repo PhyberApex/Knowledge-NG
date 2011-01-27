@@ -4,11 +4,14 @@ package de.knowhow.controller;
  * Main class everything starts here
  */
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
@@ -86,7 +89,7 @@ public class MainController extends Controller {
 		this.tcl = new TopicListController(this);
 		controller.add(tcl);
 		this.treeC = new TreeController(acl, tcl);
-		// controller.add(treeC);
+		controller.add(treeC);
 	}
 
 	public void addViews(Controller controller) {
@@ -94,7 +97,8 @@ public class MainController extends Controller {
 		while (iterator.hasNext()) {
 			View aktView = iterator.next();
 			if (aktView.isComponent()) {
-				mv.getComponent().add(aktView.getComponent());
+				getMainComponent().add(aktView.getComponent(),
+						aktView.getConstraints());
 				aktView.setVisible(true);
 			}
 		}
@@ -369,11 +373,25 @@ public class MainController extends Controller {
 		views.add(aboutView);
 		searchView = new SearchView(this);
 		views.add(searchView);
+		doLayout();
 		addViews(this);
 		addViews(acl);
-		addViews(attL);
+//		addViews(attL);
 		addViews(tcl);
 		addViews(treeC);
+	}
+
+	private void doLayout() {
+		getMainComponent().setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1;
+		c.gridx = 0;
+		c.gridy = 0;
+	}
+
+	private JFrame getMainComponent() {
+		return mv.getComponent();
 	}
 
 	@Override

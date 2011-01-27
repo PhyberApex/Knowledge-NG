@@ -1,12 +1,13 @@
 package de.knowhow.view;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.Observable;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.text.Document;
 import javax.swing.text.html.HTML;
 import javax.swing.text.html.StyleSheet;
-
 import de.knowhow.base.Constants;
 import de.knowhow.base.ReleaseNote;
 import de.knowhow.base.ViewConstants;
@@ -34,10 +35,15 @@ public class ArticleRenderView extends ArticleView {
 		window = this.panel;
 		this.acl = acl;
 		this.csc = csc;
+		constraints.fill = GridBagConstraints.BOTH;
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		constraints.gridx = 1;
+		constraints.gridy = 3;
 	}
 
 	protected void init() {
-		panel.setLayout(null);
+		panel.setLayout(new GridBagLayout());
 		this.contentScrollPane = new JScrollPane();
 		this.htmlEdit_content = new HTMLEditor(acl);
 		this.htmlEdit_content.setLocation(0, 0);
@@ -54,12 +60,19 @@ public class ArticleRenderView extends ArticleView {
 		this.contentScrollPane.setLocation(5, 0);
 		this.contentScrollPane.setSize(ViewConstants.ARTRENDER_WIDTH - 10,
 				ViewConstants.ARTRENDER_HEIGTH - 40);
+		this.contentScrollPane.setPreferredSize(contentScrollPane.getSize());
 		this.contentScrollPane.setViewportView(htmlEdit_content);
 		panel.setSize(ViewConstants.ARTRENDER_WIDTH,
 				ViewConstants.ARTRENDER_HEIGTH);
-		panel.setLocation(ViewConstants.ARTPLAIN_POS_X,
-				ViewConstants.ARTRENDER_POS_Y);
-		panel.add(contentScrollPane);
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.BOTH;
+		c.anchor = GridBagConstraints.LINE_START;
+		c.gridwidth = 2;
+		c.weightx = 1;
+		c.weighty = 1;
+		c.gridx = 0;
+		c.gridy = 0;
+		panel.add(contentScrollPane, c);
 		this.confirmButton = new Button(Constants.getText("button.confirm"));
 		this.confirmButton.setSize(confirmButton.getPreferredSize());
 		this.confirmButton.setLocation(5, contentScrollPane.getY()
@@ -74,7 +87,11 @@ public class ArticleRenderView extends ArticleView {
 						}
 					}
 				});
-		panel.add(confirmButton);
+		c.fill = GridBagConstraints.NONE;
+		c.weighty = 0;
+		c.gridx = 0;
+		c.gridy = 1;
+		panel.add(confirmButton, c);
 		this.cancelButton = new Button(Constants.getText("button.cancel"));
 		this.cancelButton.setSize(cancelButton.getPreferredSize());
 		this.cancelButton.setLocation(
@@ -86,7 +103,12 @@ public class ArticleRenderView extends ArticleView {
 						acl.cancel();
 					}
 				});
-		panel.add(cancelButton);
+		c.fill = GridBagConstraints.NONE;
+		c.anchor = GridBagConstraints.LINE_END;
+		c.weighty = 0;
+		c.gridx = 1;
+		c.gridy = 1;
+		panel.add(cancelButton, c);
 	}
 
 	@Override

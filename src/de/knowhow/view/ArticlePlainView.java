@@ -1,5 +1,7 @@
 package de.knowhow.view;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.Observable;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -27,28 +29,36 @@ public class ArticlePlainView extends ArticleView {
 		this.panel = new JPanel();
 		this.acl = acl;
 		window = this.panel;
+		constraints.fill = GridBagConstraints.BOTH;
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		constraints.gridx = 1;
+		constraints.gridy = 3;
 	}
 
 	protected void init() {
-		panel.setLayout(null);
+		panel.setLayout(new GridBagLayout());
 		panel.setSize(ViewConstants.ARTPLAIN_WIDTH,
 				ViewConstants.ARTPLAIN_HEIGTH);
-		panel.setLocation(ViewConstants.ARTPLAIN_POS_X,
-				ViewConstants.ARTPLAIN_POS_Y);
-
 		this.contentScrollPane = new JScrollPane();
 		this.ta_content = new JTextArea();
 		this.ta_content.setLocation(0, 0);
 		this.ta_content.setText(ReleaseNote.getReleaseNote());
-		this.contentScrollPane.setLocation(5, 0);
 		this.contentScrollPane.setSize(ViewConstants.ARTPLAIN_WIDTH - 10,
 				ViewConstants.ARTPLAIN_HEIGTH - 40);
+		this.contentScrollPane.setPreferredSize(contentScrollPane.getSize());
 		this.contentScrollPane.setViewportView(ta_content);
-		panel.add(contentScrollPane);
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.BOTH;
+		c.anchor = GridBagConstraints.LINE_START;
+		c.gridwidth = 2;
+		c.weightx = 1;
+		c.weighty = 1;
+		c.gridx = 0;
+		c.gridy = 0;
+		panel.add(contentScrollPane, c);
 		this.confirmButton = new Button(Constants.getText("button.confirm"));
 		this.confirmButton.setSize(confirmButton.getPreferredSize());
-		this.confirmButton.setLocation(5, contentScrollPane.getY()
-				+ contentScrollPane.getHeight());
 		this.confirmButton
 				.addActionListener(new java.awt.event.ActionListener() {
 					public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -59,19 +69,25 @@ public class ArticlePlainView extends ArticleView {
 						}
 					}
 				});
-		panel.add(confirmButton);
+		c.fill = GridBagConstraints.NONE;
+		c.weighty = 0;
+		c.gridx = 0;
+		c.gridy = 1;
+		panel.add(confirmButton, c);
 		this.cancelButton = new Button(Constants.getText("button.cancel"));
 		this.cancelButton.setSize(cancelButton.getPreferredSize());
-		this.cancelButton.setLocation(panel.getWidth() - 5
-				- cancelButton.getWidth(), contentScrollPane.getY()
-				+ contentScrollPane.getHeight());
 		this.cancelButton
 				.addActionListener(new java.awt.event.ActionListener() {
 					public void actionPerformed(java.awt.event.ActionEvent e) {
 						acl.cancel();
 					}
 				});
-		panel.add(cancelButton);
+		c.fill = GridBagConstraints.NONE;
+		c.anchor = GridBagConstraints.LINE_END;
+		c.weighty = 0;
+		c.gridx = 1;
+		c.gridy = 1;
+		panel.add(cancelButton, c);
 		setVisible(false);
 	}
 

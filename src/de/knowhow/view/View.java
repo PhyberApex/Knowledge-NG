@@ -1,11 +1,13 @@
 package de.knowhow.view;
 
 import java.awt.Component;
+import java.awt.GridBagConstraints;
 import java.util.Observer;
 
 public abstract class View implements Runnable, Observer {
 
 	protected Component window;
+	protected GridBagConstraints constraints = new GridBagConstraints();
 
 	protected abstract void init();
 
@@ -24,4 +26,8 @@ public abstract class View implements Runnable, Observer {
 	}
 
 	public abstract boolean isComponent();
+
+	public GridBagConstraints getConstraints() {
+		return constraints;
+	}
 }
