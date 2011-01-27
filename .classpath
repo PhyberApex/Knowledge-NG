@@ -4,6 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="libs/sqlitejdbc-v056.jar"/>
 	<classpathentry kind="lib" path="libs/mysql-connector-java-5.1.13-bin.jar"/>
-	<classpathentry kind="lib" path="C:/Dokumente und Einstellungen/wallij01/Eigene Dateien/Lernen/KnowledgeNG/libs/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="libs/log4j-1.2.16.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
