@@ -173,4 +173,8 @@ public class ArticleRenderView extends ArticleView {
 	public String getContent() {
 		return htmlEdit_content.getText();
 	}
+
+	public HTMLEditor getEditorPane() {
+		return htmlEdit_content;
+	}
 }

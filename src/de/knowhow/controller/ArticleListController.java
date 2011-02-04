@@ -1,10 +1,13 @@
 package de.knowhow.controller;
 
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
 import java.util.ArrayList;
 import java.util.Observer;
 import javax.swing.SwingUtilities;
 import de.knowhow.base.Config;
 import de.knowhow.exception.DatabaseException;
+import de.knowhow.extra.Print;
 import de.knowhow.model.Article;
 import de.knowhow.model.ArticleList;
 import de.knowhow.model.db.DAO;
@@ -167,5 +170,31 @@ public class ArticleListController extends Controller {
 
 	public void writeAttToFS(int att_ID, String path) {
 		mc.writeAttToFS(att_ID, path);
+	}
+
+	public void print() {
+		PageFormat pageFormat = new PageFormat();
+		Paper a4paper = new Paper();
+		double paperWidth = 8.26;
+		double paperHeight = 11.69;
+		a4paper.setSize(paperWidth * 72.0, paperHeight * 72.0);
+
+		/*
+		 * set the margins respectively the imageable area
+		 */
+		double leftMargin = 0.78; /* should be about 2cm */
+		double rightMargin = 0.78;
+		double topMargin = 0.78;
+		double bottomMargin = 0.78;
+
+		a4paper.setImageableArea(leftMargin * 72.0, topMargin * 72.0,
+		        (paperWidth - leftMargin - rightMargin) * 72.0, (paperHeight
+		                - topMargin - bottomMargin) * 72.0);
+		pageFormat.setPaper(a4paper);
+		//pageFormat.setOrientation(PageFormat.LANDSCAPE);
+
+		Print documentRenderer = new Print(pageFormat,
+		        "Report");
+		documentRenderer.print(renderView.getEditorPane());		
 	}
 }

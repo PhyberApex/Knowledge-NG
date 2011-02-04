@@ -417,4 +417,8 @@ public class MainController extends Controller {
 	public void changeArticleView(int view) {
 		acl.setCurrArticleView(view);
 	}
+
+	public void print() {
+		acl.print();
+	}
 }

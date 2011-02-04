@@ -29,6 +29,7 @@ public class MenuView extends View {
 	private JMenu file;
 	private MenuItem newArticle;
 	private MenuItem newTopic;
+	private MenuItem print;
 	private Menu upload;
 	private MenuItem uploadImage;
 	private MenuItem uploadFile;
@@ -134,6 +135,17 @@ public class MenuView extends View {
 			}
 		});
 		file.add(deleteTopic);
+		file.addSeparator();
+		print = new MenuItem(Constants.getText("menu.file.print"));
+		print.setIcon(Constants
+				.createImageIcon("/de/knowhow/resource/img/icon/print.png"));
+		print.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("print clicked");
+				mc.print();
+			}
+		});
+		file.add(print);
 		upload = new Menu(Constants.getText("menu.file.upload"));
 		upload.setIcon(new ImageIcon(ClassLoader
 				.getSystemResource("de/knowhow/resource/img/icon/upload.png")));
