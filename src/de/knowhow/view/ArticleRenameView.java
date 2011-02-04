@@ -31,6 +31,7 @@ public class ArticleRenameView extends ArticleView {
 	}
 
 	protected void init() {
+		dialog.setModal(true);
 		dialog.setSize(ViewConstants.RENAME_WIDTH, ViewConstants.RENAME_HEIGTH);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		dialog.setLocation((d.width - dialog.getSize().width) / 2,

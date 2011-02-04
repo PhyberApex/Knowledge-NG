@@ -35,6 +35,7 @@ public class AboutView extends View {
 	}
 
 	protected void init() {
+		dialog.setModal(true);
 		dialog.setSize(ViewConstants.ABOUT_WIDTH, ViewConstants.ABOUT_HEIGTH);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		dialog.setLocation((d.width - dialog.getSize().width) / 2,

@@ -35,6 +35,7 @@ public class AttachmentForArticleView extends View {
 	}
 
 	protected void init() {
+		dialog.setModal(true);
 		dialog.setSize(ViewConstants.ATTACH_WIDTH, ViewConstants.ATTACH_HEIGTH);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		dialog.setLocation((d.width - dialog.getSize().width) / 2,

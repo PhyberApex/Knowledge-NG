@@ -29,6 +29,7 @@ public class SubtopicView extends View {
 	}
 
 	protected void init() {
+		dialog.setModal(true);
 		dialog.setSize(ViewConstants.SUBTOPIC_WIDTH,
 				ViewConstants.SUBTOPIC_HEIGTH);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();

@@ -30,7 +30,7 @@ public class TopicRenameView extends View {
 	}
 
 	protected void init() {
-		dialog.setLayout(null);
+		dialog.setModal(true);
 		dialog.setSize(ViewConstants.RENAME_WIDTH, ViewConstants.RENAME_HEIGTH);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		dialog.setLocation((d.width - dialog.getSize().width) / 2,

@@ -34,6 +34,7 @@ public class SearchView extends View {
 	}
 
 	protected void init() {
+		dialog.setModal(true);
 		dialog.setSize(ViewConstants.ARTPLAIN_WIDTH,
 				ViewConstants.MAIN_HEIGTH - 40);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
