@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+import de.knowhow.extra.security.Coder;
 import de.knowhow.model.db.DAO;
 import de.knowhow.model.db.DAO_MYSQL;
 import de.knowhow.model.db.DAO_SQLite;
@@ -35,13 +36,13 @@ public class Config {
 		} catch (FileNotFoundException e) {
 			File prop = new File("knowledge.cfg");
 			try {
+				Coder coder = Coder.getInstance();
 				// Create file and set default values
 				prop.createNewFile();
 				reader = new FileReader("knowledge.cfg");
-				this.prop.setProperty("databasetyp", "1");
-				this.prop.setProperty("resolution", "1");
-				this.prop.setProperty("lang", "EN");
-				this.prop.setProperty("defaultdb", "knowledge.db");
+				this.prop.setProperty("databasetyp", coder.decode("1"));
+				this.prop.setProperty("lang", coder.decode("EN"));
+				this.prop.setProperty("defaultdb", coder.decode("knowledge.db"));
 				saveChanges();
 			} catch (IOException e1) {
 				logger.error(e1.getMessage());
@@ -55,11 +56,13 @@ public class Config {
 	}
 
 	public void setProperty(String key, String value) {
+		value = Coder.getInstance().decode(value);
 		prop.setProperty(key, value);
 	}
 
 	public String getProperty(String key) {
-		return this.prop.getProperty(key);
+		String value = this.prop.getProperty(key);
+		return Coder.getInstance().encode(value);
 	}
 
 	// This method writes all changes to the file
