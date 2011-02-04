@@ -16,7 +16,7 @@ public class Dialog extends JDialog {
 		this.setUndecorated(true);
 		this.content = new JPanel();
 		this.content.setLayout(null);
-		this.content.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED, Color.blue, Color.black));
+		this.content.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED, Color.BLACK, Color.WHITE));
 		this.getContentPane().add(this.content);
 	}
 
