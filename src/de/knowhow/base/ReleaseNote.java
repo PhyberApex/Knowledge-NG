@@ -29,24 +29,7 @@ public class ReleaseNote {
 			+ "<li>Topic of the article</li>\n"
 			+ "</ul></li>\n"
 			+ "</ul></li>\n"
-			+ "</ul>\n"
-			+ "<h3>Changelog:</h3>\n"
-			+ "<ul>\n"
-			+ "<li>1.0<ul>\n"
-			+ "<li>RELEASE</li>\n"
-			+ "</ul></li>\n"
-			+ "<li>1.2<ul>\n"
-			+ "<li>New look and feel</li>\n"
-			+ "<li>Export of all data(Articles as HTML)</li>\n"
-			+ "<li>CSS Plaintext-Editor</li>\n"
-			+ "<li>Code improvements</li>"
-			+ "<li>Loading Screens</li>"
-			+ "<li>Rendered article view is now editable</li>"
-			+ "<li>Fixed bug in JTree which not changed article on first click</li>"
-			+ "</ul></li>\n" + "</ul>\n" + "<h3>Known Bugs:</h3>\n" + "<ul>\n"
-			+ "<li>Tree closes down on change</li>\n" + "</ul>\n"
-			+ "<h3>Planned Features:</h3>\n" + "<ul>\n"
-			+ "<li>Assisted CSS Editor</li>\n" + "</ul>\n" + "</body>";
+			+ "</ul>\n";
 
 	public static final String getReleaseNote() {
 		return note;
