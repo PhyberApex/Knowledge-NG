@@ -11,7 +11,6 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
-
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.TreeController;
 import de.knowhow.model.Article;
@@ -63,36 +62,15 @@ public class TreeView extends View implements TreeSelectionListener,
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		if (arg0.getClass() == ArticleList.class) {
-			if (((ArticleList) arg0).getCurrArticle().getArticle_ID() == treeC
-					.getCurrArticleID()) {
-				this.tree.removeTreeSelectionListener(this);
-				this.tree.removeMouseListener(this);
-				this.tree = new Tree(treeC.getRootNode());
-				tree.addTreeSelectionListener(this);
-				tree.addMouseListener(this);
-				treeScrollPane.setViewportView(tree);
-			} else {
-				treeC.setCurrArticleID(((ArticleList) arg0).getCurrArticle()
-						.getArticle_ID());
-			}
+			treeC.setCurrArticleID(((ArticleList) arg0).getCurrArticle()
+					.getArticle_ID());
 		} else if (arg0.getClass() == TopicList.class) {
-			if (((TopicList) arg0).getCurrTopic().getTopic_ID() == treeC
-					.getCurrTopicID()) {
-				this.tree.removeTreeSelectionListener(this);
-				this.tree.removeMouseListener(this);
-				this.tree = new Tree(treeC.getRootNode());
-				tree.addTreeSelectionListener(this);
-				tree.addMouseListener(this);
-				treeScrollPane.setViewportView(tree);
-			} else {
-				treeC.setCurrTopicID(((TopicList) arg0).getCurrTopic()
-						.getTopic_ID());
-			}
+			treeC.setCurrTopicID(((TopicList) arg0).getCurrTopic()
+					.getTopic_ID());
 		}
 	}
 
 	public void valueChanged(TreeSelectionEvent arg0) {
-		TreePath path = tree.getSelectionPath();
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree
 				.getLastSelectedPathComponent();
 		if (node == null)
@@ -105,7 +83,6 @@ public class TreeView extends View implements TreeSelectionListener,
 			Topic newTop = (Topic) nodeInfo;
 			treeC.setCurrTopic(newTop);
 		}
-		tree.setSelectionPath(path);
 	}
 
 	@Override
@@ -118,7 +95,6 @@ public class TreeView extends View implements TreeSelectionListener,
 		if (e.getButton() == MouseEvent.BUTTON3
 				&& tree.getRowForLocation(e.getX(), e.getY()) != -1) {
 			TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
-			System.out.println(selPath);
 			tree.setSelectionPath(selPath);
 			DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath
 					.getLastPathComponent();
@@ -150,5 +126,14 @@ public class TreeView extends View implements TreeSelectionListener,
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// Nothing to do here
+	}
+
+	public void reload() {
+		this.tree.removeTreeSelectionListener(this);
+		this.tree.removeMouseListener(this);
+		this.tree = new Tree(treeC.getRootNode());
+		tree.addTreeSelectionListener(this);
+		tree.addMouseListener(this);
+		treeScrollPane.setViewportView(tree);
 	}
 }

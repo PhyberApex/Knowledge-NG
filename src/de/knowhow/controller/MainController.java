@@ -233,6 +233,7 @@ public class MainController extends Controller {
 	public void changeTopicOfCurrArticle(int i) {
 		try {
 			acl.changeTopicOfCurrArticle(i);
+			treeC.reload();
 		} catch (DatabaseException e) {
 			error(e);
 		}

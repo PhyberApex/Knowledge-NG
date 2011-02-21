@@ -123,4 +123,8 @@ public class TreeController extends Controller {
 	public void showArticlePopupMenu(int x, int y) {
 		acl.showPopupMenu(treeV.getComponent(), x, y);
 	}
+
+	public void reload() {
+		treeV.reload();
+	}
 }
