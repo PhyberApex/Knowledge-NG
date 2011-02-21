@@ -1,20 +1,26 @@
 package de.knowhow.controller;
 
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Observer;
 
+import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
+import org.apache.log4j.Logger;
+
 import de.knowhow.base.Config;
+import de.knowhow.base.Constants;
 import de.knowhow.exception.DatabaseException;
 import de.knowhow.model.Topic;
 import de.knowhow.model.TopicList;
 import de.knowhow.model.db.DAO;
+import de.knowhow.model.gui.MenuItem;
 import de.knowhow.view.SubtopicView;
 import de.knowhow.view.TopicChooseView;
 import de.knowhow.view.TopicRenameView;
 
-public class TopicListController extends Controller {
+public class TopicListController extends Controller implements Runnable {
 
 	private TopicList tl;
 	private DAO db;
@@ -22,6 +28,8 @@ public class TopicListController extends Controller {
 	private TopicChooseView tcv;
 	private TopicRenameView topicRename;
 	private SubtopicView subView;
+	private JPopupMenu popupMenu;
+	private static Logger logger = Logger.getRootLogger();
 
 	public TopicListController(MainController mc) {
 		this.db = Config.getInstance().getDBHandle();
@@ -39,6 +47,7 @@ public class TopicListController extends Controller {
 	}
 
 	public void loadGUI() {
+		SwingUtilities.invokeLater(this);
 		this.tcv = new TopicChooseView(this);
 		this.tcv.setVisible(false);
 		SwingUtilities.invokeLater(tcv);
@@ -111,5 +120,32 @@ public class TopicListController extends Controller {
 
 	public void subTopic() {
 		subView.setVisible(true);
+	}
+
+	public void showPopupMenu(Component component, int x, int y) {
+		popupMenu.show(component, x, y);
+	}
+
+	@Override
+	public void run() {
+		popupMenu = new JPopupMenu();
+		MenuItem renameTopic = new MenuItem(
+				Constants.getText("menu.edit.renameTopic"));
+		renameTopic.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("rename topic clicked");
+				mc.renameTopic();
+			}
+		});
+		popupMenu.add(renameTopic);
+		MenuItem deleteTopic = new MenuItem(
+				Constants.getText("menu.file.deleteTopic"));
+		deleteTopic.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("delete topic clicked");
+				mc.deleteTopic();
+			}
+		});
+		popupMenu.add(deleteTopic);
 	}
 }

@@ -376,7 +376,7 @@ public class MainController extends Controller {
 		doLayout();
 		addViews(this);
 		addViews(acl);
-//		addViews(attL);
+		// addViews(attL);
 		addViews(tcl);
 		addViews(treeC);
 	}

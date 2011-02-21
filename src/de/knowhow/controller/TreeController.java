@@ -115,4 +115,12 @@ public class TreeController extends Controller {
 	public void setCurrArticleID(int currArticleID) {
 		this.currArticleID = currArticleID;
 	}
+
+	public void showTopicPopupMenu(int x, int y) {
+		tcl.showPopupMenu(treeV.getComponent(), x, y);
+	}
+
+	public void showArticlePopupMenu(int x, int y) {
+		acl.showPopupMenu(treeV.getComponent(), x, y);
+	}
 }
