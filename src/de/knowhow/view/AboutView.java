@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
+import de.knowhow.controller.MainController;
 import de.knowhow.model.gui.Button;
 import de.knowhow.model.gui.Dialog;
 import de.knowhow.model.gui.Label;
@@ -21,6 +22,7 @@ public class AboutView extends View {
 	private static final long serialVersionUID = 1L;
 	private Dialog dialog;
 	private JLabel lbLogo;
+	private MainController mc;
 	private Label lbAppName;
 	private Label lbAppVersion;
 	private Label lbAppAuthor;
@@ -29,9 +31,10 @@ public class AboutView extends View {
 	private Label lbCredits;
 	private Button btClose;
 
-	public AboutView() {
+	public AboutView(MainController mc) {
 		this.dialog = new Dialog();
 		window = dialog;
+		this.mc = mc;
 	}
 
 	protected void init() {
@@ -107,17 +110,7 @@ public class AboutView extends View {
 		this.lbLicense.addMouseListener(new java.awt.event.MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				try {
-					java.awt.Desktop
-							.getDesktop()
-							.browse(new URI(
-									"http://www.gnu.org/licenses/old-licenses/gpl-2.0.html"));
-					dialog.dispose();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} catch (URISyntaxException e1) {
-					e1.printStackTrace();
-				}
+				mc.showGPL();
 			}
 
 			@Override

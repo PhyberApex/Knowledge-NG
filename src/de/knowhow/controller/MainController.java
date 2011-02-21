@@ -23,6 +23,7 @@ import de.knowhow.extra.Export;
 import de.knowhow.extra.Splash;
 import de.knowhow.model.db.DAO;
 import de.knowhow.view.AboutView;
+import de.knowhow.view.GPLView;
 import de.knowhow.view.MainView;
 import de.knowhow.view.MenuView;
 import de.knowhow.view.SearchView;
@@ -39,6 +40,7 @@ public class MainController extends Controller {
 	private MainView mv;
 	private MenuView menuV;
 	private AboutView aboutView;
+	private GPLView gplView;
 	private SearchView searchView;
 	private Config config;
 	private DAO db;
@@ -74,6 +76,7 @@ public class MainController extends Controller {
 		SwingUtilities.invokeLater(mv);
 		SwingUtilities.invokeLater(menuV);
 		SwingUtilities.invokeLater(aboutView);
+		SwingUtilities.invokeLater(gplView);
 		SwingUtilities.invokeLater(searchView);
 		splash.close();
 		mv.setVisible(true);
@@ -312,6 +315,10 @@ public class MainController extends Controller {
 		aboutView.setVisible(true);
 	}
 
+	public void showGPL() {
+		gplView.setVisible(true);
+	}
+
 	public void setCurrArtByID(int iD) {
 		acl.setCurrArticle(acl.getArticleByID(iD));
 	}
@@ -370,8 +377,10 @@ public class MainController extends Controller {
 		mv = new MainView(this);
 		menuV = new MenuView(this);
 		views.add(menuV);
-		aboutView = new AboutView();
+		aboutView = new AboutView(this);
 		views.add(aboutView);
+		gplView = new GPLView();
+		views.add(gplView);
 		searchView = new SearchView(this);
 		views.add(searchView);
 		doLayout();

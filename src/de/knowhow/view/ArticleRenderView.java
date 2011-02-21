@@ -62,6 +62,7 @@ public class ArticleRenderView extends ArticleView {
 				ViewConstants.ARTRENDER_HEIGTH - 40);
 		this.contentScrollPane.setPreferredSize(contentScrollPane.getSize());
 		this.contentScrollPane.setViewportView(htmlEdit_content);
+		this.htmlEdit_content.setCaretPosition(0);
 		panel.setSize(ViewConstants.ARTRENDER_WIDTH,
 				ViewConstants.ARTRENDER_HEIGTH);
 		GridBagConstraints c = new GridBagConstraints();

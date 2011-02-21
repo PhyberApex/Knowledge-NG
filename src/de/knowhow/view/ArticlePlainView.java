@@ -48,6 +48,7 @@ public class ArticlePlainView extends ArticleView {
 				ViewConstants.ARTPLAIN_HEIGTH - 40);
 		this.contentScrollPane.setPreferredSize(contentScrollPane.getSize());
 		this.contentScrollPane.setViewportView(ta_content);
+		this.ta_content.setCaretPosition(0);
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;
 		c.anchor = GridBagConstraints.LINE_START;

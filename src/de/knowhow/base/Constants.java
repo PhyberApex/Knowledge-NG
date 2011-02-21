@@ -4,6 +4,12 @@ package de.knowhow.base;
  * This class holds the basic information for this application
  */
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -74,5 +80,27 @@ public class Constants {
 			System.err.println("Couldn't find file: " + path);
 			return null;
 		}
+	}
+
+	public static String readInternFileToString(String path) {
+		String toReturn = "";
+		try {
+			File f = new File(Constants.class.getResource(path).toURI());
+			FileReader fileReader = new FileReader(f);
+			BufferedReader in = new BufferedReader(fileReader);
+			String zeile = null;
+			while ((zeile = in.readLine()) != null) {
+				toReturn += zeile + "\n";
+
+			}
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return toReturn;
 	}
 }
