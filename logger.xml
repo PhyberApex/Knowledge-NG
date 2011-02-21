@@ -29,7 +29,6 @@
   <!-- FATAL-Logger für die gesamte Applikation (inkl. Bibliotheken) -->
   <root>
     <level value="error" />
-    <appender-ref ref="debug" /> 
     <appender-ref ref="Logfile" />
   </root>
 </log4j:configuration>
