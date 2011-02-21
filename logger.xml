@@ -17,11 +17,19 @@
         value="[%d{HH:mm:ss}][%5p] in %c{1} on Line %L: %m%n" />
     </layout>
   </appender>
- 
+ <appender name="debug" class="org.apache.log4j.FileAppender">
+  <param name="File" value="debug.log" />
+  <param name="Append" value="false" />
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern"
+        value="[%d{HH:mm:ss}][%5p] in %c{1} on Line %L: %m%n" />
+    </layout>
+  </appender>
+  
   <!-- FATAL-Logger für die gesamte Applikation (inkl. Bibliotheken) -->
   <root>
     <level value="error" />
-   <!-- <appender-ref ref="Logfile" /> -->
+    <appender-ref ref="debug" /> 
     <appender-ref ref="Logfile" />
   </root>
 </log4j:configuration>
