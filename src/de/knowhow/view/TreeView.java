@@ -61,6 +61,9 @@ public class TreeView extends View implements TreeSelectionListener,
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
+		if (arg1 != null && arg1.equals("sub")) {
+			reload();
+		}
 		if (arg0.getClass() == ArticleList.class) {
 			treeC.setCurrArticleID(((ArticleList) arg0).getCurrArticle()
 					.getArticle_ID());

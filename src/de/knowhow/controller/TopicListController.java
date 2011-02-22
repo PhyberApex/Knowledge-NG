@@ -138,6 +138,15 @@ public class TopicListController extends Controller implements Runnable {
 			}
 		});
 		popupMenu.add(renameTopic);
+		MenuItem subTopic = new MenuItem(
+				Constants.getText("menu.edit.subtopic"));
+		subTopic.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("make subtopic clicked");
+				mc.subTopic();
+			}
+		});
+		popupMenu.add(subTopic);
 		MenuItem deleteTopic = new MenuItem(
 				Constants.getText("menu.file.deleteTopic"));
 		deleteTopic.addActionListener(new java.awt.event.ActionListener() {

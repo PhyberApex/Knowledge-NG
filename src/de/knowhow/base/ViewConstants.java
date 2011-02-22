@@ -1,6 +1,6 @@
 package de.knowhow.base;
 
-/**
+/*
  * This class holds all the positions of the view elements
  */
 public class ViewConstants {
@@ -56,8 +56,8 @@ public class ViewConstants {
 	public static int SUBTOPIC_HEIGTH = 80;
 
 	// CSSPlainView
-	public static int CSSPLAIN_WIDTH;
-	public static int CSSPLAIN_HEIGTH;
+	public static int CSSPLAIN_WIDTH = 400;
+	public static int CSSPLAIN_HEIGTH = 400;
 
 	// AboutView
 	public static int ABOUT_WIDTH = 400;
