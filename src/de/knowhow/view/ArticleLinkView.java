@@ -32,6 +32,7 @@ public class ArticleLinkView extends ArticleView {
 	}
 
 	protected void init() {
+		dialog.setModal(true);
 		dialog.setSize(ViewConstants.ARTLINK_WIDTH,
 				ViewConstants.ARTLINK_HEIGTH);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();

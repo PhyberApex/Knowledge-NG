@@ -6,8 +6,8 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Observable;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import de.knowhow.base.Constants;
@@ -28,7 +28,7 @@ public class AboutView extends View {
 	private Label lbAppAuthor;
 	private Label lbInfo;
 	private Label lbLicense;
-	private Label lbCredits;
+	private ArrayList<Label> lbCredits = new ArrayList<Label>();
 	private Button btClose;
 
 	public AboutView(MainController mc) {
@@ -67,7 +67,7 @@ public class AboutView extends View {
 				lbAppVersion.getY() + lbAppName.getHeight() + 15);
 		dialog.getPane().add(lbAppAuthor);
 		this.lbInfo = new Label(
-				"<html>Further information: <a href=\"ignore\">Project home</a></html>");
+				"Further information: Project home(click to view)");
 		this.lbInfo.setSize(this.lbInfo.getPreferredSize());
 		this.lbInfo.setLocation(10,
 				lbAppAuthor.getY() + lbAppAuthor.getHeight() + 15);
@@ -102,8 +102,7 @@ public class AboutView extends View {
 			}
 		});
 		dialog.getPane().add(lbInfo);
-		this.lbLicense = new Label(
-				"<html>License: <a href=\"ignore\">GNU GPL v2</a></html>");
+		this.lbLicense = new Label("License: GNU GPL v2 (click to view)");
 		this.lbLicense.setSize(this.lbInfo.getPreferredSize());
 		this.lbLicense.setLocation(10, lbInfo.getY() + lbAppAuthor.getHeight()
 				+ 15);
@@ -130,16 +129,25 @@ public class AboutView extends View {
 			}
 		});
 		dialog.getPane().add(lbLicense);
-		String credits = "<html>" + "Special thanks to:<br />"
-				+ "Theresa Carolus(splashscreen and logo)<br />"
-				+ "Andre Uhres @ JavaForum(splashscreen code)<br />"
-				+ "Rob Kenworthy @ Javaworld (relativ paths for images)"
-				+ "</html>";
-		this.lbCredits = new Label(credits);
-		this.lbCredits.setSize(lbCredits.getPreferredSize());
-		this.lbCredits.setLocation(10, lbLicense.getY() + lbLicense.getHeight()
-				+ 15);
-		dialog.getPane().add(lbCredits);
+		this.lbCredits.add(new Label("Special thanks to:"));
+		this.lbCredits.add(new Label("Theresa Carolus(splashscreen and logo)"));
+		this.lbCredits.add(new Label(
+				"Andre Uhres @ JavaForum(splashscreen code)"));
+		this.lbCredits.add(new Label(
+				"Rob Kenworthy @ Javaworld (relativ paths for images)"));
+		for (int i = 0; i < lbCredits.size(); i++) {
+			lbCredits.get(i).setSize(lbCredits.get(i).getPreferredSize());
+			if (i == 0) {
+				lbCredits.get(i).setLocation(10,
+						lbLicense.getY() + lbLicense.getHeight() + 15);
+			} else {
+				lbCredits.get(i).setLocation(
+						10,
+						lbCredits.get(i - 1).getHeight()
+								+ lbCredits.get(i - 1).getY());
+			}
+			dialog.getPane().add(lbCredits.get(i));
+		}
 		this.btClose = new Button(Constants.getText("about.btClose"));
 		this.btClose.setSize(this.btClose.getPreferredSize());
 		this.btClose.setLocation(

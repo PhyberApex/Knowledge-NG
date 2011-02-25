@@ -19,8 +19,9 @@ import de.knowhow.base.Config;
 import de.knowhow.base.Constants;
 import de.knowhow.base.Initializer;
 import de.knowhow.exception.DatabaseException;
-import de.knowhow.extra.Export;
 import de.knowhow.extra.Splash;
+import de.knowhow.extra.export.ExportFactory;
+import de.knowhow.extra.export.ExportType;
 import de.knowhow.model.db.DAO;
 import de.knowhow.view.AboutView;
 import de.knowhow.view.GPLView;
@@ -336,8 +337,8 @@ public class MainController extends Controller {
 		}
 	}
 
-	public void export(String action) {
-		Export ex = new Export(action, this);
+	public void export(int format) {
+		ExportType ex = ExportFactory.createExport(format, this);
 		Thread tr = new Thread(ex);
 		tr.start();
 	}

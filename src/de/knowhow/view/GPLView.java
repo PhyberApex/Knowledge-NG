@@ -20,7 +20,7 @@ public class GPLView extends View {
 
 	private static final long serialVersionUID = 1L;
 	private Dialog dialog;
-	private final JTabbedPane tabPane = new JTabbedPane();
+	private JTabbedPane tabPane = new JTabbedPane();
 	private Button btClose;
 
 	public GPLView() {

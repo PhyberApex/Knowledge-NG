@@ -44,12 +44,12 @@ public class ViewConstants {
 	public static int RENAME_HEIGTH = 75;
 
 	// AttachmentsForArticleView
-	public static int ATTACH_WIDTH = 300;
-	public static int ATTACH_HEIGTH;
+	public static int ATTACH_WIDTH = 400;
+	public static int ATTACH_HEIGTH = 400;
 
 	// ArticleLinkView
-	public static int ARTLINK_WIDTH = 300;
-	public static int ARTLINK_HEIGTH;
+	public static int ARTLINK_WIDTH = 400;
+	public static int ARTLINK_HEIGTH = 400;
 
 	// Subtopic
 	public static int SUBTOPIC_WIDTH = 350;

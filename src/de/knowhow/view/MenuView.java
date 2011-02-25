@@ -13,6 +13,7 @@ import de.knowhow.base.Config;
 import de.knowhow.base.Constants;
 import de.knowhow.base.ViewConstants;
 import de.knowhow.controller.MainController;
+import de.knowhow.extra.export.ExportFactory;
 import de.knowhow.model.db.DAO;
 import de.knowhow.model.db.DAO_MYSQL;
 import de.knowhow.model.db.DAO_SQLite;
@@ -37,6 +38,7 @@ public class MenuView extends View {
 	private MenuItem openDatabase;
 	private Menu export;
 	private MenuItem exportHTML;
+	private MenuItem exportPDF;
 	private MenuItem close;
 
 	private Menu edit;
@@ -181,10 +183,19 @@ public class MenuView extends View {
 		exportHTML.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				logger.debug("export to HTML clicked");
-				mc.export("HTML");
+				mc.export(ExportFactory.HTML);
 			}
 		});
 		export.add(exportHTML);
+		exportPDF = new MenuItem(Constants.getText("menu.file.export.PDF"));
+		exportPDF.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("export to PDF clicked");
+				mc.export(ExportFactory.PDF);
+			}
+		});
+		exportPDF.setEnabled(false);
+		export.add(exportPDF);
 		file.add(export);
 		file.addSeparator();
 		newDatabase = new MenuItem(Constants.getText("menu.file.newDatabase"));
