@@ -194,6 +194,7 @@ public class MenuView extends View {
 				mc.export(ExportFactory.PDF);
 			}
 		});
+		// TODO DELETE following line for testing and as pdf export is working properly! 
 		exportPDF.setEnabled(false);
 		export.add(exportPDF);
 		file.add(export);

@@ -58,6 +58,8 @@ public class PDFExport extends ExportType {
 		}
 	}
 
+	// TODO I DONT THE FUCK KNOW HOW TO DO THAT SRSLY!!!
+	
 	private void appendIndex(List list, int iD) {
 		ArrayList<Topic> tl = mc.getTcl().getTopics();
 		ArrayList<Article> al = mc.getAcl().getArticles();
