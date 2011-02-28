@@ -7,6 +7,8 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 import de.knowhow.base.Constants;
 import de.knowhow.controller.MainController;
 import de.knowhow.extra.Splash;
@@ -46,10 +48,18 @@ public abstract class ExportType implements Runnable {
 		}
 	}
 
+	public abstract String getInfotext();
+
 	protected abstract void innerExport(String path) throws IOException;
 
 	@Override
 	public void run() {
+		showInformationDialog();
 		doExport();
+	}
+
+	private void showInformationDialog() {
+		JOptionPane.showMessageDialog(null, getInfotext(), "Info",
+				JOptionPane.PLAIN_MESSAGE);
 	}
 }

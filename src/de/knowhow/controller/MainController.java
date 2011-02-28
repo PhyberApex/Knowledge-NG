@@ -262,10 +262,10 @@ public class MainController extends Controller {
 	public void insertLink(String string) {
 		if (string.equals("Image") || string.equals("File")) {
 			attL.getAttachArtView().setImage(false);
-			attL.getAttachArtView().setVisible(true);
 			if (string.equals("Image")) {
 				attL.getAttachArtView().setImage(true);
 			}
+			attL.getAttachArtView().setVisible(true);
 		} else if (string.equals("Article")) {
 			acl.getArtLink().setVisible(true);
 		}

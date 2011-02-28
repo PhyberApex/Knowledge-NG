@@ -126,4 +126,9 @@ public class HTMLExport extends ExportType {
 		return html;
 	}
 
+	@Override
+	public String getInfotext() {
+		return Constants.getText("export.HTML");
+	}
+
 }
