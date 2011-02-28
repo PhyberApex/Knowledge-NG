@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.List;
 import com.itextpdf.text.Paragraph;
@@ -16,16 +17,17 @@ import de.knowhow.model.Topic;
 
 public class PDFExport extends ExportType {
 
-	private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
+	private static Font FONTH1 = new Font(Font.FontFamily.TIMES_ROMAN, 24,
 			Font.BOLD);
-	private static Font redFont = new Font(Font.FontFamily.TIMES_ROMAN, 12,
-			Font.NORMAL, BaseColor.RED);
-	private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,
+	private static Font FONTH2 = new Font(Font.FontFamily.TIMES_ROMAN, 18,
 			Font.BOLD);
-	private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
+	private static Font FONTHEADPATH = new Font(Font.FontFamily.TIMES_ROMAN, 18,
+			Font.NORMAL);
+	private static Font article = new Font(Font.FontFamily.TIMES_ROMAN, 12,
 			Font.BOLD);
 
 	private Document document;
+	private String headline = "";
 
 	public PDFExport(MainController mc) {
 		super(mc);
@@ -43,30 +45,71 @@ public class PDFExport extends ExportType {
 			document.addAuthor(System.getProperty("user.name"));
 			document.addCreator(Constants.getAppName() + "version "
 					+ Constants.getAppVersion());
-			// create index page(s)
-			Paragraph preface = new Paragraph();
-			addEmptyLine(preface, 1);
-			// Header
-			preface.add(new Paragraph(Constants.getDBName(), catFont));
-			addEmptyLine(preface, 1);
-			List list = new List(true, false, 10);
-			appendIndex(list, 0);
-			document.add(list);
+			document.add(getIndexPages());
+			document.newPage();
+			document.add(getPDFBody());
 			document.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	// TODO I DONT THE FUCK KNOW HOW TO DO THAT SRSLY!!!
-	
+	private Element getPDFBody() {
+		Paragraph body = new Paragraph();
+		appendBody(body, 0);
+		return body;
+	}
+
+	private void appendBody(Paragraph body, int iD) {
+		ArrayList<Topic> tl = mc.getTcl().getTopics();
+		ArrayList<Article> al = mc.getAcl().getArticles();
+		for (int i = 0; i < tl.size(); i++) {
+			if (tl.get(i).getTopic_ID_FK() == iD) {
+				headline += tl.get(i).getName() + " => ";
+				appendBody(body, tl.get(i).getTopic_ID());
+				for (int j = 0; j < al.size(); j++) {
+					if (al.get(j).getTopic_ID_FK() == tl.get(i).getTopic_ID()) {
+						headline += al.get(j).getName();
+						body.add(new Paragraph(headline, FONTHEADPATH));
+						parseHtmlToPdf(al.get(j).getContent(), body);
+						addEmptyLine(body, 1);
+						headline = headline.substring(0, headline.length()
+								- al.get(j).getName().length());
+					}
+				}
+				headline = headline.substring(0, headline.length()
+						- (tl.get(i).getName() + " => ").length());
+			} else {
+				continue;
+			}
+		}
+	}
+
+	private void parseHtmlToPdf(String content, Paragraph body) {
+		body.add(content);
+		addEmptyLine(body, 2);
+	}
+
+	private Element getIndexPages() {
+		Paragraph preface = new Paragraph();
+		addEmptyLine(preface, 1);
+		preface.add(new Paragraph(Constants.getDBName(), FONTH1));
+		addEmptyLine(preface, 1);
+		preface.add(new Paragraph("Content", FONTH2));
+		addEmptyLine(preface, 1);
+		List list = new List(true, false, 15);
+		appendIndex(list, 0);
+		preface.add(list);
+		return preface;
+	}
+
 	private void appendIndex(List list, int iD) {
 		ArrayList<Topic> tl = mc.getTcl().getTopics();
 		ArrayList<Article> al = mc.getAcl().getArticles();
 		for (int i = 0; i < tl.size(); i++) {
 			if (tl.get(i).getTopic_ID_FK() == iD) {
 				list.add(tl.get(i).getName());
-				List newList = new List();
+				List newList = new List(false, false, 15);
 				appendIndex(newList, tl.get(i).getTopic_ID());
 				for (int j = 0; j < al.size(); j++) {
 					if (al.get(j).getTopic_ID_FK() == tl.get(i).getTopic_ID()) {
@@ -85,5 +128,4 @@ public class PDFExport extends ExportType {
 			paragraph.add(new Paragraph(" "));
 		}
 	}
-
 }

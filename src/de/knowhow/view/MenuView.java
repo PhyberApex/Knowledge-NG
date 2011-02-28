@@ -195,7 +195,7 @@ public class MenuView extends View {
 			}
 		});
 		// TODO DELETE following line for testing and as pdf export is working properly! 
-		exportPDF.setEnabled(false);
+		//exportPDF.setEnabled(false);
 		export.add(exportPDF);
 		file.add(export);
 		file.addSeparator();

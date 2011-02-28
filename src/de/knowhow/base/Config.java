@@ -42,7 +42,8 @@ public class Config {
 				reader = new FileReader("knowledge.cfg");
 				this.prop.setProperty("databasetyp", coder.decode("1"));
 				this.prop.setProperty("lang", coder.decode("EN"));
-				this.prop.setProperty("defaultdb", coder.decode("knowledge.db"));
+				this.prop
+						.setProperty("defaultdb", coder.decode("knowledge.db"));
 				saveChanges();
 			} catch (IOException e1) {
 				logger.error(e1.getMessage());
