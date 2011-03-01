@@ -28,6 +28,8 @@ public class PDFExport extends ExportType {
 			Font.NORMAL);
 	private static Font FONTARTICLE = new Font(Font.FontFamily.TIMES_ROMAN, 16,
 			Font.NORMAL);
+	private static Font TAGFONTH1 = new Font(Font.FontFamily.TIMES_ROMAN, 16,
+			Font.NORMAL);
 
 	private Document document;
 	private String headline = "";
@@ -85,12 +87,7 @@ public class PDFExport extends ExportType {
 						body.add(sep);
 						addEmptyLine(body, 1);
 						String content = al.get(j).getContent();
-						String search = "<body>";
-						content = content.substring(content.indexOf(search)
-								+ search.length());
-						content = content.substring(0,
-								content.indexOf("</body>"));
-						parseHtmlToPdf(content, body);
+						body.add(parseHtmlToPdf(content));
 						body.add(sep);
 						addEmptyLine(body, 2);
 						headline = headline.substring(0, headline.length()
@@ -112,22 +109,49 @@ public class PDFExport extends ExportType {
 		}
 	}
 
-	private void parseHtmlToPdf(String content, Paragraph body) {
+	private Element parseHtmlToPdf(String content) {
+		Paragraph body = new Paragraph("", FONTARTICLE);
+		String search = "<body>";
+		content = content.substring(content.indexOf(search) + search.length());
+		content = content.substring(0, content.indexOf("</body>"));
 		int i = 0;
-		while (content.startsWith("<")) {
+		boolean end = false;
+		while (!end) {
 			content = content.trim();
-			if (content.indexOf("<p>") <= 1) {
+			if (content.startsWith("<p>")) {
+				int indexOfNextTag = content.indexOf("<");
+				if (indexOfNextTag != -1) {
+					body.add(content.substring(
+							content.indexOf("<p>") + "<p>".length(),
+							indexOfNextTag));
+					int indexOfNextCloseTag = content.indexOf("</"
+							+ content.charAt(indexOfNextTag + 1));
+					content = content.substring(indexOfNextTag,
+							indexOfNextCloseTag);
+					body.add(parseHtmlToPdf(content));
+					int indexOfClosingTag = content.lastIndexOf("</p>");
+					body.add(content.substring("<p>".length(),
+							indexOfClosingTag));
+				} else {
+					body.add(content.substring(
+							content.indexOf("<p>") + "<p>".length(),
+							content.indexOf("</p>")));
+					content = content.substring(content.indexOf("</p>")
+							+ "</p>".length());
+				}
 
-				body.add(new Paragraph(content.substring(content.indexOf("<p>")
-						+ "<p>".length(), content.indexOf("</p>")), FONTARTICLE));
-				content = content.substring(content.indexOf("</p>")
-						+ "</p>".length());
+			} else if (content.startsWith("<a")) {
+
+			}
+			if (content.indexOf("</") == -1) {
+				end = true;
 			}
 			i++;
 			if (i > 100) {
 				break;
 			}
 		}
+		return body;
 	}
 
 	private Element getIndexPages() {
