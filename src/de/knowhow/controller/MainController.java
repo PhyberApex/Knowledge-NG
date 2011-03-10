@@ -312,7 +312,7 @@ public class MainController extends Controller {
 		searchView.searchFor(text, acl.getArticles().iterator());
 	}
 
-	public void about() {
+	public void showAbout() {
 		aboutView.setVisible(true);
 	}
 
@@ -387,7 +387,7 @@ public class MainController extends Controller {
 		doLayout();
 		addViews(this);
 		addViews(acl);
-		// addViews(attL);
+		addViews(attL);
 		addViews(tcl);
 		addViews(treeC);
 	}

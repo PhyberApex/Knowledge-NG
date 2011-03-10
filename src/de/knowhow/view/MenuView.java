@@ -27,7 +27,7 @@ public class MenuView extends View {
 
 	private static final long serialVersionUID = 1L;
 	private JMenuBar menu;
-	private JMenu file;
+	private Menu file;
 	private MenuItem newArticle;
 	private MenuItem newTopic;
 	private MenuItem print;
@@ -92,6 +92,258 @@ public class MenuView extends View {
 	public void init() {
 		menu.setSize(ViewConstants.MENU_WIDTH, ViewConstants.MENU_HEIGTH);
 		menu.setPreferredSize(menu.getSize());
+		menu.add(getFileMenu());
+		menu.add(getEditMenu());
+		menu.add(getPreferenceMenu());
+		menu.add(getHelpMenu());
+		this.bt_plain = new JButton(
+				Constants
+						.createImageIcon("/de/knowhow/resource/img/plainButton.png"));
+		this.bt_plain.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("plain article view clicked");
+				mc.changeArticleView(ArticleView.PLAINVIEW);
+				bt_render.setEnabled(true);
+				bt_plain.setEnabled(false);
+			}
+		});
+		this.bt_render = new JButton(
+				Constants
+						.createImageIcon("/de/knowhow/resource/img/renderButton.png"));
+		this.bt_render.setEnabled(false);
+		this.bt_render.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("rendered article view clicked");
+				mc.changeArticleView(ArticleView.RENDEREDVIEW);
+				bt_plain.setEnabled(true);
+				bt_render.setEnabled(false);
+			}
+		});
+		this.tfSearch = new Textfield("");
+		this.btSearch = new Button(Constants.getText("mainView.btSearch"));
+		this.btSearch.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				mc.search(tfSearch.getText());
+			}
+		});
+		// Enable or disable some features regarding databsetype
+		Class<? extends DAO> dbClass = Config.getInstance().getDBHandle()
+				.getClass();
+		if (dbClass == DAO_MYSQL.class) {
+			this.mysql.setSelected(true);
+			this.mysql.setEnabled(false);
+			this.mysql_change.setEnabled(true);
+			newDatabase.setEnabled(false);
+			openDatabase.setEnabled(false);
+		} else if (dbClass == DAO_SQLite.class) {
+			this.sqlite.setSelected(true);
+			this.sqlite.setEnabled(false);
+			this.mysql_change.setEnabled(false);
+		}
+		menu.add(tfSearch);
+		menu.add(btSearch);
+		menu.add(bt_render);
+		menu.add(bt_plain);
+		menu.setSize(ViewConstants.MENU_WIDTH, ViewConstants.MENU_HEIGTH);
+	}
+
+	private JMenu getHelpMenu() {
+		this.help = new Menu(Constants.getText("menu.help"));
+		this.about = new MenuItem(Constants.getText("menu.help.about"));
+		this.about.setIcon(Constants
+				.createImageIcon("/de/knowhow/resource/img/icon/about.png"));
+		this.about.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("about clicked");
+				mc.showAbout();
+			}
+		});
+		this.help.add(about);
+		return help;
+	}
+
+	private JMenu getPreferenceMenu() {
+		prefs = new Menu(Constants.getText("menu.prefs"));
+		lang = new Menu(Constants.getText("menu.prefs.lang"));
+		lang.setIcon(Constants
+				.createImageIcon("/de/knowhow/resource/img/icon/prefs_language.png"));
+		ButtonGroup langGroup = new ButtonGroup();
+		RadioButtonMenuItem langDE = new RadioButtonMenuItem("Deutsch");
+		langDE.setIcon(Constants
+				.createImageIcon("/de/knowhow/resource/img/icon/de_DE_Icon.png"));
+		if (Constants.getBundle().getLocale().getLanguage().equals("de")) {
+			langDE.setSelected(true);
+		}
+		langDE.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("change language to DE clicked");
+				mc.changeLanguage("DE");
+			}
+		});
+		langGroup.add(langDE);
+		lang.add(langDE);
+		RadioButtonMenuItem langEN = new RadioButtonMenuItem("English");
+		langEN.setIcon(Constants
+				.createImageIcon("/de/knowhow/resource/img/icon/en_EN_Icon.png"));
+		if (Constants.getBundle().getLocale().getLanguage().equals("en")) {
+			langEN.setSelected(true);
+		}
+		langEN.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("change language to EN clicked");
+				mc.changeLanguage("EN");
+			}
+		});
+		langGroup.add(langEN);
+		lang.add(langEN);
+		prefs.add(lang);
+		this.database = new Menu(Constants.getText("keyword.database"));
+		database.setIcon(Constants
+				.createImageIcon("/de/knowhow/resource/img/icon/prefs_database.png"));
+		ButtonGroup databaseGroup = new ButtonGroup();
+		this.sqlite = new RadioButtonMenuItem(
+				Constants.getText("menu.prefs.database.sqlite"));
+		this.sqlite.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("change database to sqlite clicked");
+				sqlite.setEnabled(false);
+				mysql.setEnabled(true);
+				mc.changeDatabase("1");
+			}
+		});
+		databaseGroup.add(this.sqlite);
+		this.database.add(this.sqlite);
+		this.mysql = new RadioButtonMenuItem(
+				Constants.getText("menu.prefs.database.mysql"));
+		this.mysql.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("change database to mysql clicked");
+				mysql.setEnabled(false);
+				sqlite.setEnabled(true);
+				mc.changeDatabase("2");
+			}
+		});
+		databaseGroup.add(this.mysql);
+		this.database.add(this.mysql);
+		this.mysql_change = new MenuItem(
+				Constants.getText("menu.prefs.database.mysql_change"));
+		this.mysql_change
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent e) {
+						logger.debug("change mysql details clicked");
+						mc.changeDatabase("2");
+					}
+				});
+		databaseGroup.add(this.mysql_change);
+		this.database.add(this.mysql_change);
+		this.prefs.add(this.database);
+		return prefs;
+	}
+
+	private JMenu getEditMenu() {
+		edit = new Menu(Constants.getText("menu.edit"));
+		renameArticle = new MenuItem(
+				Constants.getText("menu.edit.renameArticle"));
+		renameArticle.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("rename article clicked");
+				mc.renameArticle();
+			}
+		});
+		edit.add(renameArticle);
+		renameTopic = new MenuItem(Constants.getText("menu.edit.renameTopic"));
+		renameTopic.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("rename topic clicked");
+				mc.renameTopic();
+			}
+		});
+		edit.add(renameTopic);
+		this.subtopic = new MenuItem(Constants.getText("menu.edit.subtopic"));
+		this.subtopic.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("make subtopic clicked");
+				mc.subTopic();
+			}
+		});
+		edit.add(subtopic);
+		edit.addSeparator();
+		css = new Menu(Constants.getText("menu.edit.css"));
+		css.setIcon(Constants
+				.createImageIcon("/de/knowhow/resource/img/icon/css.png"));
+		plainCSS = new MenuItem(Constants.getText("menu.edit.css.plain"));
+		plainCSS.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("css plain editor clicked");
+				mc.editCSS("plain");
+			}
+		});
+		css.add(plainCSS);
+		assistCSS = new MenuItem(Constants.getText("menu.edit.css.assist"));
+		assistCSS.setEnabled(false);
+		css.add(assistCSS);
+		edit.add(css);
+		edit.addSeparator();
+		insertCode = new MenuItem(Constants.getText("menu.edit.insertCode"));
+		insertCode.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("insert HTML tag \"<code>\" clicked");
+				mc.insertHTML("CODE");
+			}
+		});
+		edit.add(insertCode);
+		insertList = new MenuItem(Constants.getText("menu.edit.insertList"));
+		insertList.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("insert HTML tag \"<ul>\" clicked");
+				mc.insertHTML("LIST");
+			}
+		});
+		edit.add(insertList);
+		insertListElement = new MenuItem(
+				Constants.getText("menu.edit.insertListElement"));
+		insertListElement
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent e) {
+						logger.debug("insert HTML tag \"<li>\" clicked");
+						mc.insertHTML("LISTELEMENT");
+					}
+				});
+		edit.add(insertListElement);
+		insertLink = new Menu(Constants.getText("menu.edit.insertLink"));
+		insertLinkArticle = new MenuItem(
+				Constants.getText("menu.edit.insertLink.article"));
+		insertLinkArticle
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent e) {
+						logger.debug("insert HTML tag \"<a>\" with article clicked");
+						mc.insertLink("Article");
+					}
+				});
+		insertLink.add(insertLinkArticle);
+		insertLinkImage = new MenuItem(
+				Constants.getText("menu.edit.insertLink.image"));
+		insertLinkImage.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("insert HTML tag \"<a>\" with image clicked");
+				mc.insertLink("Image");
+			}
+		});
+		insertLink.add(insertLinkImage);
+		insertLinkFile = new MenuItem(
+				Constants.getText("menu.edit.insertLink.file"));
+		insertLinkFile.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.debug("insert HTML tag \"<a>\" with file clicked");
+				mc.insertLink("File");
+			}
+		});
+		insertLink.add(insertLinkFile);
+		edit.add(insertLink);
+		return edit;
+	}
+
+	private JMenu getFileMenu() {
 		file = new Menu(Constants.getText("menu.file"));
 		newArticle = new MenuItem(Constants.getText("menu.file.newArticle"));
 		newArticle.setIcon(Constants
@@ -231,245 +483,7 @@ public class MenuView extends View {
 			}
 		});
 		file.add(close);
-		edit = new Menu(Constants.getText("menu.edit"));
-		renameArticle = new MenuItem(
-				Constants.getText("menu.edit.renameArticle"));
-		renameArticle.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				logger.debug("rename article clicked");
-				mc.renameArticle();
-			}
-		});
-		edit.add(renameArticle);
-		renameTopic = new MenuItem(Constants.getText("menu.edit.renameTopic"));
-		renameTopic.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				logger.debug("rename topic clicked");
-				mc.renameTopic();
-			}
-		});
-		edit.add(renameTopic);
-		this.subtopic = new MenuItem(Constants.getText("menu.edit.subtopic"));
-		this.subtopic.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				logger.debug("make subtopic clicked");
-				mc.subTopic();
-			}
-		});
-		edit.add(subtopic);
-		edit.addSeparator();
-		css = new Menu(Constants.getText("menu.edit.css"));
-		css.setIcon(Constants
-				.createImageIcon("/de/knowhow/resource/img/icon/css.png"));
-		plainCSS = new MenuItem(Constants.getText("menu.edit.css.plain"));
-		plainCSS.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				logger.debug("css plain editor clicked");
-				mc.editCSS("plain");
-			}
-		});
-		css.add(plainCSS);
-		assistCSS = new MenuItem(Constants.getText("menu.edit.css.assist"));
-		assistCSS.setEnabled(false);
-		css.add(assistCSS);
-		edit.add(css);
-		edit.addSeparator();
-		insertCode = new MenuItem(Constants.getText("menu.edit.insertCode"));
-		insertCode.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				logger.debug("insert HTML tag \"<code>\" clicked");
-				mc.insertHTML("CODE");
-			}
-		});
-		edit.add(insertCode);
-		insertList = new MenuItem(Constants.getText("menu.edit.insertList"));
-		insertList.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				logger.debug("insert HTML tag \"<ul>\" clicked");
-				mc.insertHTML("LIST");
-			}
-		});
-		edit.add(insertList);
-		insertListElement = new MenuItem(
-				Constants.getText("menu.edit.insertListElement"));
-		insertListElement
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent e) {
-						logger.debug("insert HTML tag \"<li>\" clicked");
-						mc.insertHTML("LISTELEMENT");
-					}
-				});
-		edit.add(insertListElement);
-		insertLink = new Menu(Constants.getText("menu.edit.insertLink"));
-		insertLinkArticle = new MenuItem(
-				Constants.getText("menu.edit.insertLink.article"));
-		insertLinkArticle
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent e) {
-						logger.debug("insert HTML tag \"<a>\" with article clicked");
-						mc.insertLink("Article");
-					}
-				});
-		insertLink.add(insertLinkArticle);
-		insertLinkImage = new MenuItem(
-				Constants.getText("menu.edit.insertLink.image"));
-		insertLinkImage.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				logger.debug("insert HTML tag \"<a>\" with image clicked");
-				mc.insertLink("Image");
-			}
-		});
-		insertLink.add(insertLinkImage);
-		insertLinkFile = new MenuItem(
-				Constants.getText("menu.edit.insertLink.file"));
-		insertLinkFile.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				logger.debug("insert HTML tag \"<a>\" with file clicked");
-				mc.insertLink("File");
-			}
-		});
-		insertLink.add(insertLinkFile);
-		edit.add(insertLink);
-		prefs = new Menu(Constants.getText("menu.prefs"));
-		lang = new Menu(Constants.getText("menu.prefs.lang"));
-		lang.setIcon(Constants
-				.createImageIcon("/de/knowhow/resource/img/icon/prefs_language.png"));
-		ButtonGroup langGroup = new ButtonGroup();
-		RadioButtonMenuItem langDE = new RadioButtonMenuItem("Deutsch");
-		langDE.setIcon(Constants
-				.createImageIcon("/de/knowhow/resource/img/icon/de_DE_Icon.png"));
-		if (Constants.getBundle().getLocale().getLanguage().equals("de")) {
-			langDE.setSelected(true);
-		}
-		langDE.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				logger.debug("change language to DE clicked");
-				mc.changeLanguage("DE");
-			}
-		});
-		langGroup.add(langDE);
-		lang.add(langDE);
-		RadioButtonMenuItem langEN = new RadioButtonMenuItem("English");
-		langEN.setIcon(Constants
-				.createImageIcon("/de/knowhow/resource/img/icon/en_EN_Icon.png"));
-		if (Constants.getBundle().getLocale().getLanguage().equals("en")) {
-			langEN.setSelected(true);
-		}
-		langEN.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				logger.debug("change language to EN clicked");
-				mc.changeLanguage("EN");
-			}
-		});
-		langGroup.add(langEN);
-		lang.add(langEN);
-		prefs.add(lang);
-		this.database = new Menu(Constants.getText("keyword.database"));
-		database.setIcon(Constants
-				.createImageIcon("/de/knowhow/resource/img/icon/prefs_database.png"));
-		ButtonGroup databaseGroup = new ButtonGroup();
-		this.sqlite = new RadioButtonMenuItem(
-				Constants.getText("menu.prefs.database.sqlite"));
-		this.sqlite.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				logger.debug("change database to sqlite clicked");
-				sqlite.setEnabled(false);
-				mysql.setEnabled(true);
-				mc.changeDatabase("1");
-			}
-		});
-		databaseGroup.add(this.sqlite);
-		this.database.add(this.sqlite);
-		this.mysql = new RadioButtonMenuItem(
-				Constants.getText("menu.prefs.database.mysql"));
-		this.mysql.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				logger.debug("change database to mysql clicked");
-				mysql.setEnabled(false);
-				sqlite.setEnabled(true);
-				mc.changeDatabase("2");
-			}
-		});
-		databaseGroup.add(this.mysql);
-		this.database.add(this.mysql);
-		this.mysql_change = new MenuItem(
-				Constants.getText("menu.prefs.database.mysql_change"));
-		this.mysql_change
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent e) {
-						logger.debug("change mysql details clicked");
-						mc.changeDatabase("2");
-					}
-				});
-		databaseGroup.add(this.mysql_change);
-		this.database.add(this.mysql_change);
-		this.prefs.add(this.database);
-		this.help = new Menu(Constants.getText("menu.help"));
-		this.about = new MenuItem(Constants.getText("menu.help.about"));
-		this.about.setIcon(Constants
-				.createImageIcon("/de/knowhow/resource/img/icon/about.png"));
-		this.about.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				logger.debug("about clicked");
-				mc.about();
-			}
-		});
-		this.help.add(about);
-		this.bt_plain = new JButton(
-				Constants
-						.createImageIcon("/de/knowhow/resource/img/plainButton.png"));
-		this.bt_plain.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				logger.debug("plain article view clicked");
-				mc.changeArticleView(ArticleView.PLAINVIEW);
-				bt_render.setEnabled(true);
-				bt_plain.setEnabled(false);
-			}
-		});
-		this.bt_render = new JButton(
-				Constants
-						.createImageIcon("/de/knowhow/resource/img/renderButton.png"));
-		this.bt_render.setEnabled(false);
-		this.bt_render.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				logger.debug("rendered article view clicked");
-				mc.changeArticleView(ArticleView.RENDEREDVIEW);
-				bt_plain.setEnabled(true);
-				bt_render.setEnabled(false);
-			}
-		});
-		this.tfSearch = new Textfield("");
-		this.btSearch = new Button(Constants.getText("mainView.btSearch"));
-		this.btSearch.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				mc.search(tfSearch.getText());
-			}
-		});
-		// Enable or disable some features regarding databsetype
-		Class<? extends DAO> dbClass = Config.getInstance().getDBHandle()
-				.getClass();
-		if (dbClass == DAO_MYSQL.class) {
-			this.mysql.setSelected(true);
-			this.mysql.setEnabled(false);
-			this.mysql_change.setEnabled(true);
-			newDatabase.setEnabled(false);
-			openDatabase.setEnabled(false);
-		} else if (dbClass == DAO_SQLite.class) {
-			this.sqlite.setSelected(true);
-			this.sqlite.setEnabled(false);
-			this.mysql_change.setEnabled(false);
-		}
-		menu.add(file);
-		menu.add(edit);
-		menu.add(prefs);
-		menu.add(help);
-		menu.add(tfSearch);
-		menu.add(btSearch);
-		JLabel puffer = new JLabel("     ");
-		menu.add(puffer);
-		menu.add(bt_render);
-		menu.add(bt_plain);
-		menu.setSize(ViewConstants.MENU_WIDTH, ViewConstants.MENU_HEIGTH);
+		return file;
 	}
 
 	@Override
