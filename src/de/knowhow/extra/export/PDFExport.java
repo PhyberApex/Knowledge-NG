@@ -28,8 +28,6 @@ public class PDFExport extends ExportType {
 			Font.NORMAL);
 	private static Font FONTARTICLE = new Font(Font.FontFamily.TIMES_ROMAN, 16,
 			Font.NORMAL);
-	private static Font TAGFONTH1 = new Font(Font.FontFamily.TIMES_ROMAN, 16,
-			Font.NORMAL);
 
 	private Document document;
 	private String headline = "";
