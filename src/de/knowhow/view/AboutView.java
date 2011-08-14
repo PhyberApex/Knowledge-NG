@@ -19,7 +19,6 @@ import de.knowhow.model.gui.Label;
 
 public class AboutView extends View {
 
-	private static final long serialVersionUID = 1L;
 	private Dialog dialog;
 	private JLabel lbLogo;
 	private MainController mc;

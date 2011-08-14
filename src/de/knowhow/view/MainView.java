@@ -12,7 +12,6 @@ import de.knowhow.controller.MainController;
 
 public class MainView extends View {
 
-	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private MainController mc;
 

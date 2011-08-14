@@ -15,7 +15,6 @@ import de.knowhow.model.gui.Textfield;
 
 public class TopicRenameView extends View {
 
-	private static final long serialVersionUID = 1L;
 	private Dialog dialog;
 	private TopicListController tcl;
 	private Label lbname;

@@ -21,7 +21,6 @@ import de.knowhow.model.gui.HTMLEditorKit;
 
 public class ArticleRenderView extends ArticleView {
 
-	private static final long serialVersionUID = 1L;
 	private JPanel panel;
 	private Button confirmButton;
 	private Button cancelButton;

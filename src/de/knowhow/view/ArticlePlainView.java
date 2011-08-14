@@ -17,7 +17,6 @@ import de.knowhow.model.gui.Button;
 
 public class ArticlePlainView extends ArticleView {
 
-	private static final long serialVersionUID = 1L;
 	private JPanel panel;
 	private Button confirmButton;
 	private Button cancelButton;

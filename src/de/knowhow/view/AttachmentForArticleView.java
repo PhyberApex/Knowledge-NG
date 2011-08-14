@@ -18,7 +18,6 @@ import de.knowhow.model.gui.TableModel;
 
 public class AttachmentForArticleView extends View {
 
-	private static final long serialVersionUID = 1L;
 	private Dialog dialog;
 	private AttachmentListController attL;
 	private Table tbAttachmentsFile;

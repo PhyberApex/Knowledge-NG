@@ -17,7 +17,6 @@ import de.knowhow.model.gui.TableModel;
 
 public class ArticleLinkView extends ArticleView {
 
-	private static final long serialVersionUID = 1L;
 	private Dialog dialog;
 	private ArticleListController acl;
 	private JScrollPane spArticles;

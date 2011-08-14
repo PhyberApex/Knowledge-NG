@@ -17,7 +17,6 @@ import de.knowhow.model.gui.Label;
 
 public class TopicChooseView extends View {
 
-	private static final long serialVersionUID = 1L;
 	private JPanel panel;
 	private Label topic;
 	private ComboBox topicBox;

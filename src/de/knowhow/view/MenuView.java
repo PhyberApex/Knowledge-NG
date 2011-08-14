@@ -24,7 +24,6 @@ import de.knowhow.model.gui.Textfield;
 
 public class MenuView extends View {
 
-	private static final long serialVersionUID = 1L;
 	private JMenuBar menu;
 	private Menu file;
 	private MenuItem newArticle;

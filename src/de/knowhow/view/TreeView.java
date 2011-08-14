@@ -22,7 +22,6 @@ import de.knowhow.model.gui.Tree;
 public class TreeView extends View implements TreeSelectionListener,
 		MouseListener {
 
-	private static final long serialVersionUID = 1L;
 	private JPanel panel;
 	private Tree tree;
 	private JScrollPane treeScrollPane;

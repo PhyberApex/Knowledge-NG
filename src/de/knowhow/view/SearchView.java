@@ -18,7 +18,6 @@ import de.knowhow.model.gui.TableModel;
 
 public class SearchView extends View {
 
-	private static final long serialVersionUID = 1L;
 	private Dialog dialog;
 	private JScrollPane spSearch;
 	private Table tbSearch;

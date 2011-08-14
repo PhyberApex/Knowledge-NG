@@ -15,8 +15,6 @@ import de.knowhow.model.gui.Textfield;
 
 public class ArticleRenameView extends ArticleView {
 
-	private static final long serialVersionUID = 1L;
-
 	private ArticleListController acl;
 	private Dialog dialog;
 	private Label lbname;

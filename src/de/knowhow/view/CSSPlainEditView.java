@@ -13,7 +13,6 @@ import de.knowhow.model.gui.TextArea;
 
 public class CSSPlainEditView extends View {
 
-	private static final long serialVersionUID = 1L;
 	private Dialog dialog;
 	private CSSController csc;
 	private Button btCancel;

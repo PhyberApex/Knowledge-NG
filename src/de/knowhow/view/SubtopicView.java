@@ -15,7 +15,6 @@ import de.knowhow.model.gui.Dialog;
 
 public class SubtopicView extends View {
 
-	private static final long serialVersionUID = 1L;
 	private Dialog dialog;
 	private ComboBox cbTopic;
 	private Button btConfirm;
