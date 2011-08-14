@@ -1,10 +1,8 @@
 package de.knowhow.base;
 
 import java.util.Locale;
-
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
-
 import org.apache.log4j.xml.DOMConfigurator;
 
 /*
