@@ -16,7 +16,7 @@ public class Upload implements Runnable {
 	private DAO db;
 	private boolean isImage;
 	private File file;
-	private AttachmentList al;
+	private AttachmentList attl;
 	private int currID;
 
 	public Upload(DAO db, boolean isImage, File file, AttachmentList al,
@@ -24,7 +24,7 @@ public class Upload implements Runnable {
 		this.db = db;
 		this.isImage = isImage;
 		this.file = file;
-		this.al = al;
+		this.attl = al;
 		this.currID = currID;
 	}
 
@@ -55,8 +55,8 @@ public class Upload implements Runnable {
 			}
 			Attachment attach = new Attachment(this.db, file.getName(), currID,
 					bytes, isImage);
-			al.addAttachment(attach);
-			al.reload();
+			attl.addAttachment(attach);
+			attl.reload();
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
